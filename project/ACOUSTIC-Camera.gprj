@@ -3,6 +3,17 @@
 <Project>
     <Template>FPGA</Template>
     <Version>5</Version>
-    <Device name="" pn="">gw2a18-002</Device>
-    <FileList/>
+    <Device name="GW2A-18" pn="GW2A-LV18PG256C8/I7">gw2a18-002</Device>
+    <FileList>
+        <File path="src/gowin_ip/gowin_rpll/rpll_cpu.v" type="file.verilog" enable="1"/>
+        <File path="src/gowin_ip/gowin_sdpb/mem_x.v" type="file.verilog" enable="1"/>
+        <File path="src/gowin_ip/gowin_sdpb/mem_y.v" type="file.verilog" enable="1"/>
+        <File path="src/gowin_rpll/rpll_mic.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/audio_process/i2s_decoder.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/audio_process/mic_subsys.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/audio_process/myxcorr.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/clock_and_reset/clk_div.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/clock_and_reset/clock_manage.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/top.v" type="file.verilog" enable="1"/>
+    </FileList>
 </Project>

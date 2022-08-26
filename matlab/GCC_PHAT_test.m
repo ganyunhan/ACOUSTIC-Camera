@@ -4,8 +4,8 @@ close all
 
 %加载一段声音（matlab自带敲锣声）
 load gong;
-%采样频率
-Fs = 5000;  
+%采样频率 越高越精准
+Fs = 48000;  
 %采样周期
 dt=1/Fs;
 %music_src为声源
@@ -74,7 +74,7 @@ disp(timeDiff);
 %gcc+phat算法，根据公式写
 RGCC=fft(rcc1);
 rgcc=ifft(RGCC*1./abs(RGCC));
-figure(5);
+figure(3);
 plot(lag1/Fs,rgcc);
 [M,I] = max(abs(rgcc));
 lagDiff = lag(I);
@@ -83,8 +83,8 @@ disp(timeDiff);
 
 
 %计算角度,这里假设为平面波
-dis_r=tau*c;
-angel=acos(tau*c./(mic_d*2))*180/pi;
+dis_r=timeDiff*c;
+angel=acos(timeDiff*c./(mic_d*2))*180/pi;
 if dis_s1<dis_s2
     angel=180-angel;
 end

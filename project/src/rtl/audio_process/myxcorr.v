@@ -8,7 +8,6 @@
 // Revision 1.0
 // Additional Comments: 
 //////////////////////////////////////////////////////////////////////////////////
-
 module myxcorr #(
      parameter       DATAWIDTH           = 24
     ,parameter       SEQUENCE_LENGTH     = 512
@@ -17,6 +16,7 @@ module myxcorr #(
      input                              clk
     ,input                              clk_mic
     ,input                              rst_n
+    ,input                              mic_data_valid
     ,input      [DATAWIDTH - 1: 0]      series_x
     ,input      [DATAWIDTH - 1: 0]      series_y
     ,input                              start
@@ -28,13 +28,20 @@ module myxcorr #(
 );
 
 
+
+
+reg     [12- 1: 0]      valid_data_cnt;
+reg     [10- 1: 0]      mem_x_addr;
+reg     [10- 1: 0]      mem_y_addr;
+
+
 mem_x U_MEM_X(
     .dout(dout_o), //output [15:0] dout
     .clka(clka_i), //input clka
-    .cea(cea_i), //input cea
+    .cea(1'b1), //input cea
     .reseta(reseta_i), //input reseta
     .clkb(clkb_i), //input clkb
-    .ceb(ceb_i), //input ceb
+    .ceb(1'b1), //input ceb
     .resetb(resetb_i), //input resetb
     .oce(oce_i), //input oce
     .ada(ada_i), //input [9:0] ada

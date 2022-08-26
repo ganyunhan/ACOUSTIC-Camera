@@ -13,7 +13,7 @@ module i2s_decoder#(
 )
 (
 	 input 							clk_mic
-	,input 							rst_n
+	,input 							rst_mic_n
 	,input 							WS
 	,input 							DATA
 	
@@ -31,14 +31,14 @@ reg [1:0] state,next_state;
 
 reg WS_reg;
 wire WS_en;
-always @(negedge clk_mic or negedge rst_n) begin
-	if(!rst_n) WS_reg <= 1'b0;
+always @(negedge clk_mic or negedge rst_mic_n) begin
+	if(!rst_mic_n) WS_reg <= 1'b0;
 	else WS_reg <= WS;
 end
-assign WS_en = (WS_reg)&(~WS);  // ??WS??????????
+assign WS_en = (WS_reg)&(~WS);  // WS negedge means sending left phase
 
-always @(negedge clk_mic or negedge rst_n) begin
-	if(!rst_n) begin
+always @(negedge clk_mic or negedge rst_mic_n) begin
+	if(!rst_mic_n) begin
 		state <= IDLE;
 	end
 	else begin
@@ -46,12 +46,12 @@ always @(negedge clk_mic or negedge rst_n) begin
 	end
 end
 
-// cnt????????
+
 always @(*) begin
 	case(state)
 		IDLE:
 			begin
-				if(WS_en) begin //WS????????????????32?clk_mic
+				if(WS_en) begin
 					next_state = GET_LEFT;
 				end
 				else begin
@@ -80,11 +80,11 @@ always @(*) begin
 	endcase
 end
 
-always @(negedge clk_mic or negedge rst_n) begin
-	if(!rst_n) begin
+always @(negedge clk_mic or negedge rst_mic_n) begin
+	if(!rst_mic_n) begin
 		cnt <= 'd0;
 	end
-	else if(WS_en || (state!=IDLE)) begin  // ????
+	else if(WS_en || (state!=IDLE)) begin  
 		if(cnt != 'd32) begin
 			cnt <= cnt + 1'b1;
 		end
@@ -95,26 +95,26 @@ always @(negedge clk_mic or negedge rst_n) begin
 	else cnt <= 'd0;
 end
 
-// ????????2~25?clk_mic?????
-always @(negedge clk_mic or negedge rst_n) begin
-	if(!rst_n) begin
+// Clocks 2 through 25 transmit data
+always @(negedge clk_mic or negedge rst_mic_n) begin
+	if(!rst_mic_n) begin
 		L_DATA <= 'd0;
 	end
 	else if(~WS && (cnt > 'd1) && (cnt < 'd26)) begin
-		L_DATA <= {L_DATA[DATAWIDTH - 2: 0],DATA};  // ????
+		L_DATA <= {L_DATA[DATAWIDTH - 2: 0],DATA};  // shift
 	end
 	else begin
 		L_DATA <= L_DATA;
 	end
 end
 
-// ???????
-always @(negedge clk_mic or negedge rst_n) begin
-	if(!rst_n) begin
+
+always @(negedge clk_mic or negedge rst_mic_n) begin
+	if(!rst_mic_n) begin
 		R_DATA <= 'd0;
 	end
 	else if(WS && (cnt > 'd1) && (cnt < 'd26)) begin
-		R_DATA <= {R_DATA[DATAWIDTH - 2: 0],DATA};  // ????
+		R_DATA <= {R_DATA[DATAWIDTH - 2: 0],DATA};
 	end
 	else begin
 		R_DATA <= R_DATA;
