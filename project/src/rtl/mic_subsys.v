@@ -1,0 +1,11 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Create Date: 26.08.2022
+// Last Modified : Hank.Gan 26.08.2022
+// Designer : Hank.Gan
+// Design Name: mic_subsys
+// Description: Microphone Array processing sub-system
+// Dependencies: i2s_decoder/
+// Revision 1.0
+// Additional Comments: 
+//////////////////////////////////////////////////////////////////////////////////
