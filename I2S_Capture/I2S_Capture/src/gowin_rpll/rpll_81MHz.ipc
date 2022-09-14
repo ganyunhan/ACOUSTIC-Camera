@@ -1,7 +1,7 @@
 [General]
 ipc_version=4
-file=rpll_mic
-module=rpll_mic
+file=rpll_81MHz
+module=rpll_81MHz
 target_device=gw2a18-002
 type=clock_rpll
 version=1.0
@@ -14,8 +14,8 @@ CLKOUTD=false
 CLKOUTP=false
 CLKOUT_BYPASS=false
 CLKOUT_DIVIDE_DYN=true
-CLKOUT_FREQ=172.8
-CLKOUT_TOLERANCE=0
+CLKOUT_FREQ=81
+CLKOUT_TOLERANCE=2
 DYNAMIC=true
 LANG=0
 LOCK_EN=true

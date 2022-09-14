@@ -4,12 +4,12 @@
 //GOWIN Version: V1.9.8.07
 //Part Number: GW2A-LV18PG256C8/I7
 //Device: GW2A-18
-//Created Time: Sat Aug 27 02:13:37 2022
+//Created Time: Mon Aug 29 14:06:31 2022
 
 //Change the instance name and port connections to the signal names
 //--------Copy here to design--------
 
-    rpll_mic your_instance_name(
+    rpll_81MHz your_instance_name(
         .clkout(clkout_o), //output clkout
         .lock(lock_o), //output lock
         .reset(reset_i), //input reset

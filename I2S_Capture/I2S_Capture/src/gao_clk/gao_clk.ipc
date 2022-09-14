@@ -1,7 +1,7 @@
 [General]
 ipc_version=4
-file=rpll_mic
-module=rpll_mic
+file=gao_clk
+module=gao_clk
 target_device=gw2a18-002
 type=clock_rpll
 version=1.0
@@ -14,11 +14,11 @@ CLKOUTD=false
 CLKOUTP=false
 CLKOUT_BYPASS=false
 CLKOUT_DIVIDE_DYN=true
-CLKOUT_FREQ=172.8
-CLKOUT_TOLERANCE=0
-DYNAMIC=true
+CLKOUT_FREQ=30
+CLKOUT_TOLERANCE=3
+DYNAMIC=false
 LANG=0
-LOCK_EN=true
+LOCK_EN=false
 MODE_GENERAL=true
 PLL_PWD=false
 RESET_PLL=true

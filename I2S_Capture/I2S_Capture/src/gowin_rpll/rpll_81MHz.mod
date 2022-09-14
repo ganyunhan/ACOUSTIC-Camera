@@ -4,19 +4,19 @@
 -part_number GW2A-LV18PG256C8/I7
 
 
--mod_name rpll_mic
--file_name rpll_mic
--path C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/project/src/gowin_rpll/
+-mod_name rpll_81MHz
+-file_name rpll_81MHz
+-path C:/Users/Misaka/OneDrive/2022_Gowin/I2S_Capture/I2S_Capture/src/gowin_rpll/
 -type PLL
 -rPll true
 -file_type vlg
 -dev_type GW2A-18
 -dyn_idiv_sel false
--idiv_sel 5
+-idiv_sel 1
 -dyn_fbdiv_sel false
--fbdiv_sel 32
+-fbdiv_sel 3
 -dyn_odiv_sel false
--odiv_sel 4
+-odiv_sel 8
 -dyn_da_en true
 -rst_sig true
 -rst_sig_p false

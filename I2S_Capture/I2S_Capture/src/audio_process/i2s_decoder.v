@@ -12,16 +12,16 @@ module i2s_decoder#(
 	parameter		DATAWIDTH = 24
 )
 (
-	 input 							clk_mic
-	,input 							rst_mic_n
-	,input 							WS
-	,input 							DATA
+	 input 							        clk_mic
+	,input 							        rst_mic_n
+	,input 							        WS
+	,input 							        DATA
 	
-	,output reg	[DATAWIDTH - 1: 0] 	L_DATA
-	,output reg	[DATAWIDTH - 1: 0] 	R_DATA
-	,output							L_Sel
-	,output							R_Sel
-	,output 						recv_over
+	,output reg	signed [DATAWIDTH - 1: 0] 	L_DATA
+	,output reg	signed [DATAWIDTH - 1: 0] 	R_DATA
+	,output							        L_Sel
+	,output							        R_Sel
+	,output 						        recv_over
 );
 	 
 localparam IDLE 		= 2'b00;
@@ -30,6 +30,7 @@ localparam GET_LEFT 	= 2'b11;
 
 reg [4:0] cnt;
 reg [1:0] state,next_state;
+reg [24- 1: 0]  temlate;
 
 reg WS_reg;
 wire WS_en;
@@ -47,7 +48,6 @@ always @(negedge clk_mic or negedge rst_mic_n) begin
 		state <= next_state;
 	end
 end
-
 
 always @(*) begin
 	case(state)
@@ -97,12 +97,14 @@ always @(negedge clk_mic or negedge rst_mic_n) begin
 	else cnt <= 'd0;
 end
 
+
 // Clocks 2 through 25 transmit data
-always @(negedge clk_mic or negedge rst_mic_n) begin
+always @(posedge clk_mic or negedge rst_mic_n) begin
 	if(!rst_mic_n) begin
 		L_DATA <= 'd0;
+        temlate <= 'd0;
 	end
-	else if(~WS && (cnt > 'd1) && (cnt < 'd26)) begin
+	else if(~WS && (cnt > 'd0) && (cnt < 'd25)) begin
 		L_DATA <= {L_DATA[DATAWIDTH - 2: 0],DATA};  // shift
 	end
 	else begin
@@ -110,12 +112,29 @@ always @(negedge clk_mic or negedge rst_mic_n) begin
 	end
 end
 
+// Clocks 2 through 25 transmit data
+//always @(posedge clk_mic or negedge rst_mic_n) begin
+//	if(!rst_mic_n) begin
+//		L_DATA <= 'd0;
+//        temlate <= 'd0;
+//	end
+//	else if(~WS && (cnt > 'd0) && (cnt < 'd2)) begin
+//		L_DATA <= temlate;  // shift
+//        temlate <= temlate + 1'b1;
+//	end
+//    else if (temlate >= 24'hFFFF) begin
+//        temlate <= 1'b0;
+//    end
+//	else begin
+//		temlate <= temlate;
+//	end
+//end
 
-always @(negedge clk_mic or negedge rst_mic_n) begin
+always @(posedge clk_mic or negedge rst_mic_n) begin
 	if(!rst_mic_n) begin
 		R_DATA <= 'd0;
 	end
-	else if(WS && (cnt > 'd1) && (cnt < 'd26)) begin
+	else if(WS && (cnt > 'd0) && (cnt < 'd25)) begin
 		R_DATA <= {R_DATA[DATAWIDTH - 2: 0],DATA};
 	end
 	else begin
@@ -123,8 +142,11 @@ always @(negedge clk_mic or negedge rst_mic_n) begin
 	end
 end
 
-assign recv_over = (cnt == 'd25)? 1'b1 : 1'b0;
-assign L_Sel = 1'b1;
+//assign cr_left_mic = (state == GET_LEFT) ? 1'b1 : 1'b0;
+
+//assign recv_over = ((cnt == 'd26) && (cr_left_mic == 1'b1))? 1'b1 : 1'b0;
+assign recv_over = (cnt == 'd26)? 1'b1 : 1'b0;
+assign L_Sel = 1'b0;
 assign R_Sel = 1'b1;
 
 endmodule

@@ -4,16 +4,13 @@
 //GOWIN Version: V1.9.8.07
 //Part Number: GW2A-LV18PG256C8/I7
 //Device: GW2A-18
-//Created Time: Sat Aug 27 02:13:37 2022
+//Created Time: Tue Sep 13 19:43:48 2022
 
 //Change the instance name and port connections to the signal names
 //--------Copy here to design--------
 
-    rpll_mic your_instance_name(
-        .clkout(clkout_o), //output clkout
-        .lock(lock_o), //output lock
-        .reset(reset_i), //input reset
-        .clkin(clkin_i) //input clkin
+    Gowin_OSC your_instance_name(
+        .oscout(oscout_o) //output oscout
     );
 
 //--------Copy end-------------------

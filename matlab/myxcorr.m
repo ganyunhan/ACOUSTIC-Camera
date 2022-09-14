@@ -10,9 +10,9 @@ function [result,lag] = myxcorr(series_x,series_y,SeqLength)
           lag(n) = n-SeqLength;
      end
      end
-     %1.写max/min/abs 
-     %2.每次输出一个n(lag)的结果，并在top层比较和上一个相比的abs大小决定取舍 
-     %3.数据输入前加一个fifo
+     %1.写abs module
+     %2.每次输出一个n(lag)的结果，并在上一层比较和上一个相比的abs大小决定取舍 
+     %3.数据输入前加一个ram
      
      
      % result(1) = x(1) * y(SeqLength)

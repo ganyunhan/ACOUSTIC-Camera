@@ -5,14 +5,14 @@ close all
 %加载一段声音（matlab自带敲锣声）
 load gong;
 %采样频率 越高越精准
-Fs = 72916;  
+Fs = 48000;  
 %采样周期
 dt=1/Fs;
 %music_src为声源
 music_src=y;       
 
 %设置两个麦克风坐标
-mic_d=0.05;
+mic_d=0.08;
 mic_x=[-mic_d mic_d];
 mic_y=[0 0];
 % plot(mic_x,mic_y,'x');
@@ -22,7 +22,7 @@ mic_y=[0 0];
 % quiver(0,-5,0,10,1,'color','black');
 
 %声源位置
-s_x=10;
+s_x=15;
 s_y=10;
 % plot(s_x,s_y,'o');
 % quiver(s_x,s_y,-s_x-mic_d,-s_y,1);
@@ -52,7 +52,7 @@ music_delay = delayseq(music_src,delay,Fs);
 % plot(lag,real(R(:,1)));
 
 %cc算法
-[rcc,lag]=xcorr(music_delay,music_src,16);
+[rcc,lag]=xcorr(music_delay,music_src,);
 figure(1);
 plot(lag/Fs,rcc);
 [M,I] = max(abs(rcc));
