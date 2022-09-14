@@ -13,7 +13,7 @@
 module uart_tx
 #(
 	parameter	integer	BPS		= 921600	,	//发送波特率
-	parameter 	integer	CLK_FRE	= 27_000_000	//主时钟频率
+	parameter 	integer	CLK_FRE	= 60_000_000	//主时钟频率
 )
 (
 //系统接口

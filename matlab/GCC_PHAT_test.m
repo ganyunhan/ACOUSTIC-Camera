@@ -5,14 +5,14 @@ close all
 %加载一段声音（matlab自带敲锣声）
 load gong;
 %采样频率 越高越精准
-Fs = 72916;  
+Fs = 31250;  
 %采样周期
 dt=1/Fs;
 %music_src为声源
 music_src=y;       
 
 %设置两个麦克风坐标
-mic_d=0.05;
+mic_d=0.06;
 mic_x=[-mic_d mic_d];
 mic_y=[0 0];
 % plot(mic_x,mic_y,'x');
@@ -24,16 +24,18 @@ mic_y=[0 0];
 %声源位置
 s_x=10;
 s_y=10;
-% plot(s_x,s_y,'o');
-% quiver(s_x,s_y,-s_x-mic_d,-s_y,1);
-% quiver(s_x,s_y,-s_x+mic_d,-s_y,1);
+true_degree = rad2deg(atan(s_y/s_x));
+fprintf('true_degree = %f\r\n',true_degree);
+plot(s_x,s_y,'o');
+quiver(s_x,s_y,-s_x-mic_d,-s_y,1);
+quiver(s_x,s_y,-s_x+mic_d,-s_y,1);
 
 %求出距离
 dis_s1=sqrt((mic_x(1)-s_x).^2+(mic_y(1)-s_y).^2);
 dis_s2=sqrt((mic_x(2)-s_x).^2+(mic_y(2)-s_y).^2);
 c=340;
-delay=abs((dis_s1-dis_s2)./340);
-
+delay=abs((dis_s1-dis_s2)./c);
+fprintf('delay = %f\r\n',delay);
 %设置延时
 music_delay = delayseq(music_src,delay,Fs);
 % figure(2);
@@ -44,7 +46,7 @@ music_delay = delayseq(music_src,delay,Fs);
 % plot(music_delay);
 % axis([0 length(music_delay) -2 2]);
 
-% %gccphat算法,matlab自带
+%gccphat算法,matlab自带
 % [tau,R,lag] = gccphat(music_delay,music_src,Fs);
 % disp(tau);
 % figure(3);
@@ -55,11 +57,10 @@ music_delay = delayseq(music_src,delay,Fs);
 [rcc,lag]=xcorr(music_delay,music_src,16);
 figure(1);
 plot(lag/Fs,rcc);
-[M,I] = max(abs(rcc));
+[~,I] = max(abs(rcc));
 lagDiff = lag(I);
 timeDiff = lagDiff/Fs;
-disp(timeDiff);
-
+fprintf('timeDiff_cc = %f\r\n',timeDiff);
 %自拟cc
 % music_delay = music_delay';
 % music_src = music_src';
@@ -72,20 +73,20 @@ disp(timeDiff);
 % disp(timeDiff);
 
 %gcc+phat算法，根据公式写
-RGCC=fft(rcc);
-rgcc=ifft(RGCC*1./abs(RGCC));
-figure(3);
-plot(lag/Fs,rgcc);
-[M,I] = max(abs(rgcc));
-lagDiff = lag(I);
-timeDiff = lagDiff/Fs;
-disp(timeDiff);
-
+% RGCC=fft(rcc);
+% rgcc=ifft(RGCC*1./abs(RGCC));
+% figure(3);
+% plot(lag/Fs,rgcc);
+% [M,I] = max(abs(rgcc));
+% lagDiff = lag(I);
+% timeDiff = lagDiff/Fs;
+% fprintf('timeDiff_gcc_phat = %f\r\n',timeDiff);
 
 %计算角度,这里假设为平面波
 dis_r=timeDiff*c;
-angel=acos(timeDiff*c./(mic_d*2))*180/pi;
+angel = dis_r./(mic_d*2);
+angel=acos(angel)*180/pi;
 if dis_s1<dis_s2
     angel=180-angel;
 end
-disp(angel);
+fprintf('angle_gcc_phat = %f\r\n',angel);

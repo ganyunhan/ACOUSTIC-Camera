@@ -3,7 +3,7 @@ clc;
 close all;
 
 %% pre load
-fs=46875;
+fs=31250;
 filename='data.txt';  %%待处理文件路径
 data = load(filename);
 data_int = B2QW(data,16);
@@ -33,10 +33,13 @@ d = designfilt('bandpassfir','FilterOrder',filorder, ...
          'CutoffFrequency1',cutf1,'CutoffFrequency2',cutf2, ...
          'SampleRate',fs);
 data_fir = filtfilt(d,data_int);
-
+figure(3)
+plot(data_int);
+xlabel("plot")
+ylabel("幅度")
+grid on
 %% fft
-SpecPlot(data_fir,fs,'single',3);
+SpecPlot(data_fir,fs,'single',4);
 
 %% play sound
-pl=audioplayer(data_fir,fs);
-play(pl)
+sound(data_fir,fs);
