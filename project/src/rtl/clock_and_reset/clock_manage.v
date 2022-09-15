@@ -18,7 +18,6 @@ module clock_manage(
     ,output                 rst_mic_n
 );
 
-wire    clk_2MHz;
 wire    rst_mic_lock;
 
 rpll_mic U_PLL_27_60(

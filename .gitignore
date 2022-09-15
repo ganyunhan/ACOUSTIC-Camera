@@ -2,3 +2,4 @@
 *.user
 *I2S_Capture/impl
 *.asv
+*Module_test/XCORR/work
