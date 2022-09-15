@@ -25,7 +25,7 @@ always @(posedge clk)begin
                     h_tempdata<=tempdata;           
                 end
                 else begin
-                    l_tempdata<=tempdata;           //tempdata<target     =>tempdata<target<h_tempdata
+                    l_tempdata<=tempdata;           //tempdata<target     =>    tempdata<target<h_tempdata
                 end
                 tempdata<=(h_tempdata+l_tempdata)/2; //二分，取l_tempdata和h_tempdata中点
             end
