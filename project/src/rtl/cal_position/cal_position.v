@@ -22,7 +22,7 @@ assign dist14=vel*delay14;
 
 always@(posedge ena) begin
     if(!cal_end)begin
-        R<=(dist13*dist13-dist12*dist12-dist14*dist14)/(2*(dist12+dist14-dist13));   //R=(d13^2-d12^-d14^2)/2(d12+d14-d13)
+        R<=(dist13*dist13-dist12*dist12-dist14*dist14)/(2*(dist12+dist14-dist13));   //R=(d13^2-d12^2-d14^2)/2(d12+d14-d13)
         x_position<=(2*R*dist12+dist12*dist12)/(2*L);                                //x=(2*R*d12+d12^2)/2L
         y_position<=(2*R*dist14+dist14*dist14)/(2*L);                                //y=(2*R*d14+d14^2)/2L
     end
