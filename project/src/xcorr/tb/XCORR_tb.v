@@ -2,7 +2,7 @@
 `timescale 1ns/1ps
 module tb () ;
     parameter W = 16 ; 
-    parameter N = 512 ; 
+    parameter N = 1024 ; 
     parameter lag = 10 ; 
     function integer clogb2( 
         input integer N )  ; 
