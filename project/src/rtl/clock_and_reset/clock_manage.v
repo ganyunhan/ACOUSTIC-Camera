@@ -12,48 +12,38 @@
 module clock_manage(
      input                  ext_clk
     ,input                  rst_n
-    ,output                 clk_50MHz
-    ,output                 clk_1P28MHz
-    ,output                 clk_20KHz       
+    ,output                 clk_60MHz
+    ,output                 clk_2MHz    
     ,output                 clk_WS
     ,output                 rst_mic_n
 );
 
-assign rst_mic_n = rst_mic_lock ? rst_n : 1'b0;
+wire    clk_2MHz;
+wire    rst_mic_lock;
 
-rpll_cpu U_PLL_27_50(
-    .reset          (!rst_n         ), //i
-    .clkout         (clk_50MHz      ), //o
-    .clkin          (ext_clk        )  //i
-);
-
-wire rst_mic_lock;
-wire clk_172P8MHz;
-rpll_mic U_PLL_27_135(
-    .clkout         (clk_172P8MHz   ), //o
+rpll_mic U_PLL_27_60(
+    .clkout         (clk_60MHz      ), //o
     .lock           (rst_mic_lock   ), //o
     .reset          (!rst_n         ), //i
     .clkin          (ext_clk        )  //i
 );
+assign rst_mic_n = rst_mic_lock ? rst_n : 1'b0;
 
 clk_div #(
-    .SCALER         (135            )
+    .SCALER         (30             )
 )
-U_CLK_DIV_675
+U_CLK_DIV_30
 (
-     .clk_in        (clk_172P8MHz   ) //i
+     .clk_in        (clk_60MHz      ) //i
     ,.rst_n         (rst_n          ) //i
-    ,.clk_out       (clk_1P28MHz    ) //o
+    ,.clk_out       (clk_2MHz       ) //o
 );
 
-clk_div #(
-    .SCALER         (64             )
-)
-U_CLK_DIV_675
+clk_div_64 U_CLK_DIV_64
 (
-     .clk_in        (clk_1P28MHz    ) //i
+     .clk_in        (clk_2MHz       ) //i
     ,.rst_n         (rst_n          ) //i
-    ,.clk_out       (clk_20KHz      ) //o
+    ,.clk_out       (clk_WS         ) //o
 );
 
 endmodule

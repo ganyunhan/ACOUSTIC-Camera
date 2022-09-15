@@ -54,7 +54,7 @@ music_delay = delayseq(music_src,delay,Fs);
 % plot(lag,real(R(:,1)));
 
 %cc算法
-[rcc,lag]=xcorr(music_delay,music_src,16);
+[rcc,lag]=xcorr(music_delay,music_src,10);
 figure(1);
 plot(lag/Fs,rcc);
 [~,I] = max(abs(rcc));

@@ -1,0 +1,15 @@
+[General]
+ipc_version=4
+file=xcorr
+module=XCORR_Top
+target_device=gw2a18-002
+type=xcorr
+version=1.0
+
+[Config]
+DATA_DELAY=10
+DISABLE_IO_INSERTION=false
+INPUT_DATA_WIDTH=16
+LANG=0
+SEQUENCE_LENGTH=512
+Synthesis_tool=GowinSynthesis

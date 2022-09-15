@@ -5,15 +5,18 @@
     <Version>5</Version>
     <Device name="GW2A-18" pn="GW2A-LV18PG256C8/I7">gw2a18-002</Device>
     <FileList>
-        <File path="src/gowin_ip/gowin_rpll/rpll_cpu.v" type="file.verilog" enable="1"/>
-        <File path="src/gowin_ip/gowin_sdpb/mem_x.v" type="file.verilog" enable="1"/>
-        <File path="src/gowin_ip/gowin_sdpb/mem_y.v" type="file.verilog" enable="1"/>
+        <File path="src/fifo_hs/fifo_hs.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_rpll/rpll_mic.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/audio_process/abs.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/i2s_decoder.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/mic_subsys.v" type="file.verilog" enable="1"/>
-        <File path="src/rtl/audio_process/myxcorr.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/clock_and_reset/clk_div.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/clock_and_reset/clk_div_64.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/clock_and_reset/clock_manage.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/top.v" type="file.verilog" enable="1"/>
+        <File path="src/xcorr/xcorr.v" type="file.verilog" enable="1"/>
+        <File path="src/ACOUSTIC-Camera.cst" type="file.cst" enable="1"/>
+        <File path="src/ACOUSTIC-Camera.sdc" type="file.sdc" enable="1"/>
+        <File path="src/ACOUSTIC-Camera.rao" type="file.gao" enable="1"/>
     </FileList>
 </Project>
