@@ -9,8 +9,8 @@ Fs = 31250;
 %采样周期
 dt=1/Fs;
 %music_src为声源
-music_src=y;       
-
+music_src=single(y*100000);
+music_src = double(music_src(1:1024));
 %设置两个麦克风坐标
 mic_d=0.06;
 mic_x=[-mic_d mic_d];
@@ -37,7 +37,15 @@ c=340;
 delay=abs((dis_s1-dis_s2)./c);
 fprintf('delay = %f\r\n',delay);
 %设置延时
-music_delay = delayseq(music_src,delay,Fs);
+music_delay = int16(floor(delayseq(music_src,delay,Fs)));
+music_src = int16(floor(music_src));
+
+tb_x = dec2bin(music_delay);
+tb_y = dec2bin(music_src);
+
+music_delay_b2d = B2QW(bin2dec(tb_x),16);
+music_src_b2d = B2QW(bin2dec(tb_y),16);
+
 % figure(2);
 % subplot(211);
 % plot(music_src);
@@ -53,6 +61,12 @@ music_delay = delayseq(music_src,delay,Fs);
 % t=1:length(tau);
 % plot(lag,real(R(:,1)));
 
+% music_delay = bin2dec(tb_x);
+% music_src = bin2dec(tb_y);
+
+% 
+% data_delay_diff = music_delay_b2d - music_delay;
+% data_src_diff = music_src_b2d - music_src;
 %cc算法
 [rcc,lag]=xcorr(music_delay,music_src,10);
 figure(1);
@@ -61,6 +75,7 @@ plot(lag/Fs,rcc);
 lagDiff = lag(I);
 timeDiff = lagDiff/Fs;
 fprintf('timeDiff_cc = %f\r\n',timeDiff);
+
 %自拟cc
 % music_delay = music_delay';
 % music_src = music_src';
