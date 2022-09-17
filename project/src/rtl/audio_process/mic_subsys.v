@@ -30,20 +30,22 @@ wire signed [16- 1: 0]          mic0_data;
 wire signed [16- 1: 0]          mic1_data;
 wire signed [16- 1: 0]          mic0_fifo_data;
 wire signed [16- 1: 0]          mic1_fifo_data;
-wire signed [32- 1: 0]          abs_xcorr_data;
-wire signed [32 -1: 0]          xcorr_data;
+wire signed [33- 1: 0]          abs_xcorr_data;
+wire signed [33- 1: 0]          xcorr_data;
 wire                            xcorr_done;
+wire signed [17- 1: 0]          series_x;
+wire signed [17- 1: 0]          series_y;
 
 //Measuring the number of the biggest xcorr_data
 reg signed [6 - 1: 0]   lag;
-reg signed [32- 1: 0]   max_xcorr_data;
+reg signed [33- 1: 0]   max_xcorr_data;
 
 assign cr_xcorr_bigger = (abs_xcorr_data >= max_xcorr_data) ? 1'b1 : 1'b0;
 
 always @(posedge clk_60MHz or negedge rst_n) begin
     if (!rst_n) begin
         lag <= -LAGNUM;
-        max_xcorr_data <= 32'b0;
+        max_xcorr_data <= 33'b0;
     end else if (xcorr_done) begin
         lag <= lag + 1'b1;
         lag_diff <= (cr_xcorr_bigger ? lag : lag_diff);
@@ -116,11 +118,29 @@ fifo_mic U_FIFO_MIC1(
     .Full               () //output Full
 );
 
+signExtension#(
+   .INPUT_WIDTH         (16)
+  ,.OUTPUT_WIDTH        (17)
+)
+U_SIGN_EXTENSION_X(
+  .input_number         (mic0_fifo_data), //input  wire signed [INPUT_WIDTH-1  : 0] 
+  .output_number        (series_x)  //output wire signed [OUTPUT_WIDTH-1 : 0] 
+);
+
+signExtension#(
+   .INPUT_WIDTH         (16)
+  ,.OUTPUT_WIDTH        (17)
+)
+U_SIGN_EXTENSION_Y(
+  .input_number         (mic1_fifo_data), //input  wire signed [INPUT_WIDTH-1  : 0] 
+  .output_number        (series_y)  //output wire signed [OUTPUT_WIDTH-1 : 0] 
+);
+
 XCORR_Top U_XCORR_Top(
     .clk                (clk_60MHz          ), //input clk
     .rst                (rst_n              ), //input rst
-    .series_x           (mic0_fifo_data     ), //input [15:0] series_x
-    .series_y           (mic1_fifo_data     ), //input [15:0] series_y
+    .series_x           (series_x           ), //input [15:0] series_x
+    .series_y           (series_y           ), //input [15:0] series_y
     .start              (xcorr_start        ), //input start
     .result             (xcorr_data         ), //output [31:0] result
     .complete           (xcorr_done         ), //output complete
