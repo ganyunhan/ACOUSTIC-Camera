@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Module name="XCORR_Top" Register="167" Alu="91" Lut="368" Dsp="1" Bsram="6"/>
+<Module name="XCORR_Top" Register="157" Alu="83" Lut="343" Dsp="1" Bsram="5"/>

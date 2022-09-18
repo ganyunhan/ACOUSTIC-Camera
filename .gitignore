@@ -1,5 +1,8 @@
-*impl/
+*/impl
 *.user
-*I2S_Capture/impl
+*/I2S_Capture/impl
 *.asv
-*Module_test/XCORR/work
+*/XCORR/work
+*transcript
+*.wlf
+wlf*
