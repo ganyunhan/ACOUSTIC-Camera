@@ -1,0 +1,1 @@
+modelsim -do cmd.do
