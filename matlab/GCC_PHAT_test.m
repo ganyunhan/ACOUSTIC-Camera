@@ -2,6 +2,10 @@ clc
 clear 
 close all
 
+%加载仿真输出进行对比
+golden_result_f = '..\Module_test\XCORR\data\golden_result.dat';
+golden_result = dlmread(golden_result_f);
+
 %加载一段声音（matlab自带敲锣声）
 load gong;
 %采样频率 越高越精准
@@ -9,8 +13,8 @@ Fs = 31250;
 %采样周期
 dt=1/Fs;
 %music_src为声源
-music_src=single(y*100000);
-music_src = double(music_src(1:1024));
+music_src=single(y*10000);
+music_src = double(music_src(1:512));
 %设置两个麦克风坐标
 mic_d=0.06;
 mic_x=[-mic_d mic_d];
@@ -40,11 +44,9 @@ fprintf('delay = %f\r\n',delay);
 music_delay = int16(floor(delayseq(music_src,delay,Fs)));
 music_src = int16(floor(music_src));
 
-tb_x = dec2bin(music_delay);
-tb_y = dec2bin(music_src);
-
-music_delay_b2d = B2QW(bin2dec(tb_x),16);
-music_src_b2d = B2QW(bin2dec(tb_y),16);
+%生成test数据
+tb_x = dec2bin(music_delay,16);
+tb_y = dec2bin(music_src,16);
 
 % figure(2);
 % subplot(211);
@@ -71,11 +73,15 @@ music_src_b2d = B2QW(bin2dec(tb_y),16);
 [rcc,lag]=xcorr(music_delay,music_src,10);
 figure(1);
 plot(lag/Fs,rcc);
+title('Matlab calculate');
 [~,I] = max(abs(rcc));
 lagDiff = lag(I);
 timeDiff = lagDiff/Fs;
 fprintf('timeDiff_cc = %f\r\n',timeDiff);
 
+figure(2);
+plot(golden_result);
+title('Golden result');
 %自拟cc
 % music_delay = music_delay';
 % music_src = music_src';
