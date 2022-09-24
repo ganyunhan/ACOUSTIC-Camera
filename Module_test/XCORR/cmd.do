@@ -11,7 +11,6 @@ vlog -sv -novopt +incdir+../tb -work work "../../project/src/gowin_rpll/rpll_mic
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/audio_process/abs.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/audio_process/i2s_decoder.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/audio_process/mic_subsys.v"
-vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/audio_process/sign_extension.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/clock_and_reset/clk_div.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/clock_and_reset/clk_div_64.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/clock_and_reset/clock_manage.v"
