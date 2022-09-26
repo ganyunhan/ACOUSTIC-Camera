@@ -62,7 +62,7 @@ always @(*) begin
 			end
 		GET_RIGHT:
 			begin
-				if(cnt == 'd32) begin
+				if(cnt == 'd31) begin
 					next_state = GET_LEFT;
 				end
 				else begin
@@ -71,7 +71,7 @@ always @(*) begin
 			end
 		GET_LEFT:
 			begin
-				if(cnt == 'd32) begin
+				if(cnt == 'd31) begin
 					next_state = IDLE;
 				end
 				else begin
