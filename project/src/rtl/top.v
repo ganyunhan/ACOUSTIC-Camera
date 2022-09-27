@@ -49,7 +49,8 @@ U_MIC_SUBSYS
     ,.rst_mic_n         (rst_mic_n          ) //i
     ,.mic0_data_in      (mic0_data_in       ) //i
     ,.mic1_data_in      (mic1_data_in       ) //i
-    ,.xcorr_start       (xcorr_start        ) //i
+    ,.subsys_start      (subsys_start       ) //i
+    ,.subsys_done       (subsys_done        ) //o
     ,.lag_diff          (lag_diff           ) //o[6 - 1: 0]
 );
 
@@ -57,7 +58,7 @@ assign ext_clk      = PAD_CLK;
 assign rst_n        = PAD_RST_N;
 assign mic0_data_in = PAD_MIC0_DA;
 assign mic1_data_in = PAD_MIC1_DA;
-assign xcorr_start  = PAD_XC_EN;
+assign subsys_start = PAD_XC_EN;
 assign PAD_WS0      = clk_WS;
 assign PAD_WS1      = clk_WS;
 assign PAD_CLK_MIC0 = clk_2MHz;

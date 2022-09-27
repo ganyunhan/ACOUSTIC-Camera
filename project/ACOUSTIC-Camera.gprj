@@ -7,6 +7,9 @@
     <FileList>
         <File path="src/fifo_hs/fifo_hs.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_rpll/rpll_mic.v" type="file.verilog" enable="1"/>
+        <File path="src/ram_512/ram0_512.v" type="file.verilog" enable="1"/>
+        <File path="src/ram_512/ram1_512.v" type="file.verilog" enable="1"/>
+        <File path="src/ram_512/ram_512.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/abs.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/i2s_decoder.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/mic_subsys.v" type="file.verilog" enable="1"/>
