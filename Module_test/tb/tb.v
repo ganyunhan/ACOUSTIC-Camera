@@ -7,7 +7,7 @@ reg clk;
 reg rst_n;
 integer fid_wr;
 reg xcorr_start = 1'b1;
-wire start;
+reg start = 1'b1;
 reg [9 - 1: 0] ad=0;
 
 wire signed [6 - 1: 0]  lag_diff;
@@ -25,6 +25,7 @@ initial begin
     // force U_TOP.U_MIC_SUBSYS.U_SIGN_EXTENSION_Y.input_number = series_y;
     force U_TOP.U_MIC_SUBSYS.U_XCORR_Top.series_x = series_x;
     force U_TOP.U_MIC_SUBSYS.U_XCORR_Top.series_y = series_y;
+    force U_TOP.U_MIC_SUBSYS.U_XCORR_Top.start = start;
 end
 
 initial begin
@@ -47,8 +48,9 @@ end
 always @(posedge U_TOP.U_CLOCK_MANAGE.clk_60MHz) begin
     if (start) begin
         ad <= 0;
-    end
-    else begin
+    // end else if(ad >= 511) begin
+    //     ad <= 511;
+    end else begin
         ad <= ad + 1;
     end
 end
@@ -58,9 +60,12 @@ always @(posedge U_TOP.U_CLOCK_MANAGE.clk_60MHz) begin
         series_x <= 0;
         series_y <= 0;
     end
-    else begin
+    else if(ad <= 511) begin
         series_x <= memx[ad];
         series_y <= memy[ad];
+    end else begin
+        series_x <= 0;
+        series_y <= 0;
     end
 end
 
@@ -75,13 +80,12 @@ always @(posedge U_TOP.U_CLOCK_MANAGE.clk_60MHz) begin
 	end
 end
 
-
 always #10 clk = ~clk;
 
 top U_TOP(
      .PAD_CLK           (clk) //input              
     ,.PAD_RST_N         (rst_n) //input              
-    ,.PAD_XC_EN         (start) //input              
+    // ,.PAD_XC_EN         (start) //input              
     ,.PAD_MIC0_DA       () //input              
     ,.PAD_MIC1_DA       () //input              
     ,.PAD_LR0           () //output             
