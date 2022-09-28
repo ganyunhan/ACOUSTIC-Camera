@@ -22,7 +22,7 @@ module mic_subsys#(
     ,input                      mic1_data_in
     ,input                      subsys_start
     ,output reg                 subsys_done
-    ,output reg     [6 - 1: 0]  lag_diff
+    ,output reg signed [6 - 1: 0]  lag_diff
 );
 
 wire                            mic0_data_en;
@@ -51,7 +51,7 @@ localparam      FIFO_IN      = 3'b001;
 localparam      CALC_EN      = 3'b010;
 localparam      OUTPUT       = 3'b011;
 
-localparam      LAG_NUM     = LAGNUM * 2 - 1;
+localparam      LAG_NUM     = LAGNUM * 2;
 
 always @(posedge clk_60MHz or negedge rst_n) begin
     if (!rst_n) begin
@@ -188,8 +188,10 @@ always @(posedge clk_60MHz or negedge rst_n) begin
         complete_cnt <= 9'b0;
     end else if (cr_calc_en & xcorr_done) begin
         complete_cnt <= complete_cnt + 1'b1;
-    end else begin
+    end else if(cr_fifo_in) begin
         complete_cnt <= 9'b0;
+    end else begin
+        complete_cnt <= complete_cnt;
     end
 end
 
@@ -217,10 +219,14 @@ always @(posedge clk_60MHz or negedge rst_n) begin
         lag <= -LAGNUM;
         lag_diff <= 6'b0;
         max_xcorr_data <= 31'b0;
-    end else if (cr_calc_en) begin
+    end else if (xcorr_done) begin
         lag <= lag + 1'b1;
         lag_diff <= (cr_xcorr_bigger ? lag : lag_diff);
         max_xcorr_data <= (cr_xcorr_bigger ? abs_xcorr_data : max_xcorr_data);
+    end else if(cr_fifo_in) begin
+        lag <= -LAGNUM;
+        lag_diff <= 6'b0;
+        max_xcorr_data <= 31'b0;
     end else begin
         lag <= lag;
         lag_diff <= lag_diff;
@@ -266,7 +272,7 @@ U_I2S_DECODER_1(
 	,.recv_over         (mic1_data_en       ) //o
 );
 
-ram_512 U_RAM0_512(
+ram0_512 U_RAM0_512(
     .clka               (clk_WS             ), //input clka
     .reseta             (!rst_mic_n         ), //input reseta
     .cea                (fifo_mic0_wr_en    ), //input cea
@@ -283,7 +289,7 @@ ram_512 U_RAM0_512(
     .oce                (1'b1               )  //input oce
 );
 
-ram_512 U_RAM1_512(
+ram1_512 U_RAM1_512(
     .clka               (clk_WS             ), //input clka
     .reseta             (!rst_mic_n         ), //input reseta
     .cea                (fifo_mic1_wr_en    ), //input cea
