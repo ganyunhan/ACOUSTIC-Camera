@@ -16,8 +16,6 @@ wire mic1_clk;
 reg  mic0_data = 0;
 reg  mic1_data = 0;
 
-wire signed [6 - 1: 0]  lag_diff;
-
 initial begin
         clk = 0;
 end
@@ -30,21 +28,21 @@ initial begin
         // force U_TOP.U_MIC_SUBSYS.nx_state = 3'b010;
 end
 
-always @(posedge mic0_clk or negedge mic0_ws) begin
-        if(!mic0_ws & xcorr_start) begin
-                mic0_data <= {$random}%2;
-        end else begin
-                mic0_data <= 0;
-        end
-end
+// always @(posedge mic0_clk or negedge mic0_ws) begin
+//         if(!mic0_ws & xcorr_start) begin
+//                 mic0_data <= {$random}%2;
+//         end else begin
+//                 mic0_data <= 0;
+//         end
+// end
 
-always @(posedge mic1_clk or negedge mic1_ws) begin
-        if(!mic1_ws & xcorr_start) begin
-                mic1_data <= mic0_data;
-        end else begin
-                mic1_data <= 0;
-        end
-end
+// always @(posedge mic1_clk or negedge mic1_ws) begin
+//         if(!mic1_ws & xcorr_start) begin
+//                 mic1_data <= mic0_data;
+//         end else begin
+//                 mic1_data <= 0;
+//         end
+// end
 
 //Read x data from fifo
 initial begin
@@ -94,7 +92,6 @@ top U_TOP(
     ,.PAD_WS1           (mic1_ws) //output             
     ,.PAD_CLK_MIC0      (mic0_clk) //output             
     ,.PAD_CLK_MIC1      (mic1_clk) //output             
-    ,.lag_diff          (lag_diff) //output [6 - 1: 0]  
 );
 
 deUstb ut

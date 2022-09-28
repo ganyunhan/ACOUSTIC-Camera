@@ -20,13 +20,14 @@ module top (
     ,output             PAD_WS1
     ,output             PAD_CLK_MIC0
     ,output             PAD_CLK_MIC1
-    ,output [6 - 1: 0]  lag_diff
+    ,output             PAD_UART_TX
 );
 
 wire                    clk_60MHz;
 wire                    clk_2MHz;
 wire                    rst_mic_n;
-// wire [6 - 1: 0]         lag_diff;
+wire signed [16- 1: 0]  angel;
+wire [6 - 1: 0]         lag_diff;
 
 clock_manage U_CLOCK_MANAGE(
      .ext_clk           (ext_clk            ) //i
@@ -54,6 +55,24 @@ U_MIC_SUBSYS
     ,.lag_diff          (lag_diff           ) //o[6 - 1: 0]
 );
 
+bi_microphone U_BI_MIC(
+     .clk_60MHz         (clk_60MHz          ) //i                             
+    ,.rst_n             (rst_n              ) //i     
+    ,.ena               (subsys_done        ) //i            
+    ,.lag_diff          (lag_diff           ) //i[6 - 1: 0]                     
+    ,.angel             (angel              ) //o[16 - 1: 0]         
+);
+
+uart_top U_UART_TOP
+(
+	 .sys_clk		    (clk_60MHz          )//i
+	,.sys_rst_n		    (rst_n              )//i
+	,.data	            (angel              )//i[16- 1: 0]
+    ,.uart_ena          (subsys_done        )//i
+	,.uart_ready	    ()//o
+	,.uart_txd		    (uart_txd           )//o	
+);
+
 assign ext_clk      = PAD_CLK;
 assign rst_n        = PAD_RST_N;
 assign mic0_data_in = PAD_MIC0_DA;
@@ -65,5 +84,6 @@ assign PAD_CLK_MIC0 = clk_2MHz;
 assign PAD_CLK_MIC1 = clk_2MHz;
 assign PAD_LR0      = 1'b0;
 assign PAD_LR1      = 1'b0;
+assign PAD_UART_TX  = uart_txd;
 
 endmodule

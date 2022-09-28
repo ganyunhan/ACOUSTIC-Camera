@@ -1,13 +1,15 @@
-clc
-clear 
-close all
+% clc
+% clear 
+% close all
 
 %加载仿真输出进行对比
 golden_result_f = '..\Module_test\XCORR\data\golden_result.dat';
 golden_result = dlmread(golden_result_f);
 
+mic_data = load('data.txt');
 %加载一段声音（matlab自带敲锣声）
 load gong;
+
 %采样频率 越高越精准
 Fs = 31250;  
 %采样周期
@@ -15,6 +17,8 @@ dt=1/Fs;
 %music_src为声源
 music_src=single(y*10000);
 music_src = double(music_src(1:512));
+
+% music_src = B2QW(mic_data,16);
 %设置两个麦克风坐标
 mic_d=0.06;
 mic_x=[-mic_d mic_d];
@@ -26,13 +30,13 @@ mic_y=[0 0];
 % quiver(0,-5,0,10,1,'color','black');
 
 %声源位置
-s_x=10;
+s_x=-10;
 s_y=10;
 true_degree = rad2deg(atan(s_y/s_x));
 fprintf('true_degree = %f\r\n',true_degree);
 plot(s_x,s_y,'o');
-quiver(s_x,s_y,-s_x-mic_d,-s_y,1);
-quiver(s_x,s_y,-s_x+mic_d,-s_y,1);
+% quiver(s_x,s_y,-s_x-mic_d,-s_y,1);
+% quiver(s_x,s_y,-s_x+mic_d,-s_y,1);
 
 %求出距离
 dis_s1=sqrt((mic_x(1)-s_x).^2+(mic_y(1)-s_y).^2);
@@ -41,8 +45,8 @@ c=340;
 delay=abs((dis_s1-dis_s2)./c);
 fprintf('delay = %f\r\n',delay);
 %设置延时
-music_delay = int16(floor(delayseq(music_src,delay,Fs)));
-music_src = int16(floor(music_src));
+music_delay = int16((delayseq(music_src,delay,Fs)));
+music_src = int16((music_src));
 
 %生成test数据
 tb_x = dec2bin(music_delay,16);
@@ -56,16 +60,6 @@ tb_y = dec2bin(music_src,16);
 % plot(music_delay);
 % axis([0 length(music_delay) -2 2]);
 
-%gccphat算法,matlab自带
-% [tau,R,lag] = gccphat(music_delay,music_src,Fs);
-% disp(tau);
-% figure(3);
-% t=1:length(tau);
-% plot(lag,real(R(:,1)));
-
-% music_delay = bin2dec(tb_x);
-% music_src = bin2dec(tb_y);
-
 % 
 % data_delay_diff = music_delay_b2d - music_delay;
 % data_src_diff = music_src_b2d - music_src;
@@ -75,23 +69,14 @@ figure(1);
 plot(lag/Fs,rcc);
 title('Matlab calculate');
 [~,I] = max(abs(rcc));
+% lagDiff = lag(I);
 lagDiff = lag(I);
-timeDiff = lagDiff/Fs;
+timeDiff = lagDiff/Fs*10000;
 fprintf('timeDiff_cc = %f\r\n',timeDiff);
 
-figure(2);
-plot(golden_result);
-title('Golden result');
-%自拟cc
-% music_delay = music_delay';
-% music_src = music_src';
-% [rcc1,lag1]=myxcorr(music_delay,music_src,length(music_src));
 % figure(2);
-% plot(lag1/Fs,rcc1);
-% [M1,I1] = max(abs(rcc1));
-% lagDiff = lag1(I1);
-% timeDiff = lagDiff/Fs;
-% disp(timeDiff);
+% plot(golden_result);
+% title('Golden result');
 
 %gcc+phat算法，根据公式写
 % RGCC=fft(rcc);
@@ -105,8 +90,10 @@ title('Golden result');
 
 %计算角度,这里假设为平面波
 dis_r=timeDiff*c;
-angel = dis_r./(mic_d*2);
-angel=acos(angel)*180/pi;
+angel = dis_r./(mic_d*2*100);
+angel = floor(10*angel+1000);
+% angel=acos(angel)*180/pi;
+angel=data(angel);
 if dis_s1<dis_s2
     angel=180-angel;
 end
