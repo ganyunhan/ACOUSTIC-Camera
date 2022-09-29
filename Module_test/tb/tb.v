@@ -10,7 +10,6 @@ reg xcorr_start = 1'b1;
 reg start = 1'b1;
 reg [9 - 1: 0] ad=0;
 
-wire signed [6 - 1: 0]  lag_diff;
 
 reg signed [W- 1: 0] memx [ 0:512- 1];
 reg signed [W- 1: 0] memy [ 0:512- 1];
@@ -94,7 +93,6 @@ top U_TOP(
     ,.PAD_WS1           () //output             
     ,.PAD_CLK_MIC0      () //output             
     ,.PAD_CLK_MIC1      () //output             
-    ,.lag_diff          (lag_diff) //output [6 - 1: 0]  
 );
 
 deUstb ut
