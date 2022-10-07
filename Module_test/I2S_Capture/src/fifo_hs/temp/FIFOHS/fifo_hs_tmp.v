@@ -4,7 +4,7 @@
 //GOWIN Version: GowinSynthesis V1.9.8.07
 //Part Number: GW2A-LV18PG256C8/I7
 //Device: GW2A-18
-//Created Time: Tue Sep 13 21:49:08 2022
+//Created Time: Thu Oct 06 19:00:44 2022
 
 //Change the instance name and port connections to the signal names
 //--------Copy here to design--------
@@ -15,8 +15,8 @@
 		.RdClk(RdClk_i), //input RdClk
 		.WrEn(WrEn_i), //input WrEn
 		.RdEn(RdEn_i), //input RdEn
-		.Wnum(Wnum_o), //output [14:0] Wnum
-		.Rnum(Rnum_o), //output [14:0] Rnum
+		.Wnum(Wnum_o), //output [9:0] Wnum
+		.Rnum(Rnum_o), //output [9:0] Rnum
 		.Almost_Empty(Almost_Empty_o), //output Almost_Empty
 		.Almost_Full(Almost_Full_o), //output Almost_Full
 		.Q(Q_o), //output [15:0] Q

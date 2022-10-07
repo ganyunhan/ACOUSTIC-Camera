@@ -2,57 +2,67 @@
 <GAO_CONFIG>
     <Version>3.0</Version>
     <Mode>Lite</Mode>
-    <AoCore_Lite index="0" sample_clock="clk_ref" trig_type="0" capture_amount="8192" implemention="0" input_register_enabled="0" capture_init_data_enabled="0" module_name="mic_subsys">
+    <AoCore_Lite index="0" sample_clock="clk_60MHz" trig_type="0" capture_amount="8192" implemention="0" input_register_enabled="0" capture_init_data_enabled="0" module_name="mic_subsys">
         <SignalList>
-            <Bus name="u_FIFO_HS_Top/Rnum[13:0]">
-                <Signal>u_FIFO_HS_Top/Rnum[13]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[12]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[11]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[10]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[9]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[8]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[7]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[6]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[5]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[4]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[3]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[2]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[1]</Signal>
-                <Signal>u_FIFO_HS_Top/Rnum[0]</Signal>
+            <Signal>u_i2s_decoder0/clk_mic</Signal>
+            <Signal>u_i2s_decoder0/WS</Signal>
+            <Signal>u_i2s_decoder0/DATA</Signal>
+            <Bus name="u_i2s_decoder0/L_DATA[23:0]">
+                <Signal>u_i2s_decoder0/L_DATA[23]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[22]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[21]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[20]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[19]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[18]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[17]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[16]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[15]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[14]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[13]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[12]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[11]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[10]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[9]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[8]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[7]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[6]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[5]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[4]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[3]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[2]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[1]</Signal>
+                <Signal>u_i2s_decoder0/L_DATA[0]</Signal>
             </Bus>
-            <Bus name="u_FIFO_HS_Top/Q[15:0]">
-                <Signal>u_FIFO_HS_Top/Q[15]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[14]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[13]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[12]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[11]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[10]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[9]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[8]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[7]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[6]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[5]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[4]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[3]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[2]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[1]</Signal>
-                <Signal>u_FIFO_HS_Top/Q[0]</Signal>
+            <Bus name="u_i2s_decoder1/L_DATA[23:0]">
+                <Signal>u_i2s_decoder1/L_DATA[23]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[22]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[21]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[20]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[19]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[18]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[17]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[16]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[15]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[14]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[13]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[12]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[11]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[10]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[9]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[8]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[7]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[6]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[5]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[4]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[3]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[2]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[1]</Signal>
+                <Signal>u_i2s_decoder1/L_DATA[0]</Signal>
             </Bus>
-            <Signal>u_FIFO_HS_Top/RdClk</Signal>
-            <Signal>u_FIFO_HS_Top/RdEn</Signal>
-            <Bus name="u_uart_top/cr_state[2:0]">
-                <Signal>u_uart_top/cr_state[2]</Signal>
-                <Signal>u_uart_top/cr_state[1]</Signal>
-                <Signal>u_uart_top/cr_state[0]</Signal>
-            </Bus>
-            <Bus name="u_uart_top/send_num[2:0]">
-                <Signal>u_uart_top/send_num[2]</Signal>
-                <Signal>u_uart_top/send_num[1]</Signal>
-                <Signal>u_uart_top/send_num[0]</Signal>
-            </Bus>
-            <Signal>u_uart_top/uart_ready</Signal>
-            <Signal>u_uart_top/cr_get_byte</Signal>
+            <Signal>u_i2s_decoder1/clk_mic</Signal>
+            <Signal>u_i2s_decoder1/WS</Signal>
+            <Signal>u_i2s_decoder1/DATA</Signal>
         </SignalList>
     </AoCore_Lite>
-    <GAO_ID>0001001000001001</GAO_ID>
+    <GAO_ID>0101110111000111</GAO_ID>
 </GAO_CONFIG>

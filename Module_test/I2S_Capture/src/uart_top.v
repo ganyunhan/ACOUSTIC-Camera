@@ -10,7 +10,7 @@
 module uart_top(
      input              sys_clk
     ,input              sys_rst_n
-    ,input [16 - 1: 0]  data
+    ,input [32 - 1: 0]  data
     ,input              uart_ena
     ,output  reg        uart_ready
     ,output             uart_txd
@@ -20,12 +20,12 @@ reg [3 - 1: 0]  cr_state;
 reg [3 - 1: 0]  nx_state;
 reg [8 - 1: 0]  uart_tx_data;
 reg             uart_tx_en;
-reg [8 - 1: 0]  ascii_out [5 - 1: 0];
+reg [8 - 1: 0]  ascii_out [11 - 1: 0];
 wire            uart_tx_done;
 wire            all_send_done;
 
 reg [8 - 1: 0]  hex_table [10- 1: 0];
-reg [3 - 1: 0]  send_num;
+reg [4 - 1: 0]  send_num;
 
 localparam      NEW_LINE     = 8'h0D;
 
@@ -37,7 +37,7 @@ localparam      SEND_DONE    = 3'b011;
 localparam      NL_BYTE      = 3'b100;
 localparam      NL_DONE      = 3'b101;
 
-localparam      BYTE_NUM     = 5;
+localparam      BYTE_NUM     = 11;
 
 always @(posedge sys_clk or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
@@ -93,6 +93,8 @@ assign  cr_nl_byte      = (cr_state == NL_BYTE) ? 1'b1 : 1'b0;
 assign  cr_nl_done      = (cr_state == NL_DONE) ? 1'b1 : 1'b0;
 assign  cr_idle         = (cr_state == IDLE) ? 1'b1 : 1'b0;
 
+assign  nx_nl_byte      = (nx_state == NL_BYTE) ? 1'b1 : 1'b0;
+
 assign  cr_get_byte     = (cr_state == GET_BYTE) ? 1'b1 : 1'b0;
 
 //processing data reg
@@ -100,7 +102,7 @@ always @(posedge sys_clk or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
         uart_tx_data <= 8'b0;
     end else if (cr_send_byte) begin
-        uart_tx_data <= ascii_out[4 - send_num]; //MSB_first
+        uart_tx_data <= ascii_out[10 - send_num]; //MSB_first
     end else if (cr_nl_byte) begin
         uart_tx_data <= NEW_LINE;       //send new line
     end else begin
@@ -135,17 +137,17 @@ end
 //processing send_num
 always @(posedge sys_clk or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
-        send_num <= 3'b0;
+        send_num <= 4'b0;
     end else if (cr_send_done) begin
         send_num <= send_num + 1'b1;
-    end else if (cr_nl_byte) begin
+    end else if (nx_nl_byte) begin
         send_num <= 1'b0;
     end else begin
         send_num <= send_num;
     end
 end
 
-assign all_send_done = (send_num > BYTE_NUM)? 1'b1 : 1'b0;
+assign all_send_done = (send_num >= BYTE_NUM)? 1'b1 : 1'b0;
 
 always @(posedge sys_clk) begin
     hex_table[0] <= 8'h30;
@@ -161,11 +163,17 @@ always @(posedge sys_clk) begin
 end
 
 always @(*) begin
-    ascii_out[4] = hex_table[data / 'd10000];
-    ascii_out[3] = hex_table[(data / 'd1000)%'d10];
-    ascii_out[2] = hex_table[(data / 'd100)%'d10];
-    ascii_out[1] = hex_table[(data / 'd10)%'d10];
-    ascii_out[0] = hex_table[data % 'd10];
+    ascii_out[10] = hex_table[data[32- 1:16] / 'd10000];
+    ascii_out[9] = hex_table[(data[32- 1:16] / 'd1000)%'d10];
+    ascii_out[8] = hex_table[(data[32- 1:16] / 'd100)%'d10];
+    ascii_out[7] = hex_table[(data[32- 1:16] / 'd10)%'d10];
+    ascii_out[6] = hex_table[data[32- 1:16] % 'd10];
+    ascii_out[5] = 8'h0D;
+    ascii_out[4] = hex_table[data[16- 1: 0] / 'd10000];
+    ascii_out[3] = hex_table[(data[16- 1: 0] / 'd1000)%'d10];
+    ascii_out[2] = hex_table[(data[16- 1: 0] / 'd100)%'d10];
+    ascii_out[1] = hex_table[(data[16- 1: 0] / 'd10)%'d10];
+    ascii_out[0] = hex_table[data[16- 1: 0] % 'd10];
 end
 
 uart_tx u_uart_tx
