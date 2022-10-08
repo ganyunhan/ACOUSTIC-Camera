@@ -1,0 +1,16 @@
+{
+ "Files" : [
+  {
+   "Path" : "C:/Users/hankg/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/Camera/src/video_frame_buffer/video_frame_buffer.v",
+   "Type" : "verilog"
+  }
+ ],
+ "IncludePath" : [
+
+ ],
+ "LoopLimit" : 2000,
+ "ResultFile" : "C:/Users/hankg/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/Camera/impl/temp/rtl_parser.result",
+ "Top" : "",
+ "VerilogStd" : "verilog_2001",
+ "VhdlStd" : "vhdl_93"
+}
