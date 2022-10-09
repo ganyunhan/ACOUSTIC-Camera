@@ -20,14 +20,14 @@ module bi_microphone (
 
 localparam FREQ = 46875; // fs = 46875Hz
 localparam MIC_DIS = 6; // mic_dis = 0.06m
-localparam AVG_NUM = 16;
+localparam AVG_NUM = 8;
 
 reg [32- 1: 0] distance_diff    =   32'b0;
 reg [32- 1: 0] address_latch    =   32'b0;
 reg [16- 1: 0] angel_tab        =   16'b0;
 
 always @(*) begin
-    distance_diff = (lag_diff *10000 * 340) / FREQ;
+    distance_diff = (lag_diff *100000 * 340) / FREQ;
     address_latch = (distance_diff / (MIC_DIS) ) + 999;
 end
 
