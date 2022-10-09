@@ -6,7 +6,7 @@ localparam W = 16;
 reg clk;
 reg rst_n;
 integer fid_result,fid_xdata,fid_ydata;
-reg xcorr_start = 1'b0;
+reg xcorr_start = 1'b1;
 wire start;
 
 wire mic0_ws;
@@ -24,25 +24,30 @@ initial begin
         rst_n = 1;
         #10 rst_n = 0;
         #20 rst_n = 1;
-        #100000 xcorr_start = 1;
+        #100000 xcorr_start = 0;
         // force U_TOP.U_MIC_SUBSYS.nx_state = 3'b010;
 end
 
-// always @(posedge mic0_clk or negedge mic0_ws) begin
-//         if(!mic0_ws & xcorr_start) begin
-//                 mic0_data <= {$random}%2;
-//         end else begin
-//                 mic0_data <= 0;
-//         end
+// always @(U_TOP.U_MIC_SUBSYS.subsys_done) begin
+//         xcorr_start = 0;
+//         #100000 xcorr_start = 1;
 // end
 
-// always @(posedge mic1_clk or negedge mic1_ws) begin
-//         if(!mic1_ws & xcorr_start) begin
-//                 mic1_data <= mic0_data;
-//         end else begin
-//                 mic1_data <= 0;
-//         end
-// end
+always @(posedge mic0_clk or negedge mic0_ws) begin
+        if(!mic0_ws & xcorr_start) begin
+                mic0_data <= {$random}%2;
+        end else begin
+                mic0_data <= 0;
+        end
+end
+
+always @(posedge mic1_clk or negedge mic1_ws) begin
+        if(!mic1_ws & xcorr_start) begin
+                mic1_data <= mic0_data;
+        end else begin
+                mic1_data <= 0;
+        end
+end
 
 //Read x data from fifo
 initial begin
