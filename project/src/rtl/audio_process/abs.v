@@ -1,5 +1,5 @@
 module abs(
-	 input [32- 1: 0]           datai,
+	 input signed [32- 1: 0]    datai,
 	output [32- 1: 0]           datao
 );
 

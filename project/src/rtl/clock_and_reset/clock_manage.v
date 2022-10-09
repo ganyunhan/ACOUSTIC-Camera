@@ -29,7 +29,7 @@ rpll_mic U_PLL_27_60(
 assign rst_mic_n = rst_mic_lock ? rst_n : 1'b0;
 
 clk_div #(
-    .SCALER         (30             )
+    .SCALER         (20             )
 )
 U_CLK_DIV_30
 (

@@ -37,7 +37,7 @@ localparam      SEND_DONE    = 3'b011;
 localparam      NL_BYTE      = 3'b100;
 localparam      NL_DONE      = 3'b101;
 
-localparam      BYTE_NUM     = 5;
+localparam      BYTE_NUM     = 4;
 
 always @(posedge sys_clk or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
@@ -145,7 +145,7 @@ always @(posedge sys_clk or negedge sys_rst_n) begin
     end
 end
 
-assign all_send_done = (send_num > BYTE_NUM)? 1'b1 : 1'b0;
+assign all_send_done = (send_num > BYTE_NUM - 1)? 1'b1 : 1'b0;
 
 always @(posedge sys_clk) begin
     hex_table[0] <= 8'h30;

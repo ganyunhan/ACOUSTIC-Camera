@@ -10,7 +10,7 @@
 // Additional Comments: 
 //////////////////////////////////////////////////////////////////////////////////
 module mic_subsys#(
-    parameter       LAGNUM = 10
+    parameter       LAGNUM = 16
 )
 (
      input                      clk_60MHz
@@ -31,7 +31,7 @@ wire signed [16- 1: 0]          mic0_data;
 wire signed [16- 1: 0]          mic1_data;
 wire signed [16- 1: 0]          mic0_fifo_data;
 wire signed [16- 1: 0]          mic1_fifo_data;
-wire signed [32- 1: 0]          abs_xcorr_data;
+wire        [32- 1: 0]          abs_xcorr_data;
 wire signed [32- 1: 0]          xcorr_data;
 wire                            xcorr_done;
 
@@ -65,7 +65,7 @@ always @(*) begin
 	case (cr_state)
 		IDLE: begin 
             if (subsys_start) begin
-                nx_state = FIFO_IN;
+                nx_state = CALC_EN;
             end else begin
                 nx_state = IDLE;
             end
@@ -97,7 +97,9 @@ assign cr_fifo_in       = (cr_state == FIFO_IN) ? 1'b1 : 1'b0;
 assign cr_calc_en       = (cr_state == CALC_EN) ? 1'b1 : 1'b0;
 assign cr_output        = (cr_state == OUTPUT ) ? 1'b1 : 1'b0;
 
+assign nx_fifo_in       = (nx_state == FIFO_IN) ? 1'b1 : 1'b0;
 assign nx_calc_en       = (nx_state == CALC_EN) ? 1'b1 : 1'b0;
+assign nx_output        = (nx_state == OUTPUT ) ? 1'b1 : 1'b0;
 
 //processing fifo_en_mask reg
 always @(negedge clk_WS or negedge rst_n) begin
@@ -109,6 +111,21 @@ always @(negedge clk_WS or negedge rst_n) begin
         fifo_en_mask <= 1'b0;
     end
 end
+
+//processing xcorr_rst_n reg
+reg  xcorr_rst;
+wire xcorr_rst_n;
+always @(negedge clk_WS or negedge rst_n) begin
+    if (!rst_n) begin
+        xcorr_rst <= 1'b0;
+    end else if (nx_output | nx_calc_en) begin
+        xcorr_rst <= 1'b1;
+    end else begin
+        xcorr_rst <= 1'b0;
+    end
+end
+
+assign xcorr_rst_n = rst_n & rst_mic_n & xcorr_rst;
 
 //processing ram_wr_addr reg, delay for 1 cycle
 reg [9 - 1: 0] ram_wr_addr_r;
@@ -236,11 +253,12 @@ end
 
 assign fifo_mic0_wr_en  = fifo_en_mask;
 assign fifo_mic1_wr_en  = fifo_en_mask;
+assign abs_xcorr_data   = (xcorr_data[31] == 1) ? (~xcorr_data + 1'b1) : xcorr_data; //abs
 
-abs U_XCORR_ABS(
-	 .datai              (xcorr_data        ) //i[32- 1: 0]
-    ,.datao              (abs_xcorr_data    ) //o[32- 1: 0]
-);
+//abs U_XCORR_ABS(
+//	 .datai              (xcorr_data        ) //i[32- 1: 0]
+//    ,.datao              (abs_xcorr_data    ) //o[32- 1: 0]
+//);
 
 i2s_decoder#(
 	 .DATAWIDTH         (24)
@@ -306,12 +324,13 @@ ram1_512 U_RAM1_512(
     .oce                (1'b1               )  //input oce
 );
 
-XCORR_Top U_XCORR_Top(
+
+XCORR_NEW_Top U_XCORR_Top(
     .clk                (clk_60MHz          ), //input clk
-    .rst                (rst_n&rst_mic_n    ), //input rst
-    .series_x           (mic0_fifo_data     ), //input [15:0] series_x
-    .series_y           (mic1_fifo_data     ), //input [15:0] series_y
-    .start              (xcorr_start        ), //input start_n
+    .rstn               (ram_rd_en          ), //input rstn
+    .series_x           (mic1_fifo_data     ), //input [15:0] series_x
+    .series_y           (mic0_fifo_data     ), //input [15:0] series_y
+    // .start              (xcorr_start        ), //input start_n
     .result             (xcorr_data         ), //output [31:0] result
     .complete           (xcorr_done         ), //output complete
     .delay              () //output [9:0] delay

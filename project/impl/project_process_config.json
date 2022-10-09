@@ -27,7 +27,7 @@
  "I2C_SLAVE_ADDR" : "00",
  "Implicit_Initial_Value_Support" : false,
  "IncludePath" : [
-
+  "C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/project/src/xcorr_new/define"
  ],
  "Incremental_Compile" : "",
  "Initialize_Primitives" : false,
@@ -56,7 +56,7 @@
  "Resolve_Mixed_Drivers" : false,
  "Resource_Sharing" : true,
  "Retiming" : false,
- "Route_Maxfan" : "23",
+ "Route_Maxfan" : 23,
  "Route_Option" : "0",
  "Run_Timing_Driven" : true,
  "SECURE_MODE" : false,

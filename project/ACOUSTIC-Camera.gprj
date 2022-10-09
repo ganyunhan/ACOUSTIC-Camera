@@ -22,8 +22,10 @@
         <File path="src/rtl/uart/uart_top.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/uart/uart_tx.v" type="file.verilog" enable="1"/>
         <File path="src/xcorr/xcorr.v" type="file.verilog" enable="1"/>
+        <File path="src/xcorr_new/xcorr.v" type="file.verilog" enable="1"/>
+        <File path="src/xcorr_new/xcorr_wrap.v" type="file.verilog" enable="1"/>
         <File path="src/ACOUSTIC-Camera.cst" type="file.cst" enable="1"/>
         <File path="src/ACOUSTIC-Camera.sdc" type="file.sdc" enable="1"/>
-        <File path="src/ACOUSTIC-Camera.rao" type="file.gao" enable="0"/>
+        <File path="src/ACOUSTIC-Camera.rao" type="file.gao" enable="1"/>
     </FileList>
 </Project>
