@@ -17,8 +17,6 @@ module mic_subsys (
     ,input           PAD_KEY2
     ,input           PAD_MIC0_DA
     ,input           PAD_MIC1_DA
-    ,output          PAD_LR0
-    ,output          PAD_LR1
     ,output          PAD_WS0
     ,output          PAD_WS1
     ,output          PAD_CLK_MIC0
@@ -109,13 +107,13 @@ uart_top u_uart_top
 );
 
 clk_div#(
-    .SCALER             (30)
+    .SCALER             (20)
 )
 u_clk_div_9
 (
      .clk_in         (clk_60MHz)
     ,.rst_n          (i_rst_n)
-    ,.clk_out        (o_mic_sclk)//2MHz
+    ,.clk_out        (o_mic_sclk)//3MHz
 );
 
 clk_div#(
@@ -125,7 +123,7 @@ u_clk_div_64
 (
     .clk_in         (!o_mic_sclk)
    ,.rst_n          (i_rst_n)
-   ,.clk_out        (o_mic_ws)//31250Hz
+   ,.clk_out        (o_mic_ws)//46875Hz
 );
 
 gao_clk u_gao_clk(
