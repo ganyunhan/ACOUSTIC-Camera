@@ -107,13 +107,13 @@ uart_top u_uart_top
 );
 
 clk_div#(
-    .SCALER             (20)
+    .SCALER             (10)
 )
 u_clk_div_9
 (
      .clk_in         (clk_60MHz)
     ,.rst_n          (i_rst_n)
-    ,.clk_out        (o_mic_sclk)//3MHz
+    ,.clk_out        (o_mic_sclk)//6MHz
 );
 
 clk_div#(
@@ -123,7 +123,7 @@ u_clk_div_64
 (
     .clk_in         (!o_mic_sclk)
    ,.rst_n          (i_rst_n)
-   ,.clk_out        (o_mic_ws)//46875Hz
+   ,.clk_out        (o_mic_ws)//93750Hz
 );
 
 gao_clk u_gao_clk(

@@ -34,7 +34,7 @@ end
 // end
 
 always @(posedge mic0_clk or negedge mic0_ws) begin
-        if(!mic0_ws & xcorr_start) begin
+        if(!mic0_ws & !xcorr_start) begin
                 mic0_data <= {$random}%2;
         end else begin
                 mic0_data <= 0;
@@ -42,7 +42,7 @@ always @(posedge mic0_clk or negedge mic0_ws) begin
 end
 
 always @(posedge mic1_clk or negedge mic1_ws) begin
-        if(!mic1_ws & xcorr_start) begin
+        if(!mic1_ws & !xcorr_start) begin
                 mic1_data <= mic0_data;
         end else begin
                 mic1_data <= 0;
@@ -97,13 +97,6 @@ top U_TOP(
     ,.PAD_WS1           (mic1_ws) //output             
     ,.PAD_CLK_MIC0      (mic0_clk) //output             
     ,.PAD_CLK_MIC1      (mic1_clk) //output             
-);
-
-deUstb ut
-(
-    .in(xcorr_start),
-    .out(start),
-    .clk(U_TOP.U_CLOCK_MANAGE.clk_60MHz)
 );
 
 endmodule
