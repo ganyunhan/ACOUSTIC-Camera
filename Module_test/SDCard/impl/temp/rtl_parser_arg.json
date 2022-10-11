@@ -1,0 +1,28 @@
+{
+ "Files" : [
+  {
+   "Path" : "C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/SDCard/src/sd_card/sd_card_cmd.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/SDCard/src/sd_card/sd_card_sec_read_write.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/SDCard/src/sd_card/sd_card_top.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/SDCard/src/sd_card/spi_master.v",
+   "Type" : "verilog"
+  }
+ ],
+ "IncludePath" : [
+
+ ],
+ "LoopLimit" : 2000,
+ "ResultFile" : "C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/SDCard/impl/temp/rtl_parser.result",
+ "Top" : "",
+ "VerilogStd" : "verilog_2001",
+ "VhdlStd" : "vhdl_93"
+}

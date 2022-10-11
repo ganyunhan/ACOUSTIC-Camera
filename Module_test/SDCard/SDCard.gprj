@@ -1,0 +1,13 @@
+<?xml version="1" encoding="UTF-8"?>
+<!DOCTYPE gowin-fpga-project>
+<Project>
+    <Template>FPGA</Template>
+    <Version>5</Version>
+    <Device name="GW2A-18" pn="GW2A-LV18PG256C8/I7">gw2a18-002</Device>
+    <FileList>
+        <File path="src/sd_card/sd_card_cmd.v" type="file.verilog" enable="1"/>
+        <File path="src/sd_card/sd_card_sec_read_write.v" type="file.verilog" enable="1"/>
+        <File path="src/sd_card/sd_card_top.v" type="file.verilog" enable="1"/>
+        <File path="src/sd_card/spi_master.v" type="file.verilog" enable="1"/>
+    </FileList>
+</Project>
