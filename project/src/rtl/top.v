@@ -28,6 +28,7 @@ wire                    clk_2MHz;
 wire                    rst_mic_n;
 wire signed [16- 1: 0]  angel;
 wire                    done;
+wire                    subsys_done;
 wire [6 - 1: 0]         lag_diff;
 
 clock_manage U_CLOCK_MANAGE(

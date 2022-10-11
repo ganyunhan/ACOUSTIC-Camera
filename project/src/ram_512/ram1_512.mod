@@ -16,5 +16,5 @@
 -width_1 16
 -read_mode bypass
 -reset_mode sync
--init_file C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/XCORR/data/tb_y.mi
+-init_file C:\Users\Misaka\OneDrive\2022_Gowin\ACOUSTIC-Camera\Module_test\XCORR\data\tb_y.mi
 -init_match port_B

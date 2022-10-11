@@ -2,36 +2,50 @@
 <GAO_CONFIG>
     <Version>3.0</Version>
     <Mode>Standard</Mode>
-    <AoCore index="0" sample_clock="clk_60MHz" trig_type="0" storage_depth="4096" window_num="1" capture_amount="4096" trigger_pos="0" module_name="top" force_trigger_by_falling_edge="false">
+    <AoCore index="0" sample_clock="U_BI_MIC/clk_60MHz" trig_type="0" storage_depth="8192" window_num="1" capture_amount="8192" trigger_pos="0" module_name="top" force_trigger_by_falling_edge="false">
         <SignalList>
-            <Bus name="U_BI_MIC/angel_avg[15:0]">
-                <Signal>U_BI_MIC/angel_avg[15]</Signal>
-                <Signal>U_BI_MIC/angel_avg[14]</Signal>
-                <Signal>U_BI_MIC/angel_avg[13]</Signal>
-                <Signal>U_BI_MIC/angel_avg[12]</Signal>
-                <Signal>U_BI_MIC/angel_avg[11]</Signal>
-                <Signal>U_BI_MIC/angel_avg[10]</Signal>
-                <Signal>U_BI_MIC/angel_avg[9]</Signal>
-                <Signal>U_BI_MIC/angel_avg[8]</Signal>
-                <Signal>U_BI_MIC/angel_avg[7]</Signal>
-                <Signal>U_BI_MIC/angel_avg[6]</Signal>
-                <Signal>U_BI_MIC/angel_avg[5]</Signal>
-                <Signal>U_BI_MIC/angel_avg[4]</Signal>
-                <Signal>U_BI_MIC/angel_avg[3]</Signal>
-                <Signal>U_BI_MIC/angel_avg[2]</Signal>
-                <Signal>U_BI_MIC/angel_avg[1]</Signal>
-                <Signal>U_BI_MIC/angel_avg[0]</Signal>
+            <Bus name="lag_diff[5:0]">
+                <Signal>lag_diff[5]</Signal>
+                <Signal>lag_diff[4]</Signal>
+                <Signal>lag_diff[3]</Signal>
+                <Signal>lag_diff[2]</Signal>
+                <Signal>lag_diff[1]</Signal>
+                <Signal>lag_diff[0]</Signal>
             </Bus>
-            <Signal>U_BI_MIC/done</Signal>
-            <Bus name="U_MIC_SUBSYS/lag_diff[5:0]">
-                <Signal>U_MIC_SUBSYS/lag_diff[5]</Signal>
-                <Signal>U_MIC_SUBSYS/lag_diff[4]</Signal>
-                <Signal>U_MIC_SUBSYS/lag_diff[3]</Signal>
-                <Signal>U_MIC_SUBSYS/lag_diff[2]</Signal>
-                <Signal>U_MIC_SUBSYS/lag_diff[1]</Signal>
-                <Signal>U_MIC_SUBSYS/lag_diff[0]</Signal>
+            <Bus name="U_MIC_SUBSYS/U_XCORR_Top/result[31:0]">
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[31]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[30]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[29]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[28]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[27]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[26]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[25]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[24]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[23]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[22]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[21]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[20]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[19]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[18]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[17]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[16]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[15]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[14]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[13]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[12]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[11]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[10]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[9]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[8]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[7]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[6]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[5]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[4]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[3]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[2]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[1]</Signal>
+                <Signal>U_MIC_SUBSYS/U_XCORR_Top/result[0]</Signal>
             </Bus>
-            <Signal>U_MIC_SUBSYS/subsys_done</Signal>
         </SignalList>
         <Triggers>
             <Trigger index="0">
@@ -77,5 +91,5 @@
             <Expression>M0</Expression>
         </Expressions>
     </AoCore>
-    <GAO_ID>1011001000001111</GAO_ID>
+    <GAO_ID>0100010111101001</GAO_ID>
 </GAO_CONFIG>

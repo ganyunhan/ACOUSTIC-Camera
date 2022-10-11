@@ -25,6 +25,9 @@ module mic_subsys#(
     ,output reg signed [6 - 1: 0]  lag_diff
 );
 
+// `define     SIM_IN_RAM
+`define     SIM_IN_MIC
+
 wire                            mic0_data_en;
 wire                            mic1_data_en;
 wire signed [16- 1: 0]          mic0_data;
@@ -65,7 +68,11 @@ always @(*) begin
 	case (cr_state)
 		IDLE: begin 
             if (subsys_start) begin
-                nx_state = CALC_EN;
+                `ifdef SIM_IN_RAM
+                    nx_state = CALC_EN;
+                `elif  SIM_IN_MIC
+                    nx_state = FIFO_IN;
+                `endif
             end else begin
                 nx_state = IDLE;
             end
