@@ -161,12 +161,21 @@ always @(posedge sys_clk) begin
 end
 
 always @(*) begin
-    ascii_out[4] = hex_table[data / 'd10000];
-    ascii_out[3] = hex_table[(data / 'd1000)%'d10];
-    ascii_out[2] = hex_table[(data / 'd100)%'d10];
-    ascii_out[1] = hex_table[(data / 'd10)%'d10];
-    ascii_out[0] = hex_table[data % 'd10];
-end
+    if (uart_ena) begin
+        ascii_out[4] = hex_table[data / 'd10000];
+        ascii_out[3] = hex_table[(data / 'd1000)%'d10];
+        ascii_out[2] = hex_table[(data / 'd100)%'d10];
+        ascii_out[1] = hex_table[(data / 'd10)%'d10];
+        ascii_out[0] = hex_table[data % 'd10];
+    end else begin
+        ascii_out[4] =  ascii_out[4];
+        ascii_out[3] =  ascii_out[3];
+        ascii_out[2] =  ascii_out[2];
+        ascii_out[1] =  ascii_out[1];
+        ascii_out[0] =  ascii_out[0];
+    end
+    end
+    
 
 uart_tx u_uart_tx
 (
