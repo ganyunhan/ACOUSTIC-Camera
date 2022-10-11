@@ -28,9 +28,8 @@ wire                    clk_2MHz;
 wire                    rst_mic_n;
 wire signed [16- 1: 0]  angel;
 wire                    done;
-wire                    subsys_done;
 wire [6 - 1: 0]         lag_diff;
-
+wire [16-1:   0]        lagdiff_16;
 clock_manage U_CLOCK_MANAGE(
      .ext_clk           (ext_clk            ) //i
     ,.rst_n             (rst_n              ) //i
@@ -70,7 +69,7 @@ uart_top U_UART_TOP
 (
 	 .sys_clk		    (clk_60MHz          )//i
 	,.sys_rst_n		    (rst_n              )//i
-	,.data	            (angel              )//i[16- 1: 0]
+	,.data	            (angel        )//i[16- 1: 0]
     ,.uart_ena          (done               )//i
 	,.uart_ready	    ()//o
 	,.uart_txd		    (uart_txd           )//o	
@@ -88,5 +87,9 @@ assign PAD_CLK_MIC1 = clk_2MHz;
 assign PAD_LR0      = 1'b0;
 assign PAD_LR1      = 1'b0;
 assign PAD_UART_TX  = uart_txd;
+//assign lagdiff_16[6-1:0]=lag_diff;
+//assign lagdiff_16[16-1]=lag_diff[6-1];
+//assign lagdiff_16[15-1:6]=9'b0;
+assign lagdiff_16=16'd13;
 
 endmodule

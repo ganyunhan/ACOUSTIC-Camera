@@ -20,7 +20,7 @@ reg [3 - 1: 0]  cr_state;
 reg [3 - 1: 0]  nx_state;
 reg [8 - 1: 0]  uart_tx_data;
 reg             uart_tx_en;
-reg [8 - 1: 0]  ascii_out [5 - 1: 0];
+reg [8 - 1: 0]  ascii_out [6 - 1: 0];
 wire            uart_tx_done;
 wire            all_send_done;
 
@@ -37,7 +37,7 @@ localparam      SEND_DONE    = 3'b011;
 localparam      NL_BYTE      = 3'b100;
 localparam      NL_DONE      = 3'b101;
 
-localparam      BYTE_NUM     = 4;
+localparam      BYTE_NUM     = 5;
 
 always @(posedge sys_clk or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
@@ -93,6 +93,8 @@ assign  cr_nl_byte      = (cr_state == NL_BYTE) ? 1'b1 : 1'b0;
 assign  cr_nl_done      = (cr_state == NL_DONE) ? 1'b1 : 1'b0;
 assign  cr_idle         = (cr_state == IDLE) ? 1'b1 : 1'b0;
 
+assign  nx_nl_byte      = (nx_state == NL_BYTE) ? 1'b1 : 1'b0;
+
 assign  cr_get_byte     = (cr_state == GET_BYTE) ? 1'b1 : 1'b0;
 
 //processing data reg
@@ -100,7 +102,7 @@ always @(posedge sys_clk or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
         uart_tx_data <= 8'b0;
     end else if (cr_send_byte) begin
-        uart_tx_data <= ascii_out[4 - send_num]; //MSB_first
+        uart_tx_data <= ascii_out[5 - send_num]; //MSB_first
     end else if (cr_nl_byte) begin
         uart_tx_data <= NEW_LINE;       //send new line
     end else begin
@@ -114,7 +116,7 @@ always @(posedge sys_clk or negedge sys_rst_n) begin
         uart_tx_en <= 1'b0;
     end else if (cr_send_byte) begin
         uart_tx_en <= 1'b1;
-    end else if (cr_nl_byte) begin
+    end else if (nx_nl_byte && all_send_done) begin
         uart_tx_en <= 1'b1; 
     end else begin
         uart_tx_en <= 1'b0;
@@ -162,12 +164,19 @@ end
 
 always @(*) begin
     if (uart_ena) begin
-        ascii_out[4] = hex_table[data / 'd10000];
-        ascii_out[3] = hex_table[(data / 'd1000)%'d10];
-        ascii_out[2] = hex_table[(data / 'd100)%'d10];
-        ascii_out[1] = hex_table[(data / 'd10)%'d10];
-        ascii_out[0] = hex_table[data % 'd10];
+//        ascii_out[4] = hex_table[data / 'd10000];
+//        ascii_out[3] = hex_table[(data / 'd1000)%'d10];
+//        ascii_out[2] = hex_table[(data / 'd100)%'d10];
+//        ascii_out[1] = hex_table[(data / 'd10)%'d10];
+//        ascii_out[0] = hex_table[data % 'd10];
+        ascii_out[5] = 8'h41;
+        ascii_out[4] = hex_table[(data / 'd1000)%'d10];
+        ascii_out[3] = hex_table[(data / 'd100)%'d10];
+        ascii_out[2] = hex_table[(data / 'd10)%'d10];
+        ascii_out[1] = hex_table[data % 'd10];
+        ascii_out[0] = 8'h0A;
     end else begin
+        ascii_out[5] =  ascii_out[5];
         ascii_out[4] =  ascii_out[4];
         ascii_out[3] =  ascii_out[3];
         ascii_out[2] =  ascii_out[2];
