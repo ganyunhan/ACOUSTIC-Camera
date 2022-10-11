@@ -25,9 +25,6 @@ module mic_subsys#(
     ,output reg signed [6 - 1: 0]  lag_diff
 );
 
-// `define     SIM_IN_RAM
-`define     SIM_IN_MIC
-
 wire                            mic0_data_en;
 wire                            mic1_data_en;
 wire signed [16- 1: 0]          mic0_data;
@@ -49,18 +46,26 @@ reg                             fifo_en_mask;
 reg                             ram_rd_en;
 wire                            xcorr_all_complete;
 
+//`define      SIM_ROM_DATA
+`define      SIM_MIC_DATA
+
 localparam      IDLE         = 3'b000;
 localparam      FIFO_IN      = 3'b001;
 localparam      CALC_EN      = 3'b010;
 localparam      OUTPUT       = 3'b011;
 
 localparam      LAG_NUM     = LAGNUM * 2;
+reg random_mic0_data;
+reg random_mic1_data;
+
 
 always @(posedge clk_60MHz or negedge rst_n) begin
     if (!rst_n) begin
         cr_state <= IDLE;
     end else begin
         cr_state <= nx_state;
+        random_mic0_data <= random_mic1_data+1;
+        random_mic1_data <=random_mic0_data+1;
     end
 end
 
@@ -68,11 +73,11 @@ always @(*) begin
 	case (cr_state)
 		IDLE: begin 
             if (subsys_start) begin
-                `ifdef SIM_IN_RAM
-                    nx_state = CALC_EN;
-                `elif  SIM_IN_MIC
-                    nx_state = FIFO_IN;
-                `endif
+        `ifdef SIM_ROM_DATA
+                nx_state = CALC_EN;
+        `elsif SIM_MIC_DATA
+                nx_state = FIFO_IN;
+        `endif
             end else begin
                 nx_state = IDLE;
             end
@@ -336,7 +341,7 @@ XCORR_NEW_Top U_XCORR_Top(
     .clk                (clk_60MHz          ), //input clk
     .rstn               (ram_rd_en          ), //input rstn
     .series_x           (mic1_fifo_data     ), //input [15:0] series_x
-    .series_y           (mic0_fifo_data     ), //input [15:0] series_y
+    .series_y           (mic0_fifo_data), //input [15:0] series_y
     // .start              (xcorr_start        ), //input start_n
     .result             (xcorr_data         ), //output [31:0] result
     .complete           (xcorr_done         ), //output complete
