@@ -55,17 +55,12 @@ localparam      CALC_EN      = 3'b010;
 localparam      OUTPUT       = 3'b011;
 
 localparam      LAG_NUM     = LAGNUM * 2;
-reg random_mic0_data;
-reg random_mic1_data;
-
 
 always @(posedge clk_60MHz or negedge rst_n) begin
     if (!rst_n) begin
         cr_state <= IDLE;
     end else begin
         cr_state <= nx_state;
-        random_mic0_data <= random_mic1_data+1;
-        random_mic1_data <=random_mic0_data+1;
     end
 end
 
