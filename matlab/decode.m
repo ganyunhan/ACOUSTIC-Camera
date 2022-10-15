@@ -1,6 +1,6 @@
-clear;
-clc;
-close all;
+% clear;
+% clc;
+% close all;
 
 %% pre load
 fs=46875;
@@ -19,8 +19,8 @@ for i=2:2:1024
 end
 
 %鐢熸垚test鏁版嵁
-% tb_x = dec2bin(mic2_data,16);
-% tb_y = dec2bin(mic1_data,16);
+tb_x = dec2bin(mic2_data,16);
+tb_y = dec2bin(mic1_data,16);
 % figure(1)
 % plot(mic1_data);
 % plot(mic2_data);
@@ -57,13 +57,18 @@ plot(mic1_data,'DisplayName','mic1_data');hold on;plot(mic2_data,'DisplayName','
 %% fft
 % SpecPlot(data_fir,fs,'single',4);
 [rcc,lag] = xcorr(mic1_data,mic2_data,16);
-rcc = abs(rcc);
-[~,I] = max(abs(rcc));
-% lagDiff = lag(I);
+
+RGCC=fft(rcc,64); %fft后，虚部实部存入ram
+RGCC_abs=abs(RGCC); %负数求模
+RGCC_PHAT = RGCC*1./RGCC_abs; %实部和虚部分别除以模
+rgcc=ifft(RGCC_PHAT,33); %ifft
+
+[~,I] = max(abs(rgcc));
 lagDiff = lag(I);
 timeDiff = lagDiff/fs;
 dis_r=timeDiff*c;
 angel = dis_r./(mic_d);
 angel=acos(angel)*180/pi;
+
 %% play sound
 sound(data_fir,fs);
