@@ -29,7 +29,10 @@ wire                    rst_mic_n;
 wire signed [16- 1: 0]  angel;
 wire                    done;
 wire [6 - 1: 0]         lag_diff;
-wire [16-1:   0]        lagdiff_16;
+wire [16- 1: 0]         lagdiff_16;
+wire signed [32- 1: 0]  xcorr_data;
+wire                    xcorr_done;
+
 clock_manage U_CLOCK_MANAGE(
      .ext_clk           (ext_clk            ) //i
     ,.rst_n             (rst_n              ) //i
@@ -51,10 +54,21 @@ U_MIC_SUBSYS
     ,.rst_mic_n         (rst_mic_n          ) //i
     ,.mic0_data_in      (mic0_data_in       ) //i
     ,.mic1_data_in      (mic1_data_in       ) //i
+    ,.xcorr_data        (xcorr_data) //output signed [16- 1: 0]   
+    ,.xcorr_done        (xcorr_done) //output                     
     ,.subsys_start      (subsys_start       ) //i
     ,.subsys_done       (subsys_done        ) //o
     ,.lag_diff          (lag_diff           ) //o[6 - 1: 0]
 );
+
+phat_fft_abs U_PHAT(
+     .clk                (clk_60MHz         ) //input                       
+    ,.rst_n              (rst_n             ) //input                       
+    ,.xcorr_data         (xcorr_data        ) //input signed [16- 1: 0]     
+    ,.xcorr_done         (xcorr_done        ) //input                       
+    ,.lag_diff           () //output signed [6 - 1: 0]    
+);
+
 
 bi_microphone U_BI_MIC(
      .clk_60MHz         (clk_60MHz          ) //i                             

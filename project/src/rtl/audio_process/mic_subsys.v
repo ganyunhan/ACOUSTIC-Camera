@@ -21,6 +21,8 @@ module mic_subsys#(
     ,input                      mic0_data_in
     ,input                      mic1_data_in
     ,input                      subsys_start
+    ,output signed [32- 1: 0]   xcorr_data
+    ,output                     xcorr_done
     ,output reg                 subsys_done
     ,output reg signed [6 - 1: 0]  lag_diff
 );
@@ -32,8 +34,8 @@ wire signed [16- 1: 0]          mic1_data;
 wire signed [16- 1: 0]          mic0_fifo_data;
 wire signed [16- 1: 0]          mic1_fifo_data;
 wire        [32- 1: 0]          abs_xcorr_data;
-wire signed [32- 1: 0]          xcorr_data;
-wire                            xcorr_done;
+// wire signed [32- 1: 0]          xcorr_data;
+// wire                            xcorr_done;
 
 //FSM of controlling xcorr/fifo I/O 
 reg         [3 - 1: 0]          cr_state;
@@ -46,8 +48,8 @@ reg                             fifo_en_mask;
 reg                             ram_rd_en;
 wire                            xcorr_all_complete;
 
-//`define      SIM_ROM_DATA
-`define      SIM_MIC_DATA
+`define      SIM_ROM_DATA
+// `define      SIM_MIC_DATA
 
 localparam      IDLE         = 3'b000;
 localparam      FIFO_IN      = 3'b001;
@@ -55,17 +57,12 @@ localparam      CALC_EN      = 3'b010;
 localparam      OUTPUT       = 3'b011;
 
 localparam      LAG_NUM     = LAGNUM * 2;
-reg random_mic0_data;
-reg random_mic1_data;
-
 
 always @(posedge clk_60MHz or negedge rst_n) begin
     if (!rst_n) begin
         cr_state <= IDLE;
     end else begin
         cr_state <= nx_state;
-        random_mic0_data <= random_mic1_data+1;
-        random_mic1_data <=random_mic0_data+1;
     end
 end
 

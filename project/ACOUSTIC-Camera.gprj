@@ -5,9 +5,24 @@
     <Version>5</Version>
     <Device name="GW2A-18" pn="GW2A-LV18PG256C8/I7">gw2a18-002</Device>
     <FileList>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/audio_process/i2s_decoder.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/audio_process/mic_subsys.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/bus_cnt_width.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/clk_div.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/fifo_hs/fifo_hs.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/fifo_top/fifo_top.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/gao_clk/gao_clk.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/gowin_osc/gowin_osc.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/gowin_rpll/rpll_81MHz.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/uart_top.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/uart_tx.v" type="file.verilog" enable="1"/>
+        <File path="src/fft/fft.v" type="file.verilog" enable="1"/>
+        <File path="src/fft_abs_ram/fft_abs_ram.v" type="file.verilog" enable="1"/>
         <File path="src/fifo_hs/fifo_hs.v" type="file.verilog" enable="1"/>
+        <File path="src/fifo_top/fifo_top.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_prom/acos_rom.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_rpll/rpll_mic.v" type="file.verilog" enable="1"/>
+        <File path="src/ifft/ifft.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram0_512.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram1_512.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram_512.v" type="file.verilog" enable="1"/>
@@ -22,10 +37,15 @@
         <File path="src/rtl/uart/uart_top.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/uart/uart_tx.v" type="file.verilog" enable="1"/>
         <File path="src/xcorr/xcorr.v" type="file.verilog" enable="1"/>
+        <File path="src/xcorr_data_fifo/xcorr_data_fifo.v" type="file.verilog" enable="1"/>
         <File path="src/xcorr_new/xcorr.v" type="file.verilog" enable="1"/>
         <File path="src/xcorr_new/xcorr_wrap.v" type="file.verilog" enable="1"/>
-        <File path="src/ACOUSTIC-Camera.cst" type="file.cst" enable="1"/>
-        <File path="src/ACOUSTIC-Camera.sdc" type="file.sdc" enable="1"/>
-        <File path="src/ACOUSTIC-Camera.rao" type="file.gao" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/I2S_Capture.cst" type="file.cst" enable="1"/>
+        <File path="src/ACOUSTIC-Camera.cst" type="file.cst" enable="0"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/I2S_Capture.sdc" type="file.sdc" enable="1"/>
+        <File path="src/ACOUSTIC-Camera.sdc" type="file.sdc" enable="0"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/I2S_Capture.rao" type="file.gao" enable="0"/>
+        <File path="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/I2S_Capture_Lite.rao" type="file.gao" enable="1"/>
+        <File path="src/ACOUSTIC-Camera.rao" type="file.gao" enable="0"/>
     </FileList>
 </Project>

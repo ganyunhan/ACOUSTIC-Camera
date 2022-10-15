@@ -1,0 +1,35 @@
+[General]
+ipc_version=4
+file=xcorr_data_fifo
+module=xcorr_data_fifo
+target_device=gw2a18-002
+type=fifo_hs
+version=1.0
+
+[Config]
+AlmostEmptyFlag=true
+AlmostEmptyFlagItem=Empty_Single Threshold Constant Parameter
+AlmostFullFlag=true
+AlmostFullFlagItem=Full_Single Threshold Constant Parameter
+BSRAM=true
+ControlledByRdEn=true
+ECCSelected=false
+EmptyClear=1
+EmptySet=1
+EnReset=true
+FirstWordFallThrough=false
+FullClear=1
+FullSet=33
+LANG=0
+OutputRegistersSelected=true
+REG=false
+ReadDataNum=true
+ReadDataWidth=32
+ReadDepth=64
+ResetSynchronization=true
+SSRAM=false
+StandardFIFO=true
+Synthesis_tool=GowinSynthesis
+WriteDataNum=true
+WriteDataWidth=32
+WriteDepth=64

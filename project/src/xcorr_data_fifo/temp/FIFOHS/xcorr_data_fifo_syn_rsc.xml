@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module name="xcorr_data_fifo" Register="95" Alu="20" Lut="64" Bsram="1"/>
