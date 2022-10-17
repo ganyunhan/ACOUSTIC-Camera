@@ -9,14 +9,14 @@ module    divider_cell
 
       input [M:0]               dividend,
       input [M-1:0]             divisor,
-      input [N-M:0]             merchant_ci , //ä¸Šä¸€çº§è¾“å‡ºçš„å•†
-      input [N-M-1:0]           dividend_ci , //åŸå§‹é™¤æ•°
+      input [N-M:0]             merchant_ci , //ÉÏÒ»¼¶Êä³öµÄÉÌ
+      input [N-M-1:0]           dividend_ci , //Ô­Ê¼³ıÊı
 
-      output reg [N-M-1:0]      dividend_kp,  //åŸå§‹è¢«é™¤æ•°ä¿¡æ¯
-      output reg [M-1:0]        divisor_kp,   //åŸå§‹é™¤æ•°ä¿¡æ¯
+      output reg [N-M-1:0]      dividend_kp,  //Ô­Ê¼±»³ıÊıĞÅÏ¢
+      output reg [M-1:0]        divisor_kp,   //Ô­Ê¼³ıÊıĞÅÏ¢
       output reg                rdy ,
-      output reg [N-M:0]        merchant ,  //è¿ç®—å•å…ƒè¾“å‡ºå•†
-      output reg [M-1:0]        remainder   //è¿ç®—å•å…ƒè¾“å‡ºä½™æ•°
+      output reg [N-M:0]        merchant ,  //ÔËËãµ¥ÔªÊä³öÉÌ
+      output reg [M-1:0]        remainder   //ÔËËãµ¥ÔªÊä³öÓàÊı
     );
 
     always @(posedge clk or negedge rstn) begin
@@ -29,15 +29,15 @@ module    divider_cell
         end
         else if (en) begin
             rdy            <= 1'b1 ;
-            divisor_kp     <= divisor ;  //åŸå§‹é™¤æ•°ä¿æŒä¸å˜
-            dividend_kp    <= dividend_ci ;  //åŸå§‹è¢«é™¤æ•°ä¼ é€’
+            divisor_kp     <= divisor ;  //Ô­Ê¼³ıÊı±£³Ö²»±ä
+            dividend_kp    <= dividend_ci ;  //Ô­Ê¼±»³ıÊı´«µİ
             if (dividend >= {1'b0, divisor}) begin
-                merchant    <= (merchant_ci<<1) + 1'b1 ; //å•†ä¸º1
-                remainder   <= (dividend - {1'b0, divisor}) ; //æ±‚ä½™
+                merchant    <= (merchant_ci<<1) + 1'b1 ; //ÉÌÎª1
+                remainder   <= (dividend - {1'b0, divisor}) ; //ÇóÓà
             end
             else begin
-                merchant    <= merchant_ci<<1 ;  //å•†ä¸º0
-                remainder   <= dividend ;        //ä½™æ•°ä¸å˜
+                merchant    <= merchant_ci<<1 ;  //ÉÌÎª0
+                remainder   <= dividend ;        //ÓàÊı²»±ä
             end
         end // if (en)
         else begin
