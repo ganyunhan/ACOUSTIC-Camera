@@ -4,6 +4,7 @@
 */I2S_Capture/impl
 *.asv
 */XCORR/work
+*/mic_algorithm/work
 *transcript
 *.wlf
 wlf*
