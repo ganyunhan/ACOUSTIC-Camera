@@ -4,10 +4,10 @@ vmap work work
 
 ## part 2: load design
 vlog -sv -novopt -incr -work work "./tb.v"
-vlog -sv -novopt +incdir+../tb -work work "./divisor_cell.v"
-vlog -sv -novopt +incdir+../tb -work work "./divisor_top.v"
-vlog -sv -novopt +incdir+../tb -work work "./sqrt.v"
-vlog -sv -novopt +incdir+../tb -work work "./cal_position_6+1.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/divisor_cell.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/divisor_top.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/sqrt.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/cal_position_6+1.v"
 
 ## part 3: sim design
 vsim  -novopt work.tb
@@ -16,6 +16,7 @@ vsim  -novopt work.tb
 add wave -group "tb" {sim:/tb/*}
 add wave -group "cal" {sim:/tb/u_cal_position/*}
 add wave -group "cal" {sim:/tb/u_cal_position/distance}
+add wave -group "cal" {sim:/tb/u_cal_position/IntrinsicMatrix}
 
 ## part 5: show ui 
 view wave
