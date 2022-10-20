@@ -122,13 +122,14 @@ always @(posedge clk_mic or negedge rst_mic_n) begin
 	end
 end
 
-assign cr_get_left	=	(state == GET_LEFT) ? 1'b1 : 1'b0;
+assign cr_get_left	=	(state == GET_LEFT ) ? 1'b1 : 1'b0;
+assign cr_get_right	=	(state == GET_RIGHT) ? 1'b1 : 1'b0;
 
 //only get the left channel
 always @(posedge clk_mic or negedge rst_mic_n) begin
 	if (!rst_mic_n) begin
 		recv_over <= 1'b0;
-	end else if (cr_get_left && cnt == 'd26)begin
+	end else if (cr_get_right && cnt == 'd26)begin
 		recv_over <= 1'b1;
 	end else begin
 		recv_over <= 1'b0;

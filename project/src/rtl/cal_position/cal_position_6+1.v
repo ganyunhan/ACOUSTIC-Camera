@@ -2,14 +2,18 @@ module cal_position(
      input                          clk    //for sqrt
     ,input                          rst_n
     ,input                          ena         //start caculate
-    ,input  signed [32- 1: 0]       lag_diff [0 : 6 - 1]
+    ,input  signed [6 - 1: 0]       lag_diff_in_0
+    ,input  signed [6 - 1: 0]       lag_diff_in_1
+    ,input  signed [6 - 1: 0]       lag_diff_in_2
+    ,input  signed [6 - 1: 0]       lag_diff_in_3
+    ,input  signed [6 - 1: 0]       lag_diff_in_4
+    ,input  signed [6 - 1: 0]       lag_diff_in_5
     ,output signed [32- 1: 0]       x_position
     ,output signed [32- 1: 0]       y_position//mm
     ,output        [16- 1: 0]       z_position
     ,output reg    [32- 1: 0]       x_2d
     ,output reg    [32- 1: 0]       y_2d
     ,output reg                     done//caculate end
-
 );
 
 localparam signed   L           = 16'd200;   // distance between microphones (0.1mm)
@@ -27,10 +31,18 @@ reg signed  [32- 1: 0]  x_position_temp;       //distance between target and mic
 reg signed  [32- 1: 0]  y_position_temp;       //distance between target and microphones
 
 reg signed  [32- 1: 0]  distance[6 - 1: 0];      //d12,d13,d14
-reg         [10- 1: 0]  IntrinsicMatrix [ 0:2 - 1] [ 0:3 - 1];
+reg         [10- 1: 0]  IntrinsicMatrix [0 : 2 - 1] [0: 3 - 1];
 
 wire        [32- 1: 0]  z_position2;           //z*z
 wire                    cal_end;
+wire        [32- 1: 0]  lag_diff [0 : 6 - 1];
+
+assign      lag_diff[0] = {{26{lag_diff_in_0[5]}} , {lag_diff_in_0}};
+assign      lag_diff[1] = {{26{lag_diff_in_1[5]}} , {lag_diff_in_1}};
+assign      lag_diff[2] = {{26{lag_diff_in_2[5]}} , {lag_diff_in_2}};
+assign      lag_diff[3] = {{26{lag_diff_in_3[5]}} , {lag_diff_in_3}};
+assign      lag_diff[4] = {{26{lag_diff_in_4[5]}} , {lag_diff_in_4}};
+assign      lag_diff[5] = {{26{lag_diff_in_5[5]}} , {lag_diff_in_5}};
 
 initial begin
     IntrinsicMatrix[0][0]       <= 437;      //内参矩阵
