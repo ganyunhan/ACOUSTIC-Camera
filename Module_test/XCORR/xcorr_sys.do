@@ -26,6 +26,13 @@ vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/clock_and_reset
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/clock_and_reset/clock_manage.v"
 
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/bi_microphone.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/cal_position_6+1.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/divisor_cell.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/divisor_top.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/sqrt.v"
+
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/audio_process/mic_subsys_6+1.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/gowin_rpll/rpll_20MHz.v"
 
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/xcorr/xcorr.vo"
 vlog -sv -novopt +incdir+../src/define/ -incr -work work "../../project/src/xcorr_new/XCORR.vo"
@@ -38,11 +45,65 @@ vsim  -novopt work.tb
 
 ## part 4: add signals
 add wave -group "tb" {sim:/tb/*}
-add wave -group "XCORR" {sim:/tb/U_TOP/U_MIC_SUBSYS/*}
-add wave -group "ram" {sim:/tb/U_TOP/U_MIC_SUBSYS/U_RAM0_512/*}
-add wave -group "rom" {sim:/tb/U_TOP/U_BI_MIC/U_ACOS_ROM/*}
-add wave -group "acos" {sim:/tb/U_TOP/U_BI_MIC/*}
-add wave -group "uart" {sim:/tb/U_TOP/U_UART_TOP/*}
+add wave -group "subsys" {sim:/tb/U_TOP/U_MIC_SUBSYS/*}
+
+add wave -group "subsys/ram_0" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[0]/U_RAM_512/*}
+add wave -group "subsys/ram_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[1]/U_RAM_512/*}
+add wave -group "subsys/ram_2" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[2]/U_RAM_512/*}
+add wave -group "subsys/ram_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[3]/U_RAM_512/*}
+add wave -group "subsys/ram_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[4]/U_RAM_512/*}
+add wave -group "subsys/ram_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[5]/U_RAM_512/*}
+add wave -group "subsys/ram_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[6]/U_RAM_512/*}
+
+add wave -group "subsys/xcorr_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[1]/U_XCORR_TOP/series_x}
+add wave -group "subsys/xcorr_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[1]/U_XCORR_TOP/series_y}
+add wave -group "subsys/xcorr_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[1]/U_XCORR_TOP/clk}
+add wave -group "subsys/xcorr_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[1]/U_XCORR_TOP/rstn}
+add wave -group "subsys/xcorr_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[1]/U_XCORR_TOP/result}
+add wave -group "subsys/xcorr_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[1]/U_XCORR_TOP/complete}
+add wave -group "subsys/xcorr_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[1]/U_XCORR_TOP/delay}
+
+add wave -group "subsys/xcorr_2" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[2]/U_XCORR_TOP/series_x}
+add wave -group "subsys/xcorr_2" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[2]/U_XCORR_TOP/series_y}
+add wave -group "subsys/xcorr_2" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[2]/U_XCORR_TOP/clk}
+add wave -group "subsys/xcorr_2" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[2]/U_XCORR_TOP/rstn}
+add wave -group "subsys/xcorr_2" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[2]/U_XCORR_TOP/result}
+add wave -group "subsys/xcorr_2" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[2]/U_XCORR_TOP/complete}
+add wave -group "subsys/xcorr_2" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[2]/U_XCORR_TOP/delay}
+
+add wave -group "subsys/xcorr_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[3]/U_XCORR_TOP/series_x}
+add wave -group "subsys/xcorr_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[3]/U_XCORR_TOP/series_y}
+add wave -group "subsys/xcorr_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[3]/U_XCORR_TOP/clk}
+add wave -group "subsys/xcorr_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[3]/U_XCORR_TOP/rstn}
+add wave -group "subsys/xcorr_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[3]/U_XCORR_TOP/result}
+add wave -group "subsys/xcorr_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[3]/U_XCORR_TOP/complete}
+add wave -group "subsys/xcorr_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[3]/U_XCORR_TOP/delay}
+
+add wave -group "subsys/xcorr_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[4]/U_XCORR_TOP/series_x}
+add wave -group "subsys/xcorr_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[4]/U_XCORR_TOP/series_y}
+add wave -group "subsys/xcorr_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[4]/U_XCORR_TOP/clk}
+add wave -group "subsys/xcorr_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[4]/U_XCORR_TOP/rstn}
+add wave -group "subsys/xcorr_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[4]/U_XCORR_TOP/result}
+add wave -group "subsys/xcorr_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[4]/U_XCORR_TOP/complete}
+add wave -group "subsys/xcorr_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[4]/U_XCORR_TOP/delay}
+
+add wave -group "subsys/xcorr_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[5]/U_XCORR_TOP/series_x}
+add wave -group "subsys/xcorr_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[5]/U_XCORR_TOP/series_y}
+add wave -group "subsys/xcorr_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[5]/U_XCORR_TOP/clk}
+add wave -group "subsys/xcorr_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[5]/U_XCORR_TOP/rstn}
+add wave -group "subsys/xcorr_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[5]/U_XCORR_TOP/result}
+add wave -group "subsys/xcorr_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[5]/U_XCORR_TOP/complete}
+add wave -group "subsys/xcorr_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[5]/U_XCORR_TOP/delay}
+
+add wave -group "subsys/xcorr_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[6]/U_XCORR_TOP/series_x}
+add wave -group "subsys/xcorr_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[6]/U_XCORR_TOP/series_y}
+add wave -group "subsys/xcorr_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[6]/U_XCORR_TOP/clk}
+add wave -group "subsys/xcorr_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[6]/U_XCORR_TOP/rstn}
+add wave -group "subsys/xcorr_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[6]/U_XCORR_TOP/result}
+add wave -group "subsys/xcorr_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[6]/U_XCORR_TOP/complete}
+add wave -group "subsys/xcorr_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[6]/U_XCORR_TOP/delay}
+
+add wave -group "calc" {sim:/tb/U_TOP/U_CAL_POSITION/*}
 
 ## part 5: show ui 
 view wave
