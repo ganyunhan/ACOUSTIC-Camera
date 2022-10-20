@@ -9,13 +9,13 @@ module    divider_top#(
     input                     clk,
     input                     rstn,
 
-    input                     data_rdy ,  //Êı¾İÊ¹ÄÜ
-    input signed [N-1:0]      dividend,   //±»³ıÊı
-    input signed [M-1:0]      divisor,    //³ıÊı
+    input                     data_rdy ,  //æ•°æ®ä½¿èƒ½
+    input signed [N-1:0]      dividend,   //è¢«é™¤æ•°
+    input signed [M-1:0]      divisor,    //é™¤æ•°
 
     output                    res_rdy ,
-    output signed [N_ACT-M:0] merchant ,  //ÉÌÎ»¿í£ºN
-    output signed [M-1:0]     remainder  //×îÖÕÓàÊı
+    output signed [N_ACT-M:0] merchant ,  //å•†ä½å®½ï¼šN
+    output signed [M-1:0]     remainder  //æœ€ç»ˆä½™æ•°
 ); 
 
     wire [N_ACT-M-1:0]   dividend_t [N_ACT-M:0] ;
@@ -24,7 +24,7 @@ module    divider_top#(
     wire [N_ACT-M:0]     rdy_t ;
     wire [N_ACT-M:0]     merchant_t [N_ACT-M:0] ;
 
-     //ÅĞ¶ÏÊÇ·ñÎª¸ºÊı£¬Á½ÕßÍ¬ºÅÈ¡Õı£¬ÒìºÅÈ¡¸º
+     //åˆ¤æ–­æ˜¯å¦ä¸ºè´Ÿæ•°ï¼Œä¸¤è€…åŒå·å–æ­£ï¼Œå¼‚å·å–è´Ÿ
     wire [N-1:0] dividend_abs;
     wire [N-1:0] divisor_abs;
 
@@ -33,23 +33,23 @@ module    divider_top#(
 
     wire sign = (dividend[N-1] == 1) ^ (divisor[N-1] == 1);
 
-    //³õÊ¼»¯Ê×¸öÔËËãµ¥Ôª
+    //åˆå§‹åŒ–é¦–ä¸ªè¿ç®—å•å…ƒ
     divider_cell      #(.N(N_ACT), .M(M))
        u_divider_step0
     ( .clk              (clk),
       .rstn             (rstn),
       .en               (data_rdy),
-      //ÓÃ±»³ıÊı×î¸ßÎ» 1bit Êı¾İ×öµÚÒ»´Îµ¥²½ÔËËãµÄ±»³ıÊı£¬¸ßÎ»²¹0
+      //ç”¨è¢«é™¤æ•°æœ€é«˜ä½ 1bit æ•°æ®åšç¬¬ä¸€æ¬¡å•æ­¥è¿ç®—çš„è¢«é™¤æ•°ï¼Œé«˜ä½è¡¥0
       .dividend         ({{(M){1'b0}}, dividend_abs[N-1]}),
       .divisor          (divisor_abs),                  
-      .merchant_ci      ({(N_ACT-M+1){1'b0}}),   //ÉÌ³õÊ¼Îª0
-      .dividend_ci      (dividend_abs[N_ACT-M-1:0]), //Ô­Ê¼±»³ıÊı
+      .merchant_ci      ({(N_ACT-M+1){1'b0}}),   //å•†åˆå§‹ä¸º0
+      .dividend_ci      (dividend_abs[N_ACT-M-1:0]), //åŸå§‹è¢«é™¤æ•°
       //output
-      .dividend_kp      (dividend_t[N_ACT-M]),   //Ô­Ê¼±»³ıÊıĞÅÏ¢´«µİ
-      .divisor_kp       (divisor_t[N_ACT-M]),    //Ô­Ê¼³ıÊıĞÅÏ¢´«µİ
+      .dividend_kp      (dividend_t[N_ACT-M]),   //åŸå§‹è¢«é™¤æ•°ä¿¡æ¯ä¼ é€’
+      .divisor_kp       (divisor_t[N_ACT-M]),    //åŸå§‹é™¤æ•°ä¿¡æ¯ä¼ é€’
       .rdy              (rdy_t[N_ACT-M]),
-      .merchant         (merchant_t[N_ACT-M]),   //µÚÒ»´ÎÉÌ½á¹û
-      .remainder        (remainder_t[N_ACT-M])   //µÚÒ»´ÎÓàÊı
+      .merchant         (merchant_t[N_ACT-M]),   //ç¬¬ä¸€æ¬¡å•†ç»“æœ
+      .remainder        (remainder_t[N_ACT-M])   //ç¬¬ä¸€æ¬¡ä½™æ•°
       );
 
     genvar  i ;
@@ -60,7 +60,7 @@ module    divider_top#(
               (.clk              (clk),
                .rstn             (rstn),
                .en               (rdy_t[N_ACT-M-i+1]),
-               .dividend         ({remainder_t[N_ACT-M-i+1], dividend_t[N_ACT-M-i+1][N_ACT-M-i]}),   //ÓàÊıÓëÔ­Ê¼±»³ıÊıµ¥bitÊı¾İÆ´½Ó
+               .dividend         ({remainder_t[N_ACT-M-i+1], dividend_t[N_ACT-M-i+1][N_ACT-M-i]}),   //ä½™æ•°ä¸åŸå§‹è¢«é™¤æ•°å•bitæ•°æ®æ‹¼æ¥
                .divisor          (divisor_t[N_ACT-M-i+1]),
                .merchant_ci      (merchant_t[N_ACT-M-i+1]),
                .dividend_ci      (dividend_t[N_ACT-M-i+1]),
@@ -75,7 +75,7 @@ module    divider_top#(
     endgenerate
 
     assign res_rdy       = rdy_t[0];
-    assign merchant      = sign ? (-merchant_t[0]) : merchant_t[0];  //×îºóÒ»´ÎÉÌ½á¹û×÷Îª×îÖÕµÄÉÌ
-    assign remainder     = remainder_t[0]; //×îºóÒ»´ÎÓàÊı×÷Îª×îÖÕµÄÓàÊı
+    assign merchant      = sign ? (-merchant_t[0]) : merchant_t[0];  //æœ€åä¸€æ¬¡å•†ç»“æœä½œä¸ºæœ€ç»ˆçš„å•†
+    assign remainder     = remainder_t[0]; //æœ€åä¸€æ¬¡ä½™æ•°ä½œä¸ºæœ€ç»ˆçš„ä½™æ•°
 
 endmodule
