@@ -7,14 +7,19 @@
     <FileList>
         <File path="src/fifo_hs/fifo_hs.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_prom/acos_rom.v" type="file.verilog" enable="1"/>
+        <File path="src/gowin_rpll/rpll_20MHz.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_rpll/rpll_mic.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram0_512.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram1_512.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram_512.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/abs.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/i2s_decoder.v" type="file.verilog" enable="1"/>
-        <File path="src/rtl/audio_process/mic_subsys.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/audio_process/mic_subsys_6+1.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/cal_position/bi_microphone.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/cal_position/cal_position_6+1.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/cal_position/divisor_cell.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/cal_position/divisor_top.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/cal_position/sqrt.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/clock_and_reset/clk_div.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/clock_and_reset/clk_div_64.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/clock_and_reset/clock_manage.v" type="file.verilog" enable="1"/>
@@ -26,6 +31,6 @@
         <File path="src/xcorr_new/xcorr_wrap.v" type="file.verilog" enable="1"/>
         <File path="src/ACOUSTIC-Camera.cst" type="file.cst" enable="1"/>
         <File path="src/ACOUSTIC-Camera.sdc" type="file.sdc" enable="1"/>
-        <File path="src/ACOUSTIC-Camera.rao" type="file.gao" enable="1"/>
+        <File path="src/ACOUSTIC-Camera.rao" type="file.gao" enable="0"/>
     </FileList>
 </Project>

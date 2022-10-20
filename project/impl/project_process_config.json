@@ -27,7 +27,7 @@
  "I2C_SLAVE_ADDR" : "00",
  "Implicit_Initial_Value_Support" : false,
  "IncludePath" : [
-  "C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/project/src/xcorr_new/define"
+  "C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/project/src/xcorr_new/define"
  ],
  "Incremental_Compile" : "",
  "Initialize_Primitives" : false,
@@ -38,7 +38,7 @@
  "Number_of_Critical_Paths" : "",
  "Number_of_Start/End_Points" : "",
  "OUTPUT_BASE_NAME" : "ACOUSTIC-Camera",
- "POWER_ON_RESET" : false,
+ "POWER_ON_RESET_MONITOR" : true,
  "PRINT_BSRAM_VALUE" : true,
  "PROGRAM_DONE_BYPASS" : false,
  "Pipelining" : true,
@@ -76,6 +76,7 @@
  "Verilog_Standard" : "Vlg_Std_2001",
  "WAKE_UP" : "0",
  "Write_Vendor_Constraint_File" : true,
- "dsp_balance" : false,
- "show_all_warnings" : false
+ "dsp_balance" : true,
+ "show_all_warnings" : false,
+ "turn_off_bg" : false
 }
