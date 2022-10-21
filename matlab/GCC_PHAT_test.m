@@ -1,6 +1,6 @@
-% clc
-% clear 
-% close all
+clc
+clear 
+close all
 
 %加载仿真输出进行对比
 golden_result_f = '..\Module_test\XCORR\data\golden_result.dat';
@@ -71,7 +71,7 @@ title('Matlab calculate');
 [~,I] = max(abs(rcc));
 % lagDiff = lag(I);
 lagDiff = lag(I);
-timeDiff = lagDiff/Fs*10000;
+timeDiff = lagDiff/Fs;
 fprintf('timeDiff_cc = %f\r\n',timeDiff);
 
 % figure(2);
@@ -90,10 +90,8 @@ fprintf('timeDiff_cc = %f\r\n',timeDiff);
 
 %计算角度,这里假设为平面波
 dis_r=timeDiff*c;
-angel = dis_r./(mic_d*2*100);
-angel = floor(10*angel+1000);
-% angel=acos(angel)*180/pi;
-angel=data(angel);
+angel = dis_r./(mic_d*2);
+angel=acos(angel)*180/pi;
 if dis_s1<dis_s2
     angel=180-angel;
 end
