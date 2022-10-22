@@ -41,7 +41,8 @@ reg                             ram_rd_en;
 wire                            xcorr_all_complete;
 wire                            xcorr_calc_done;
 
-//`define      SIM_ROM_DATA
+
+// `define      SIM_ROM_DATA
 `define      SIM_MIC_DATA
 
 localparam      IDLE         = 3'b000;
@@ -311,29 +312,153 @@ endgenerate
 
 
 //Data RAM
-genvar j;
 wire signed [16- 1: 0]          mic_fifo_data [7 - 1: 0];
 
-generate
-    for (j = 0; j < 7; j = j + 1) begin: MIC_DATA_RAM
-        ram_512 U_RAM_512(
-        .clka                   (clk_WS             ), //input clka
-        .reseta                 (!rst_mic_n         ), //input reseta
-        .cea                    (fifo_en_mask       ), //input cea
-        .ada                    (ram_wr_addr        ), //input [8:0] ada
-        .din                    (mic_data[j]        ), //input [15:0] din
+`ifdef SIM_ROM_DATA
+ram0_512 U_RAM0_512(
+.clka                   (clk_WS             ), //input clka
+.reseta                 (!rst_mic_n         ), //input reseta
+.cea                    (fifo_en_mask       ), //input cea
+.ada                    (ram_wr_addr        ), //input [8:0] ada
+.din                    (mic_data[0]        ), //input [15:0] din
 
 
-        .clkb                   (clk          ), //input clkb
-        .resetb                 (!rst_n             ), //input resetb
-        .ceb                    (ram_rd_en          ), //input ceb
-        .adb                    (ram_rd_addr        ),//input [8:0] adb
-        .dout                   (mic_fifo_data[j]   ), //output [15:0] dout
+.clkb                   (clk                ), //input clkb
+.resetb                 (!rst_n             ), //input resetb
+.ceb                    (ram_rd_en          ), //input ceb
+.adb                    (ram_rd_addr        ),//input [8:0] adb
+.dout                   (mic_fifo_data[0]   ), //output [15:0] dout
 
-        .oce                    (1'b1               )  //input oce
-    );
-    end
-endgenerate
+.oce                    (1'b1               )  //input oce
+);
+
+ram1_512 U_RAM1_512(
+.clka                   (clk_WS             ), //input clka
+.reseta                 (!rst_mic_n         ), //input reseta
+.cea                    (fifo_en_mask       ), //input cea
+.ada                    (ram_wr_addr        ), //input [8:0] ada
+.din                    (mic_data[1]        ), //input [15:0] din
+
+
+.clkb                   (clk                ), //input clkb
+.resetb                 (!rst_n             ), //input resetb
+.ceb                    (ram_rd_en          ), //input ceb
+.adb                    (ram_rd_addr        ),//input [8:0] adb
+.dout                   (mic_fifo_data[1]   ), //output [15:0] dout
+
+.oce                    (1'b1               )  //input oce
+);
+
+ram2_512 U_RAM2_512(
+.clka                   (clk_WS             ), //input clka
+.reseta                 (!rst_mic_n         ), //input reseta
+.cea                    (fifo_en_mask       ), //input cea
+.ada                    (ram_wr_addr        ), //input [8:0] ada
+.din                    (mic_data[2]        ), //input [15:0] din
+
+
+.clkb                   (clk                ), //input clkb
+.resetb                 (!rst_n             ), //input resetb
+.ceb                    (ram_rd_en          ), //input ceb
+.adb                    (ram_rd_addr        ),//input [8:0] adb
+.dout                   (mic_fifo_data[2]   ), //output [15:0] dout
+
+.oce                    (1'b1               )  //input oce
+);
+
+ram3_512 U_RAM3_512(
+.clka                   (clk_WS             ), //input clka
+.reseta                 (!rst_mic_n         ), //input reseta
+.cea                    (fifo_en_mask       ), //input cea
+.ada                    (ram_wr_addr        ), //input [8:0] ada
+.din                    (mic_data[3]        ), //input [15:0] din
+
+
+.clkb                   (clk                ), //input clkb
+.resetb                 (!rst_n             ), //input resetb
+.ceb                    (ram_rd_en          ), //input ceb
+.adb                    (ram_rd_addr        ),//input [8:0] adb
+.dout                   (mic_fifo_data[3]   ), //output [15:0] dout
+
+.oce                    (1'b1               )  //input oce
+);
+
+ram4_512 U_RAM4_512(
+.clka                   (clk_WS             ), //input clka
+.reseta                 (!rst_mic_n         ), //input reseta
+.cea                    (fifo_en_mask       ), //input cea
+.ada                    (ram_wr_addr        ), //input [8:0] ada
+.din                    (mic_data[4]        ), //input [15:0] din
+
+
+.clkb                   (clk                ), //input clkb
+.resetb                 (!rst_n             ), //input resetb
+.ceb                    (ram_rd_en          ), //input ceb
+.adb                    (ram_rd_addr        ),//input [8:0] adb
+.dout                   (mic_fifo_data[4]   ), //output [15:0] dout
+
+.oce                    (1'b1               )  //input oce
+);
+
+ram5_512 U_RAM5_512(
+.clka                   (clk_WS             ), //input clka
+.reseta                 (!rst_mic_n         ), //input reseta
+.cea                    (fifo_en_mask       ), //input cea
+.ada                    (ram_wr_addr        ), //input [8:0] ada
+.din                    (mic_data[5]        ), //input [15:0] din
+
+
+.clkb                   (clk                ), //input clkb
+.resetb                 (!rst_n             ), //input resetb
+.ceb                    (ram_rd_en          ), //input ceb
+.adb                    (ram_rd_addr        ),//input [8:0] adb
+.dout                   (mic_fifo_data[5]   ), //output [15:0] dout
+
+.oce                    (1'b1               )  //input oce
+);
+
+ram6_512 U_RAM6_512(
+.clka                   (clk_WS             ), //input clka
+.reseta                 (!rst_mic_n         ), //input reseta
+.cea                    (fifo_en_mask       ), //input cea
+.ada                    (ram_wr_addr        ), //input [8:0] ada
+.din                    (mic_data[6]        ), //input [15:0] din
+
+
+.clkb                   (clk                ), //input clkb
+.resetb                 (!rst_n             ), //input resetb
+.ceb                    (ram_rd_en          ), //input ceb
+.adb                    (ram_rd_addr        ),//input [8:0] adb
+.dout                   (mic_fifo_data[6]   ), //output [15:0] dout
+
+.oce                    (1'b1               )  //input oce
+);
+`elsif SIM_MIC_DATA
+
+    genvar j;
+    generate
+        for (j = 0; j < 7; j = j + 1) begin: MIC_DATA_RAM
+            ram_512 U_RAM_512(
+            .clka                   (clk_WS             ), //input clka
+            .reseta                 (!rst_mic_n         ), //input reseta
+            .cea                    (fifo_en_mask       ), //input cea
+            .ada                    (ram_wr_addr        ), //input [8:0] ada
+            .din                    (mic_data[j]        ), //input [15:0] din
+
+
+            .clkb                   (clk                ), //input clkb
+            .resetb                 (!rst_n             ), //input resetb
+            .ceb                    (ram_rd_en          ), //input ceb
+            .adb                    (ram_rd_addr        ),//input [8:0] adb
+            .dout                   (mic_fifo_data[j]   ), //output [15:0] dout
+
+            .oce                    (1'b1               )  //input oce
+        );
+        end
+    endgenerate
+
+`endif
+
 
 //XCORR CALC
 genvar k;

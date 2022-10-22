@@ -75,7 +75,8 @@ module    divider_top#(
     endgenerate
 
     assign res_rdy       = rdy_t[0];
-    assign merchant      = sign ? (-merchant_t[0]) : merchant_t[0];  //最后一次商结果作为最终的商
+    assign remainder_over = (remainder_t[0] >= (divisor_abs >> 2) )? 1'b1 : 1'b0; //四舍五入
+    assign merchant      = sign ? (-merchant_t[0] - remainder_over) : (merchant_t[0] + remainder_over);  //最后一次商结果作为最终的商
     assign remainder     = remainder_t[0]; //最后一次余数作为最终的余数
 
 endmodule

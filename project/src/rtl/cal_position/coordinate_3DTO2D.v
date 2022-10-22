@@ -10,7 +10,7 @@ module coordinate_3DTO2D(
 
 localparam height = 4800; //height/156 or width/208
 localparam weight = 274;
-localparam rate = weight / 'd208;
+localparam rate = height / 'd208;
 
 reg  [10- 1: 0] IntrinsicMatrix [ 0:3 - 1] [ 0:3 - 1];
 
@@ -26,11 +26,11 @@ end
 assign x_2d = (   IntrinsicMatrix[0][0] * x 
                 + IntrinsicMatrix[0][1] * y
                 + IntrinsicMatrix[0][2] * z
-             )/ z * rate;
+              ) * 10 / z * rate;
 
 assign y_2d = (   IntrinsicMatrix[1][0] * x 
                 + IntrinsicMatrix[1][1] * y
                 + IntrinsicMatrix[1][2] * z
-              )/ z * rate;
+              ) * 10 / z * rate;
 
 endmodule

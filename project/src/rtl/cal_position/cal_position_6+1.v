@@ -19,11 +19,8 @@ module cal_position(
 localparam signed   L           = 16'd200;   // distance between microphones (0.1mm)
 localparam          vel         = 340;       //  velicity of sound (0.1mm/0.1ms)
 localparam          frequency   = 93750;
-localparam          COEF1       = 8 * 1732 * L / 1000;
-localparam          COEF2       = 16 * L;
-localparam          height      = 4800; //height/156 or width/208
-localparam          weight      = 274;
-localparam          rate        = height / 208;
+localparam          COEF1       = 8 * 1732 * L / 100;
+localparam          COEF2       = 160 * L;
 
 reg signed  [32- 1: 0]  R;
 
@@ -35,14 +32,32 @@ reg         [10- 1: 0]  IntrinsicMatrix [0 : 2 - 1] [0: 3 - 1];
 
 wire        [32- 1: 0]  z_position2;           //z*z
 wire                    cal_end;
-wire        [32- 1: 0]  lag_diff [0 : 6 - 1];
+reg         [32- 1: 0]  lag_diff [0 : 6 - 1];
 
-assign      lag_diff[0] = {{26{lag_diff_in_0[5]}} , {lag_diff_in_0}};
-assign      lag_diff[1] = {{26{lag_diff_in_1[5]}} , {lag_diff_in_1}};
-assign      lag_diff[2] = {{26{lag_diff_in_2[5]}} , {lag_diff_in_2}};
-assign      lag_diff[3] = {{26{lag_diff_in_3[5]}} , {lag_diff_in_3}};
-assign      lag_diff[4] = {{26{lag_diff_in_4[5]}} , {lag_diff_in_4}};
-assign      lag_diff[5] = {{26{lag_diff_in_5[5]}} , {lag_diff_in_5}};
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+        lag_diff[0] <= 32'b0;
+        lag_diff[1] <= 32'b0;
+        lag_diff[2] <= 32'b0;
+        lag_diff[3] <= 32'b0;
+        lag_diff[4] <= 32'b0;
+        lag_diff[5] <= 32'b0;
+    end else if(ena)begin
+        lag_diff[0] <= {{26{lag_diff_in_0[5]}} , {lag_diff_in_0}};
+        lag_diff[1] <= {{26{lag_diff_in_1[5]}} , {lag_diff_in_1}};
+        lag_diff[2] <= {{26{lag_diff_in_2[5]}} , {lag_diff_in_2}};
+        lag_diff[3] <= {{26{lag_diff_in_3[5]}} , {lag_diff_in_3}};
+        lag_diff[4] <= {{26{lag_diff_in_4[5]}} , {lag_diff_in_4}};
+        lag_diff[5] <= {{26{lag_diff_in_5[5]}} , {lag_diff_in_5}};
+    end else begin
+        lag_diff[0] <= lag_diff[0];
+        lag_diff[1] <= lag_diff[1];
+        lag_diff[2] <= lag_diff[2];
+        lag_diff[3] <= lag_diff[3];
+        lag_diff[4] <= lag_diff[4];
+        lag_diff[5] <= lag_diff[5];
+    end
+end     
 
 initial begin
     IntrinsicMatrix[0][0]       <= 437;      //内参矩阵
@@ -332,7 +347,7 @@ always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
         x_2d <= 32'b0;
     end else if (cr_div_x_2d) begin
-        x_2d <= merchant * rate;
+        x_2d <= merchant;
     end else begin
         x_2d <= x_2d;
     end
@@ -342,7 +357,7 @@ always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
         y_2d <= 32'b0;
     end else if (cr_div_y_2d) begin
-        y_2d <= merchant * rate;
+        y_2d <= merchant;
     end else begin
         y_2d <= y_2d;
     end
@@ -388,7 +403,7 @@ always@(posedge clk or negedge rst_n) begin
         dividend <=   IntrinsicMatrix[0][0] * x_position
                     + IntrinsicMatrix[0][1] * y_position
                     + IntrinsicMatrix[0][2] * z_position ;
-        divisor <= z_position * 10;
+        divisor <= z_position;
         data_rdy <= 1'b1;
     end else if (cr_x_2d) begin
         data_rdy <= 1'b0;
@@ -396,7 +411,7 @@ always@(posedge clk or negedge rst_n) begin
         dividend <= IntrinsicMatrix[1][0] * x_position 
                   + IntrinsicMatrix[1][1] * y_position
                   + IntrinsicMatrix[1][2] * z_position ;
-        divisor <= z_position * 10;
+        divisor <= z_position;
         data_rdy <= 1'b1;
     end else if (cr_y_2d) begin
         data_rdy <= 1'b0;
@@ -407,13 +422,19 @@ always@(posedge clk or negedge rst_n) begin
     end
 end
 
-assign x_position = x_position_temp / 10;
-assign y_position = y_position_temp / 10;
+// assign x_pos_round = ((x_position_temp % 10) >= 5)? 1'b1 : 1'b0;
+// assign y_pos_round = ((y_position_temp % 10) >= 5)? 1'b1 : 1'b0;
+// assign R_pos_round = ((R % 10) >= 5)? 1'b1 : 1'b0;
+
+// assign x_position = (x_position_temp / 10) + x_pos_round;
+// assign y_position = (y_position_temp / 10) + y_pos_round;
+assign x_position = x_position_temp;
+assign y_position = y_position_temp;
 assign z_position2 = (R / 10) * (R / 10) - x_position * x_position - y_position * y_position;
 
 divider_top#(           
-     .N                 (32             )
-    ,.M                 (32             )
+     .N                 (32           )
+    ,.M                 (32           )
 )
 U_DIVIDER(
      .clk               (clk          )
@@ -427,7 +448,7 @@ U_DIVIDER(
 );
 
 sqrt#(
-    .TIMES              (31            )
+    .TIMES              (64           )
 )
 mysqrt(
      .clk               (clk           ) //input               
