@@ -4,12 +4,12 @@
 //GOWIN Version: V1.9.8.08
 //Part Number: GW2A-LV18PG256C8/I7
 //Device: GW2A-18
-//Created Time: Sat Oct 22 12:42:43 2022
+//Created Time: Sat Oct 22 12:44:58 2022
 
 //Change the instance name and port connections to the signal names
 //--------Copy here to design--------
 
-    ram0_512 your_instance_name(
+    ram3_512 your_instance_name(
         .dout(dout_o), //output [15:0] dout
         .clka(clka_i), //input clka
         .cea(cea_i), //input cea

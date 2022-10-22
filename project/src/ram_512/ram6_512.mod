@@ -4,9 +4,9 @@
 -part_number GW2A-LV18PG256C8/I7
 
 
--mod_name ram0_512
--file_name ram0_512
--path C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/project/src/ram_512/
+-mod_name ram6_512
+-file_name ram6_512
+-path C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/project/src/gowin_sdpb/
 -type RAM_SDP
 -file_type vlg
 -bram_b true
@@ -16,5 +16,5 @@
 -width_1 16
 -read_mode bypass
 -reset_mode sync
--init_file C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/Module_test/XCORR/data/tb0.mi
+-init_file C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/Module_test/XCORR/data/tb6.mi
 -init_match port_B

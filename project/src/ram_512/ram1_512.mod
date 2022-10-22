@@ -6,7 +6,7 @@
 
 -mod_name ram1_512
 -file_name ram1_512
--path C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/project/src/ram_512/
+-path C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/project/src/ram_512/
 -type RAM_SDP
 -file_type vlg
 -bram_b true
@@ -16,5 +16,5 @@
 -width_1 16
 -read_mode bypass
 -reset_mode sync
--init_file C:\Users\Misaka\OneDrive\2022_Gowin\ACOUSTIC-Camera\Module_test\XCORR\data\tb_y.mi
+-init_file C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/Module_test/XCORR/data/tb1.mi
 -init_match port_B

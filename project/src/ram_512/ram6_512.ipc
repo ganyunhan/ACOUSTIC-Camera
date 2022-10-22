@@ -1,7 +1,7 @@
 [General]
 ipc_version=4
-file=ram0_512
-module=ram0_512
+file=ram6_512
+module=ram6_512
 target_device=gw2a18-002
 type=ram_sdpb
 version=1.0
@@ -12,7 +12,7 @@ DEPTH_A=512
 DEPTH_B=512
 DIMENSION_MATCH=66
 LANG=0
-MEM_FILE=C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/Module_test/XCORR/data/tb0.mi
+MEM_FILE=C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/Module_test/XCORR/data/tb6.mi
 READ=0
 RESET_MODE=true
 WIDTH_A=16
