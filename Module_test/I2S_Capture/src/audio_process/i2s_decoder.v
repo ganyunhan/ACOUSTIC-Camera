@@ -6,7 +6,7 @@
 // Description: I2S Audio Signal Decoder
 // Dependencies: None
 // Revision 1.0
-// Additional Comments: clk_mic = 64*fs = 64*f(WS) = 1.28MHz
+// Additional Comments: clk_mic = 64*fs = 64*f(WS)
 //////////////////////////////////////////////////////////////////////////////////
 module i2s_decoder#(
 	parameter		DATAWIDTH = 24
@@ -17,20 +17,21 @@ module i2s_decoder#(
 	,input 							        WS
 	,input 							        DATA
 	
-	,output reg	signed [DATAWIDTH - 1: 0] 	L_DATA
-	,output reg	signed [DATAWIDTH - 1: 0] 	R_DATA
+	,output 	signed [DATAWIDTH - 1: 0] 	L_DATA_O
+	,output 	signed [DATAWIDTH - 1: 0] 	R_DATA_O
 	,output							        L_Sel
 	,output							        R_Sel
-	,output 						        recv_over
+	,output reg						        recv_over
 );
-	 
+
 localparam IDLE 		= 2'b00;
 localparam GET_RIGHT 	= 2'b01;
 localparam GET_LEFT 	= 2'b11;
 
+reg	signed [DATAWIDTH - 1: 0] 	L_DATA;
+reg	signed [DATAWIDTH - 1: 0] 	R_DATA;
 reg [4:0] cnt;
 reg [1:0] state,next_state;
-reg [24- 1: 0]  temlate;
 
 reg WS_reg;
 wire WS_en;
@@ -49,6 +50,7 @@ always @(negedge clk_mic or negedge rst_mic_n) begin
 	end
 end
 
+
 always @(*) begin
 	case(state)
 		IDLE:
@@ -62,7 +64,7 @@ always @(*) begin
 			end
 		GET_RIGHT:
 			begin
-				if(cnt == 'd32) begin
+				if(cnt == 'd31) begin
 					next_state = GET_LEFT;
 				end
 				else begin
@@ -71,7 +73,7 @@ always @(*) begin
 			end
 		GET_LEFT:
 			begin
-				if(cnt == 'd32) begin
+				if(cnt == 'd31) begin
 					next_state = IDLE;
 				end
 				else begin
@@ -97,12 +99,10 @@ always @(negedge clk_mic or negedge rst_mic_n) begin
 	else cnt <= 'd0;
 end
 
-
 // Clocks 2 through 25 transmit data
 always @(posedge clk_mic or negedge rst_mic_n) begin
 	if(!rst_mic_n) begin
 		L_DATA <= 'd0;
-        temlate <= 'd0;
 	end
 	else if(~WS && (cnt > 'd0) && (cnt < 'd25)) begin
 		L_DATA <= {L_DATA[DATAWIDTH - 2: 0],DATA};  // shift
@@ -111,24 +111,6 @@ always @(posedge clk_mic or negedge rst_mic_n) begin
 		L_DATA <= L_DATA;
 	end
 end
-
-// Clocks 2 through 25 transmit data
-//always @(posedge clk_mic or negedge rst_mic_n) begin
-//	if(!rst_mic_n) begin
-//		L_DATA <= 'd0;
-//        temlate <= 'd0;
-//	end
-//	else if(~WS && (cnt > 'd0) && (cnt < 'd2)) begin
-//		L_DATA <= temlate;  // shift
-//        temlate <= temlate + 1'b1;
-//	end
-//    else if (temlate >= 24'hFFFF) begin
-//        temlate <= 1'b0;
-//    end
-//	else begin
-//		temlate <= temlate;
-//	end
-//end
 
 always @(posedge clk_mic or negedge rst_mic_n) begin
 	if(!rst_mic_n) begin
@@ -142,10 +124,23 @@ always @(posedge clk_mic or negedge rst_mic_n) begin
 	end
 end
 
-//assign cr_left_mic = (state == GET_LEFT) ? 1'b1 : 1'b0;
+assign L_DATA_O = L_DATA[24- 1: 8];
+assign R_DATA_O = R_DATA[24- 1: 8];
 
-//assign recv_over = ((cnt == 'd26) && (cr_left_mic == 1'b1))? 1'b1 : 1'b0;
-assign recv_over = (cnt == 'd26)? 1'b1 : 1'b0;
+assign cr_get_left	=	(state == GET_LEFT ) ? 1'b1 : 1'b0;
+assign cr_get_right	=	(state == GET_RIGHT) ? 1'b1 : 1'b0;
+
+//only get the left channel
+always @(posedge clk_mic or negedge rst_mic_n) begin
+	if (!rst_mic_n) begin
+		recv_over <= 1'b0;
+	end else if (cr_get_right && cnt == 'd26)begin
+		recv_over <= 1'b1;
+	end else begin
+		recv_over <= 1'b0;
+	end
+end
+
 assign L_Sel = 1'b0;
 assign R_Sel = 1'b1;
 

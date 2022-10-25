@@ -17,8 +17,8 @@ module i2s_decoder#(
 	,input 							        WS
 	,input 							        DATA
 	
-	,output reg	signed [DATAWIDTH - 1: 0] 	L_DATA
-	,output reg	signed [DATAWIDTH - 1: 0] 	R_DATA
+	,output 	signed [DATAWIDTH - 1: 0] 	L_DATA_O
+	,output 	signed [DATAWIDTH - 1: 0] 	R_DATA_O
 	,output							        L_Sel
 	,output							        R_Sel
 	,output reg						        recv_over
@@ -28,6 +28,8 @@ localparam IDLE 		= 2'b00;
 localparam GET_RIGHT 	= 2'b01;
 localparam GET_LEFT 	= 2'b11;
 
+reg	signed [DATAWIDTH - 1: 0] 	L_DATA;
+reg	signed [DATAWIDTH - 1: 0] 	R_DATA;
 reg [4:0] cnt;
 reg [1:0] state,next_state;
 
@@ -121,6 +123,9 @@ always @(posedge clk_mic or negedge rst_mic_n) begin
 		R_DATA <= R_DATA;
 	end
 end
+
+assign L_DATA_O = L_DATA[24- 1: 8];
+assign R_DATA_O = R_DATA[24- 1: 8];
 
 assign cr_get_left	=	(state == GET_LEFT ) ? 1'b1 : 1'b0;
 assign cr_get_right	=	(state == GET_RIGHT) ? 1'b1 : 1'b0;
