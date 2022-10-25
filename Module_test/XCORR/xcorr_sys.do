@@ -10,6 +10,11 @@ vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/top.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/ram_512/ram_512.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/ram_512/ram0_512.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/ram_512/ram1_512.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/ram_512/ram2_512.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/ram_512/ram3_512.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/ram_512/ram4_512.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/ram_512/ram5_512.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/ram_512/ram6_512.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/gowin_prom/acos_rom.v"
 
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/gowin_rpll/rpll_mic.v"
@@ -17,6 +22,10 @@ vlog -sv -novopt +incdir+../tb -work work "../../project/src/gowin_rpll/rpll_mic
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/audio_process/abs.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/audio_process/i2s_decoder.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/audio_process/mic_subsys.v"
+
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/video_process/hotspot_show.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/video_process/syn_gen.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/video_process/gowin_prom/gowin_prom.v"
 
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/uart/uart_top.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/uart/uart_tx.v"
@@ -30,6 +39,7 @@ vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/ca
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/divisor_cell.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/divisor_top.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/sqrt.v"
+vlog -sv -novopt +incdir+../tb -work work "../../project/src/gowin_mult/gowin_mult.v"
 
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/audio_process/mic_subsys_6+1.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/gowin_rpll/rpll_20MHz.v"
@@ -54,6 +64,14 @@ add wave -group "subsys/ram_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[3]/U_RAM
 add wave -group "subsys/ram_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[4]/U_RAM_512/*}
 add wave -group "subsys/ram_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[5]/U_RAM_512/*}
 add wave -group "subsys/ram_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[6]/U_RAM_512/*}
+
+## add wave -group "subsys/ram_0" {sim:/tb/U_TOP/U_MIC_SUBSYS/U_RAM0_512/*}
+## add wave -group "subsys/ram_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/U_RAM1_512/*}
+## add wave -group "subsys/ram_2" {sim:/tb/U_TOP/U_MIC_SUBSYS/U_RAM2_512/*}
+## add wave -group "subsys/ram_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/U_RAM3_512/*}
+## add wave -group "subsys/ram_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/U_RAM4_512/*}
+## add wave -group "subsys/ram_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/U_RAM5_512/*}
+## add wave -group "subsys/ram_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/U_RAM6_512/*}
 
 add wave -group "subsys/xcorr_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[1]/U_XCORR_TOP/series_x}
 add wave -group "subsys/xcorr_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[1]/U_XCORR_TOP/series_y}
@@ -104,6 +122,9 @@ add wave -group "subsys/xcorr_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[6]/U_X
 add wave -group "subsys/xcorr_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/XCORR_MODULE[6]/U_XCORR_TOP/delay}
 
 add wave -group "calc" {sim:/tb/U_TOP/U_CAL_POSITION/*}
+add wave -group "calc" {sim:/tb/U_TOP/U_CAL_POSITION/lag_diff}
+
+add wave -group "thd_show" {sim:/tb/U_TOP/U_THD_SHOW/*}
 
 ## part 5: show ui 
 view wave
@@ -112,4 +133,4 @@ view signals
 
 ## part 6: run 
 ## run 9060000ns
-run 260000ns
+run 96000000ns

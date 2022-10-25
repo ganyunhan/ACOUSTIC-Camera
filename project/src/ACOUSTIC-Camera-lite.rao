@@ -1,0 +1,46 @@
+<?xml version="1" encoding="UTF-8"?>
+<GAO_CONFIG>
+    <Version>3.0</Version>
+    <Mode>Lite</Mode>
+    <AoCore_Lite index="0" sample_clock="clk_60MHz" trig_type="0" capture_amount="2048" implemention="0" input_register_enabled="0" capture_init_data_enabled="0" module_name="top">
+        <SignalList>
+            <Bus name="x_2d[15:0]">
+                <Signal>x_2d[15]</Signal>
+                <Signal>x_2d[14]</Signal>
+                <Signal>x_2d[13]</Signal>
+                <Signal>x_2d[12]</Signal>
+                <Signal>x_2d[11]</Signal>
+                <Signal>x_2d[10]</Signal>
+                <Signal>x_2d[9]</Signal>
+                <Signal>x_2d[8]</Signal>
+                <Signal>x_2d[7]</Signal>
+                <Signal>x_2d[6]</Signal>
+                <Signal>x_2d[5]</Signal>
+                <Signal>x_2d[4]</Signal>
+                <Signal>x_2d[3]</Signal>
+                <Signal>x_2d[2]</Signal>
+                <Signal>x_2d[1]</Signal>
+                <Signal>x_2d[0]</Signal>
+            </Bus>
+            <Bus name="y_2d[15:0]">
+                <Signal>y_2d[15]</Signal>
+                <Signal>y_2d[14]</Signal>
+                <Signal>y_2d[13]</Signal>
+                <Signal>y_2d[12]</Signal>
+                <Signal>y_2d[11]</Signal>
+                <Signal>y_2d[10]</Signal>
+                <Signal>y_2d[9]</Signal>
+                <Signal>y_2d[8]</Signal>
+                <Signal>y_2d[7]</Signal>
+                <Signal>y_2d[6]</Signal>
+                <Signal>y_2d[5]</Signal>
+                <Signal>y_2d[4]</Signal>
+                <Signal>y_2d[3]</Signal>
+                <Signal>y_2d[2]</Signal>
+                <Signal>y_2d[1]</Signal>
+                <Signal>y_2d[0]</Signal>
+            </Bus>
+        </SignalList>
+    </AoCore_Lite>
+    <GAO_ID>0011100001010101</GAO_ID>
+</GAO_CONFIG>

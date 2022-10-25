@@ -9,31 +9,34 @@ module cal_position(
     ,input  signed          [6 - 1: 0]      lag_diff_in_3
     ,input  signed          [6 - 1: 0]      lag_diff_in_4
     ,input  signed          [6 - 1: 0]      lag_diff_in_5
-    ,output signed          [32- 1: 0]      x_position
-    ,output signed          [32- 1: 0]      y_position//mm
-    ,output                 [16- 1: 0]      z_position
+    // ,output signed          [16- 1: 0]      x_position
+    // ,output signed          [32- 1: 0]      y_position//mm
+    // ,output                 [16- 1: 0]      z_position
     ,output reg signed      [32- 1: 0]      x_2d
     ,output reg signed      [32- 1: 0]      y_2d
     ,output reg                             done//caculate end
-)/* synthesis syn_preserve = 1 *//* synthesis syn_netlist_hierarchy=1 */;
+)/* synthesis syn_preserve = 1 */ /* synthesis syn_keep=1 *//* synthesis syn_netlist_hierarchy=1 *//* synthesis syn_dspstyle ="logic" */;
 
 localparam signed   L           = 16'd200;   // distance between microphones (0.1mm)
 localparam          vel         = 340;       //  velicity of sound (0.1mm/0.1ms)
 localparam          frequency   = 93750;
-localparam          COEF1       = 8 * 1732 * L / 100;
-localparam          COEF2       = 160 * L;
+localparam          COEF1       = 8 * 1732 * L / 1000;
+localparam          COEF2       = 16 * L;
 
 reg signed  [32- 1: 0]  R;
 
-reg signed  [32- 1: 0]  y_position_temp/* synthesis syn_preserve = 1 */;
-reg signed  [32- 1: 0]  x_position_temp/* synthesis syn_preserve = 1 */;
+reg  signed [32- 1: 0]  x_position/* synthesis syn_keep=1 */;
+wire signed [32- 1: 0]  y_position/* synthesis syn_keep=1 */;
+wire signed [16- 1: 0]  z_position/* synthesis syn_keep=1 */;
+reg signed  [32- 1: 0]  y_temp/* synthesis syn_preserve = 1 */ /* synthesis syn_keep=1 */;       //distance between target and microphones
+reg signed  [32- 1: 0]  x_temp/* synthesis syn_preserve = 1 */ /* synthesis syn_keep=1 */;       //distance between target and microphones
 
 reg signed  [32- 1: 0]  distance[6 - 1: 0];      //d12,d13,d14
 reg         [10- 1: 0]  IntrinsicMatrix [0 : 2 - 1] [0: 3 - 1];
 
-reg signed  [32- 1: 0]  z_position2;           //z*z
+wire signed [32- 1: 0]  z_position2;           //z*z
 wire                    cal_end;
-reg         [32- 1: 0]  lag_diff [0 : 6 - 1];
+reg  signed [32- 1: 0]  lag_diff [0 : 6 - 1];
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
@@ -60,22 +63,13 @@ always @(posedge clk or negedge rst_n) begin
     end
 end     
 
-always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-        IntrinsicMatrix[0][0]       <= 10'b0;      //内参矩阵
-        IntrinsicMatrix[0][1]       <= 10'b0;
-        IntrinsicMatrix[0][2]       <= 10'b0;
-        IntrinsicMatrix[1][0]       <= 10'b0;
-        IntrinsicMatrix[1][1]       <= 10'b0;
-        IntrinsicMatrix[1][2]       <= 10'b0;
-    end else begin
-        IntrinsicMatrix[0][0]       <= 437;      //内参矩阵
-        IntrinsicMatrix[0][1]       <= 0;
-        IntrinsicMatrix[0][2]       <= 242;
-        IntrinsicMatrix[1][0]       <= 0;
-        IntrinsicMatrix[1][1]       <= 330;
-        IntrinsicMatrix[1][2]       <= 145;
-    end  
+initial begin
+    IntrinsicMatrix[0][0]       <= 437;      //内参矩阵
+    IntrinsicMatrix[0][1]       <= 0;
+    IntrinsicMatrix[0][2]       <= 242;
+    IntrinsicMatrix[1][0]       <= 0;
+    IntrinsicMatrix[1][1]       <= 330;
+    IntrinsicMatrix[1][2]       <= 145;
 end
 
 localparam      IDLE            = 5'b00000;
@@ -100,6 +94,9 @@ localparam      CALC_Y_2D       = 5'b10000;
 localparam      DIV_Y_2D        = 5'b10001;
 localparam      DONE            = 5'b10010;
 localparam      PAUSE_LAG       = 5'b10011;
+localparam      CAL_X_10        = 5'b10100;
+localparam      DIV_X_10        = 5'b10101;
+localparam      PAUSE_10        = 5'b10110;
 
 localparam      DIST_NUM        = 6;
 
@@ -180,9 +177,26 @@ always @(*) begin
         end
         CALC_DIV_X: begin
             if (res_rdy) begin
-                nx_state = CALC_POS_Y;
+                nx_state = PAUSE_10;
             end else begin  
                 nx_state = CALC_DIV_X;
+            end
+        end
+        PAUSE_10: begin
+            nx_state = CAL_X_10;
+        end
+        CAL_X_10: begin
+            if (!cal_end) begin
+                nx_state = DIV_X_10;
+            end else begin
+                nx_state = CAL_X_10;
+            end
+        end
+        DIV_X_10: begin
+            if (res_rdy) begin
+                nx_state = CALC_POS_Y;
+            end else begin  
+                nx_state = DIV_X_10;
             end
         end
         CALC_POS_Y: begin
@@ -262,6 +276,8 @@ assign  cr_div_x_2d  = (cr_state == DIV_X_2D   ) ? 1'b1 : 1'b0;
 assign  cr_y_2d      = (cr_state == CALC_Y_2D  ) ? 1'b1 : 1'b0;
 assign  cr_div_y_2d  = (cr_state == DIV_Y_2D   ) ? 1'b1 : 1'b0;
 assign  cr_done      = (cr_state == DONE       ) ? 1'b1 : 1'b0;
+assign  cr_xdiv_10   = (cr_state == DIV_X_10   ) ? 1'b1 : 1'b0;
+assign  cr_clcx_10   = (cr_state == CAL_X_10   ) ? 1'b1 : 1'b0;
 
 assign  nx_calc_dist = (nx_state == CALC_DIST  ) ? 1'b1 : 1'b0;
 assign  nx_div_dist  = (nx_state == DIV_DIST   ) ? 1'b1 : 1'b0;
@@ -279,6 +295,8 @@ assign  nx_div_x_2d  = (nx_state == DIV_X_2D   ) ? 1'b1 : 1'b0;
 assign  nx_y_2d      = (nx_state == CALC_Y_2D  ) ? 1'b1 : 1'b0;
 assign  nx_div_y_2d  = (nx_state == DIV_Y_2D   ) ? 1'b1 : 1'b0;
 assign  nx_done      = (nx_state == DONE       ) ? 1'b1 : 1'b0;
+assign  nx_xdiv_10   = (nx_state == DIV_X_10   ) ? 1'b1 : 1'b0;
+assign  nx_clcx_10   = (nx_state == CAL_X_10   ) ? 1'b1 : 1'b0;
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
@@ -343,21 +361,31 @@ end
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        x_position_temp <= 32'b0;
+        x_temp <= 32'b0;
     end else if (cr_div_x) begin
-        x_position_temp <= merchant;
+        x_temp <= merchant;
     end else begin
-        x_position_temp <= x_position_temp;
+        x_temp <= x_temp;
     end
 end
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        y_position_temp <= 32'b0;
-    end else if (cr_div_y) begin
-        y_position_temp <= merchant;
+        x_position <= 32'b0;
+    end else if (cr_xdiv_10) begin
+        x_position <= merchant;
     end else begin
-        y_position_temp <= y_position_temp;
+        x_position <= x_position;
+    end
+end
+
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+        y_temp <= 32'b0;
+    end else if (cr_div_y) begin
+        y_temp <= merchant;
+    end else begin
+        y_temp <= y_temp;
     end
 end
 
@@ -407,6 +435,12 @@ always@(posedge clk or negedge rst_n) begin
         data_rdy <= 1'b1;
     end else if (cr_calc_x) begin
         data_rdy <= 1'b0;
+    end else if (nx_clcx_10) begin
+        dividend <= x_temp; 
+        divisor <= 10;
+        data_rdy <= 1'b1;
+    end else if (cr_clcx_10) begin
+        data_rdy <= 1'b0;
     end else if (nx_calc_y) begin
         dividend <= 2 * R * (distance[4] - distance[1] + distance[5] - distance[0] 
                            + distance[3] - distance[2]) + distance[4] * distance[4] 
@@ -418,16 +452,16 @@ always@(posedge clk or negedge rst_n) begin
     end else if (cr_calc_y) begin
         data_rdy <= 1'b0;
     end else if (nx_x_2d) begin
-        dividend <=   IntrinsicMatrix[0][0] * x_position_temp
-                    + IntrinsicMatrix[0][1] * y_position_temp
+        dividend <=   IntrinsicMatrix[0][0] * x_position
+                    + IntrinsicMatrix[0][1] * y_position
                     + IntrinsicMatrix[0][2] * z_position ;
         divisor <= z_position;
         data_rdy <= 1'b1;
     end else if (cr_x_2d) begin
         data_rdy <= 1'b0;
     end else if (nx_y_2d) begin
-        dividend <= IntrinsicMatrix[1][0] * x_position_temp 
-                  + IntrinsicMatrix[1][1] * y_position_temp
+        dividend <= IntrinsicMatrix[1][0] * x_position 
+                  + IntrinsicMatrix[1][1] * y_position
                   + IntrinsicMatrix[1][2] * z_position ;
         divisor <= z_position;
         data_rdy <= 1'b1;
@@ -440,13 +474,11 @@ always@(posedge clk or negedge rst_n) begin
     end
 end
 
-always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-        z_position2 <= 32'b0;
-    end else begin
-        z_position2 <= (R / 10) * (R / 10) - x_position_temp * x_position_temp - y_position_temp * y_position_temp;
-    end
-end
+wire [32- 1: 0] x_position2;
+wire [32- 1: 0] y_position2;
+
+assign y_position = y_temp/10;
+assign z_position2 = (R / 10) * (R / 10) - x_position2 - y_position2;
 
 divider_top#(           
      .N                 (32           )
@@ -464,7 +496,7 @@ U_DIVIDER(
 );
 
 sqrt#(
-    .TIMES              (64           )
+    .TIMES              (32           )
 )
 U_SQRT(
      .clk               (clk           ) //input               
@@ -474,4 +506,23 @@ U_SQRT(
     ,.out_data          (z_position    ) //output reg [15:0]   
     ,.sqrt_end          (cal_end       ) //output reg          
 );
+
+Gowin_MULT U_Gowin_MULT1(
+    .dout               (x_position2), //output [31:0] dout
+    .a                  (x_position), //input [15:0] a
+    .b                  (x_position), //input [15:0] b
+    .ce                 (1'b1), //input ce
+    .clk                (clk), //input clk
+    .reset              (!rst_n) //input reset
+);
+
+Gowin_MULT U_Gowin_MULT2(
+    .dout               (y_position2), //output [31:0] dout
+    .a                  (y_position), //input [15:0] a
+    .b                  (y_position), //input [15:0] b
+    .ce                 (1'b1), //input ce
+    .clk                (clk), //input clk
+    .reset              (!rst_n) //input reset
+);
+
 endmodule

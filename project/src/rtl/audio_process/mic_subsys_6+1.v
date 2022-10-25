@@ -265,11 +265,11 @@ generate
 endgenerate
 
 assign lag_diff_0 = lag_diff[0];
-assign lag_diff_1 = lag_diff[1];
-assign lag_diff_2 = lag_diff[2];
+assign lag_diff_1 = lag_diff[5];
+assign lag_diff_2 = lag_diff[4];
 assign lag_diff_3 = lag_diff[3];
-assign lag_diff_4 = lag_diff[4];
-assign lag_diff_5 = lag_diff[5];
+assign lag_diff_4 = lag_diff[2];
+assign lag_diff_5 = lag_diff[1];
 
 // I2S_Drivers
 genvar i;
@@ -284,8 +284,8 @@ U_I2S_DECODER_0(
 	,.rst_mic_n         (rst_mic_n          ) //i
 	,.WS                (clk_WS             ) //i
 	,.DATA              (mic_data_in[0]     ) //i
-	,.L_DATA            () //o[DATAWIDTH - 1: 0]
-	,.R_DATA            (mic_data[0]        ) //o[DATAWIDTH - 1: 0]
+	,.L_DATA_O          () //o[DATAWIDTH - 1: 0]
+	,.R_DATA_O          (mic_data[0]        ) //o[DATAWIDTH - 1: 0]
     ,.L_Sel             () //o
     ,.R_Sel             () //o
 	,.recv_over         (mic_data_en[0]     ) //o
@@ -301,8 +301,8 @@ generate
             ,.rst_mic_n         (rst_mic_n          ) //i
             ,.WS                (clk_WS             ) //i
             ,.DATA              (mic_data_in[(i + 1)/2]) //i
-            ,.L_DATA            (mic_data[i]        ) //o[DATAWIDTH - 1: 0]
-            ,.R_DATA            (mic_data[i + 1]    ) //o[DATAWIDTH - 1: 0]
+            ,.L_DATA_O          (mic_data[i]        ) //o[DATAWIDTH - 1: 0]
+            ,.R_DATA_O          (mic_data[i + 1]    ) //o[DATAWIDTH - 1: 0]
             ,.L_Sel             () //o
             ,.R_Sel             () //o
             ,.recv_over         (mic_data_en[(i + 1)/2]) //o
