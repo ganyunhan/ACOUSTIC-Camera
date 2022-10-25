@@ -1,10 +1,10 @@
 //Copyright (C)2014-2022 Gowin Semiconductor Corporation.
 //All rights reserved.
 //File Title: Template file for instantiation
-//GOWIN Version: GowinSynthesis V1.9.8.07
+//GOWIN Version: GowinSynthesis V1.9.8.08
 //Part Number: GW2A-LV18PG256C8/I7
 //Device: GW2A-18
-//Created Time: Thu Oct 06 19:00:44 2022
+//Created Time: Tue Oct 25 10:20:13 2022
 
 //Change the instance name and port connections to the signal names
 //--------Copy here to design--------

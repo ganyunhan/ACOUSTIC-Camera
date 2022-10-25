@@ -10,7 +10,7 @@
 module uart_top(
      input              sys_clk
     ,input              sys_rst_n
-    ,input [32 - 1: 0]  data
+    ,input [16 - 1: 0]  data
     ,input              uart_ena
     ,output  reg        uart_ready
     ,output             uart_txd
@@ -20,7 +20,7 @@ reg [3 - 1: 0]  cr_state;
 reg [3 - 1: 0]  nx_state;
 reg [8 - 1: 0]  uart_tx_data;
 reg             uart_tx_en;
-reg [8 - 1: 0]  ascii_out [11 - 1: 0];
+reg [8 - 1: 0]  ascii_out [5 - 1: 0];
 wire            uart_tx_done;
 wire            all_send_done;
 
@@ -37,7 +37,7 @@ localparam      SEND_DONE    = 3'b011;
 localparam      NL_BYTE      = 3'b100;
 localparam      NL_DONE      = 3'b101;
 
-localparam      BYTE_NUM     = 11;
+localparam      BYTE_NUM     = 4;
 
 always @(posedge sys_clk or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
@@ -102,7 +102,7 @@ always @(posedge sys_clk or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
         uart_tx_data <= 8'b0;
     end else if (cr_send_byte) begin
-        uart_tx_data <= ascii_out[10 - send_num]; //MSB_first
+        uart_tx_data <= ascii_out[4 - send_num]; //MSB_first
     end else if (cr_nl_byte) begin
         uart_tx_data <= NEW_LINE;       //send new line
     end else begin
@@ -163,12 +163,6 @@ always @(posedge sys_clk) begin
 end
 
 always @(*) begin
-    ascii_out[10] = hex_table[data[32- 1:16] / 'd10000];
-    ascii_out[9] = hex_table[(data[32- 1:16] / 'd1000)%'d10];
-    ascii_out[8] = hex_table[(data[32- 1:16] / 'd100)%'d10];
-    ascii_out[7] = hex_table[(data[32- 1:16] / 'd10)%'d10];
-    ascii_out[6] = hex_table[data[32- 1:16] % 'd10];
-    ascii_out[5] = 8'h0D;
     ascii_out[4] = hex_table[data[16- 1: 0] / 'd10000];
     ascii_out[3] = hex_table[(data[16- 1: 0] / 'd1000)%'d10];
     ascii_out[2] = hex_table[(data[16- 1: 0] / 'd100)%'d10];

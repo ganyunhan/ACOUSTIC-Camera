@@ -4,14 +4,14 @@
     <Version>beta</Version>
     <Device id="GW2A-18" package="PBGA256" speed="8" partNumber="GW2A-LV18PG256C8/I7"/>
     <FileList>
-        <File path="E:/Gowin/Gowin_V1.9.8.07/IDE/ipcore/FIFO_HS/data/fifo_hs.v" type="verilog"/>
-        <File path="E:/Gowin/Gowin_V1.9.8.07/IDE/ipcore/FIFO_HS/data/fifo_hs_top.v" type="verilog"/>
+        <File path="E:/Gowin/Gowin_V1.9.8.08/IDE/ipcore/FIFO_HS/data/fifo_hs.v" type="verilog"/>
+        <File path="E:/Gowin/Gowin_V1.9.8.08/IDE/ipcore/FIFO_HS/data/fifo_hs_top.v" type="verilog"/>
     </FileList>
     <OptionList>
         <Option type="disable_insert_pad" value="1"/>
         <Option type="dsp_balance" value="1"/>
-        <Option type="include_path" value="E:/Gowin/Gowin_V1.9.8.07/IDE/ipcore/FIFO_HS/data"/>
-        <Option type="include_path" value="C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/I2S_Capture/src/fifo_hs/temp/FIFOHS"/>
+        <Option type="include_path" value="E:/Gowin/Gowin_V1.9.8.08/IDE/ipcore/FIFO_HS/data"/>
+        <Option type="include_path" value="C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/Module_test/I2S_Capture/src/fifo_hs/temp/FIFOHS"/>
         <Option type="output_file" value="fifo_hs.vg"/>
         <Option type="output_template" value="fifo_hs_tmp.v"/>
         <Option type="ram_balance" value="1"/>

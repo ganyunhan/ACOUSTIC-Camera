@@ -4,65 +4,38 @@
     <Mode>Lite</Mode>
     <AoCore_Lite index="0" sample_clock="clk_60MHz" trig_type="0" capture_amount="8192" implemention="0" input_register_enabled="0" capture_init_data_enabled="0" module_name="mic_subsys">
         <SignalList>
-            <Bus name="u_i2s_decoder1/L_DATA[23:0]">
-                <Signal>u_i2s_decoder1/L_DATA[23]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[22]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[21]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[20]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[19]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[18]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[17]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[16]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[15]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[14]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[13]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[12]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[11]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[10]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[9]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[8]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[7]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[6]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[5]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[4]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[3]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[2]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[1]</Signal>
-                <Signal>u_i2s_decoder1/L_DATA[0]</Signal>
+            <Signal>o_mic_ws</Signal>
+            <Signal>PAD_MIC0_DA</Signal>
+            <Signal>PAD_MIC12_DA</Signal>
+            <Signal>PAD_MIC34_DA</Signal>
+            <Signal>PAD_MIC56_DA</Signal>
+            <Bus name="mic_data[5][23:0]">
+                <Signal>mic_data[5][23]</Signal>
+                <Signal>mic_data[5][22]</Signal>
+                <Signal>mic_data[5][21]</Signal>
+                <Signal>mic_data[5][20]</Signal>
+                <Signal>mic_data[5][19]</Signal>
+                <Signal>mic_data[5][18]</Signal>
+                <Signal>mic_data[5][17]</Signal>
+                <Signal>mic_data[5][16]</Signal>
+                <Signal>mic_data[5][15]</Signal>
+                <Signal>mic_data[5][14]</Signal>
+                <Signal>mic_data[5][13]</Signal>
+                <Signal>mic_data[5][12]</Signal>
+                <Signal>mic_data[5][11]</Signal>
+                <Signal>mic_data[5][10]</Signal>
+                <Signal>mic_data[5][9]</Signal>
+                <Signal>mic_data[5][8]</Signal>
+                <Signal>mic_data[5][7]</Signal>
+                <Signal>mic_data[5][6]</Signal>
+                <Signal>mic_data[5][5]</Signal>
+                <Signal>mic_data[5][4]</Signal>
+                <Signal>mic_data[5][3]</Signal>
+                <Signal>mic_data[5][2]</Signal>
+                <Signal>mic_data[5][1]</Signal>
+                <Signal>mic_data[5][0]</Signal>
             </Bus>
-            <Signal>u_i2s_decoder1/clk_mic</Signal>
-            <Signal>u_i2s_decoder1/WS</Signal>
-            <Signal>u_i2s_decoder1/DATA</Signal>
-            <Bus name="u_i2s_decoder0/L_DATA[23:0]">
-                <Signal>u_i2s_decoder0/L_DATA[23]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[22]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[21]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[20]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[19]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[18]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[17]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[16]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[15]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[14]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[13]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[12]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[11]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[10]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[9]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[8]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[7]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[6]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[5]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[4]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[3]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[2]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[1]</Signal>
-                <Signal>u_i2s_decoder0/L_DATA[0]</Signal>
-            </Bus>
-            <Signal>u_i2s_decoder0/clk_mic</Signal>
-            <Signal>u_i2s_decoder0/WS</Signal>
-            <Signal>u_i2s_decoder0/DATA</Signal>
         </SignalList>
     </AoCore_Lite>
-    <GAO_ID>0101110111000111</GAO_ID>
+    <GAO_ID>0000000000111111</GAO_ID>
 </GAO_CONFIG>
