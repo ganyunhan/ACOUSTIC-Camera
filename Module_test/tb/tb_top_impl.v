@@ -26,12 +26,12 @@ initial begin
 	// force U_TOP.U_MIC_SUBSYS.nx_state = 3'b010;
 end
 
-always @(*) begin
-	if (U_TOP.U_CAL_POSITION.done) begin
-			#10000
-			$finish;  
-	end
-end
+// always @(*) begin
+// 	if (U_TOP.U_CAL_POSITION.done) begin
+// 			#10000
+// 			$finish;  
+// 	end
+// end
 
 always @(posedge mic_clk or negedge mic_ws) begin
 	if(mic_ws & !xcorr_start) begin
