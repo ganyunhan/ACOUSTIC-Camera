@@ -21,7 +21,7 @@
  "Generate_Post_PNR_Simulation_Model_File" : false,
  "Generate_Post_Place_File" : false,
  "Generate_SDF_File" : false,
- "GwSyn_Loop_Limit" : 2000,
+ "GwSyn_Loop_Limit" : 4000,
  "HOTBOOT" : false,
  "I2C" : false,
  "I2C_SLAVE_ADDR" : "00",
@@ -72,11 +72,11 @@
  "Update_Compile_Point_Timing_Data" : false,
  "Use_Clock_Period_for_Unconstrainted IO" : false,
  "Use_SCF" : false,
- "VHDL_Standard" : "VHDL_Std_1993",
- "Verilog_Standard" : "Vlg_Std_2001",
+ "VHDL_Standard" : "VHDL_Std_2008",
+ "Verilog_Standard" : "Vlg_Std_Sysv2017",
  "WAKE_UP" : "0",
  "Write_Vendor_Constraint_File" : true,
  "dsp_balance" : true,
- "show_all_warnings" : false,
+ "show_all_warnings" : true,
  "turn_off_bg" : false
 }

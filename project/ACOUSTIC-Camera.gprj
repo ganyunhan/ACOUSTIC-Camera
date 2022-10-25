@@ -6,11 +6,17 @@
     <Device name="GW2A-18" pn="GW2A-LV18PG256C8/I7">gw2a18-002</Device>
     <FileList>
         <File path="src/fifo_hs/fifo_hs.v" type="file.verilog" enable="1"/>
+        <File path="src/gowin_mult/gowin_mult.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_prom/acos_rom.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_rpll/rpll_20MHz.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_rpll/rpll_mic.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram0_512.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram1_512.v" type="file.verilog" enable="1"/>
+        <File path="src/ram_512/ram2_512.v" type="file.verilog" enable="1"/>
+        <File path="src/ram_512/ram3_512.v" type="file.verilog" enable="1"/>
+        <File path="src/ram_512/ram4_512.v" type="file.verilog" enable="1"/>
+        <File path="src/ram_512/ram5_512.v" type="file.verilog" enable="1"/>
+        <File path="src/ram_512/ram6_512.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram_512.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/abs.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/i2s_decoder.v" type="file.verilog" enable="1"/>
@@ -26,11 +32,15 @@
         <File path="src/rtl/top.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/uart/uart_top.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/uart/uart_tx.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/gowin_prom/gowin_prom.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/hotspot_show.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/syn_gen.v" type="file.verilog" enable="1"/>
         <File path="src/xcorr/xcorr.v" type="file.verilog" enable="1"/>
         <File path="src/xcorr_new/xcorr.v" type="file.verilog" enable="1"/>
         <File path="src/xcorr_new/xcorr_wrap.v" type="file.verilog" enable="1"/>
         <File path="src/ACOUSTIC-Camera.cst" type="file.cst" enable="1"/>
         <File path="src/ACOUSTIC-Camera.sdc" type="file.sdc" enable="1"/>
+        <File path="src/ACOUSTIC-Camera-lite.rao" type="file.gao" enable="0"/>
         <File path="src/ACOUSTIC-Camera.rao" type="file.gao" enable="0"/>
     </FileList>
 </Project>
