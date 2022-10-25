@@ -3,20 +3,25 @@
 % close all;
 
 %% pre load
-fs=46875;
+fs=93750;
 c=340;
 mic_d=0.06;
-filename='data2.txt';  %%待处理文件路�?
+filename='data_6+1.txt';  %%待处理文件路�?
 data = load(filename);
 data_int = B2QW(data,16);
-mic1_data = zeros(512,1);
-mic2_data = zeros(512,1);
-for i=1:2:1024
-    mic2_data(fix(i/2)+1,1) = data_int(i,1);
-end
-for i=2:2:1024
-    mic1_data(fix(i/2),1) = data_int(i,1);
-end
+mic0_data = data_int(1:512);
+mic1_data = data_int(513:1024);
+mic2_data = data_int(1025:1536);
+mic3_data = data_int(1537:2048);
+mic4_data = data_int(2049:2560);
+mic5_data = data_int(2561:3072);
+mic6_data = data_int(3073:3584);
+% for i=1:2:1024
+%     mic2_data(fix(i/2)+1,1) = data_int(i,1);
+% end
+% for i=2:2:1024
+%     mic1_data(fix(i/2),1) = data_int(i,1);
+% end
 
 %生成test数据
 tb_x = dec2bin(mic2_data,16);

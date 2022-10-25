@@ -14,7 +14,7 @@ dist06=round(round(lagDiff06*vel*10000)/fq);      %  s=> 0.1ms     乘10000
 
 R_dividend = round(dist06^2-dist04^2+dist03^2-dist01^2);
 R_divisor = round(2*(dist01-dist03+dist04-dist06));
-R=round(R_dividend/R_divisor);
+R=abs(round(R_dividend/R_divisor))
 
 x_dividend = round(2 * R * (dist03-dist01+dist04-dist06) +dist03^2-dist01^2+dist04^2-dist06^2 );
 x_divisor = round(8*sqrt(3) * L);

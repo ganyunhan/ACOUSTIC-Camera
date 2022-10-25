@@ -11,6 +11,17 @@ dt=1/Fs;
 %music_src为声源
 music_src=single(y*10000);
 music_src = double(music_src(1:512));
+
+filename='data_6+1.txt';  %%寰呭鐞嗘枃浠惰矾寰?
+data = load(filename);
+data_int = B2QW(data,16);
+music_delay00 = data_int(1:512);
+music_delay01 = data_int(513:1024);
+music_delay02 = data_int(1025:1536);
+music_delay03 = data_int(1537:2048);
+music_delay04 = data_int(2049:2560);
+music_delay05 = data_int(2561:3072);
+music_delay06 = data_int(3073:3584);
 %设置两个麦克风坐标
 mic_d=0.02;
 root_3=1.732;
@@ -23,7 +34,7 @@ plot3(mic_x,mic_y,mic_z,'r*');
 
 %声源坐标
 s_x=0.03;
-s_y=-0.04;
+s_y=0.04;
 s_z=0.08;
 plot3(s_x,s_y,s_z,'r*');
 
@@ -44,13 +55,13 @@ delay05=(dis_s5-dis_s0)/c;
 delay06=(dis_s6-dis_s0)/c;
 
 %设置延时
-music_delay00 = int16(floor(music_src));
-music_delay01 = int16(floor(delayseq(music_src,delay01,Fs)));
-music_delay02 = int16(floor(delayseq(music_src,delay02,Fs)));
-music_delay03 = int16(floor(delayseq(music_src,delay03,Fs)));
-music_delay04 = int16(floor(delayseq(music_src,delay04,Fs)));
-music_delay05 = int16(floor(delayseq(music_src,delay05,Fs)));
-music_delay06 = int16(floor(delayseq(music_src,delay06,Fs)));
+% music_delay00 = int16(floor(music_src));
+% music_delay01 = int16(floor(delayseq(music_src,delay01,Fs)));
+% music_delay02 = int16(floor(delayseq(music_src,delay02,Fs)));
+% music_delay03 = int16(floor(delayseq(music_src,delay03,Fs)));
+% music_delay04 = int16(floor(delayseq(music_src,delay04,Fs)));
+% music_delay05 = int16(floor(delayseq(music_src,delay05,Fs)));
+% music_delay06 = int16(floor(delayseq(music_src,delay06,Fs)));
 
 tb_0 = dec2bin(music_delay00);
 tb_1 = dec2bin(music_delay01);
@@ -114,10 +125,10 @@ fprintf('dist01 = %f\r\n',dist01);
 fprintf('dist02 = %f\r\n',dist02);
 fprintf('dist03 = %f\r\n',dist03);
 fprintf('dist04 = %f\r\n',dist04);
-fprintf('dist05 = %f\r\n',dist05);
+fprintf('dist05 = %f\r\n',dist05)
 fprintf('dist06 = %f\r\n',dist06);
 
-[x,y,z] = mic6_1_decode(lagDiff01,lagDiff02,lagDiff03,lagDiff04,lagDiff05,lagDiff06);
+[x,y,z] = mic6_1_decode(-1,-6,-6,2,5,5);
 
 fprintf('x = %f\r\n',x);
 fprintf('y = %f\r\n',y);
