@@ -3,10 +3,13 @@
 <Project>
     <Template>FPGA</Template>
     <Version>5</Version>
-    <Device name="GW2A-18C" pn="GW2A-LV18PG256C8/I7">gw2a18c-011</Device>
+    <Device name="GW2A-18" pn="GW2A-LV18PG256C8/I7">gw2a18-002</Device>
     <FileList>
-        <File path="src/gowin_prom/gowin_prom.v" type="file.verilog" enable="1"/>
-        <File path="src/hotspot_show.v" type="file.verilog" enable="1"/>
-        <File path="src/syn_gen.v" type="file.verilog" enable="1"/>
+        <File path="src/top.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/project/src/rtl/clock_and_reset/clk_div.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/project/src/rtl/video_process/gowin_prom/gowin_prom.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/project/src/rtl/video_process/hotspot_show.v" type="file.verilog" enable="1"/>
+        <File path="C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/project/src/rtl/video_process/syn_gen.v" type="file.verilog" enable="1"/>
+        <File path="src/top.cst" type="file.cst" enable="1"/>
     </FileList>
 </Project>

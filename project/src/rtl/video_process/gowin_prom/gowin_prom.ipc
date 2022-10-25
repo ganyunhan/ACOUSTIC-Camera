@@ -9,7 +9,7 @@ version=1.0
 [Config]
 DEPTH=2401
 LANG=0
-MEM_FILE=../hotspot.mi
+MEM_FILE=../hotspot_data.mi
 READ=0
 RESET_MODE=true
 WIDTH=16

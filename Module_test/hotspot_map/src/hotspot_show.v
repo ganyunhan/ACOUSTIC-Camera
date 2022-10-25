@@ -1,13 +1,13 @@
 module thd_show(
-     input              clk_pix
-    ,input              rst_n
-    ,input              pix_x
-    ,input              pix_y
-    ,output             syn_off0_hs
-    ,output             syn_off0_vs
-    ,output             out_de
-    ,output             syn_off0_re
-    ,output reg [15:0]  thd_rgb_data
+     input                  clk_pix
+    ,input                  rst_n
+    ,input      [16- 1: 0]  pix_x
+    ,input      [16- 1: 0]  pix_y
+    ,output                 syn_off0_hs
+    ,output                 syn_off0_vs
+    ,output                 out_de
+    ,output                 syn_off0_re
+    ,output reg [16- 1: 0]  thd_rgb_data
 );
 
 

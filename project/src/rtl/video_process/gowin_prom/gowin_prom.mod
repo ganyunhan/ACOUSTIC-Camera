@@ -6,7 +6,7 @@
 
 -mod_name Gowin_pROM
 -file_name gowin_prom
--path C:/Users/Misaka/OneDrive/2022_Gowin/ACOUSTIC-Camera/Module_test/hotspot_map/src/gowin_prom/
+-path C:/Users/Misaka/OneDrive/Works/ACOUSTIC-Camera/project/src/rtl/video_process/gowin_prom/
 -type RAM_ROM
 -file_type vlg
 -pROM true
@@ -14,4 +14,4 @@
 -width 16
 -read_mode bypass
 -reset_mode sync
--init_file C:\Users\Misaka\OneDrive\2022_Gowin\ACOUSTIC-Camera\Module_test\hotspot_map\src\hotspot.mi
+-init_file C:\Users\Misaka\OneDrive\Works\ACOUSTIC-Camera\project\src\rtl\video_process\hotspot_data.mi
