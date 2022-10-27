@@ -13,6 +13,8 @@ wire mic_ws;
 wire mic_clk;
 reg  mic0_data = 0;
 reg  mic12_data = 0;
+reg  mic34_data = 0;
+reg  mic56_data = 0;
 GSR GSR (.GSRI(1'b1)) ; 
 initial begin
 	clk = 0;
@@ -51,6 +53,26 @@ always @(posedge mic_clk or negedge mic_ws) begin
 	end
 end
 
+always @(posedge mic_clk or negedge mic_ws) begin
+	if(!mic_ws & !xcorr_start) begin
+		mic34_data <= {$random}%2;
+	end else if(mic_ws & !xcorr_start) begin
+		mic34_data <= {$random}%2;
+	end else begin
+		mic34_data <= 0;
+	end
+end
+
+always @(posedge mic_clk or negedge mic_ws) begin
+	if(!mic_ws & !xcorr_start) begin
+		mic56_data <= {$random}%2;
+	end else if(mic_ws & !xcorr_start) begin
+		mic56_data <= {$random}%2;
+	end else begin
+		mic56_data <= 0;
+	end
+end
+
 always #10 clk = ~clk;
 
 top U_TOP(
@@ -59,8 +81,8 @@ top U_TOP(
     ,.PAD_XC_EN         (xcorr_start)         
     ,.PAD_MIC0_DA       (mic0_data)         
     ,.PAD_MIC12_DA      (mic12_data)         
-    ,.PAD_MIC34_DA      (mic12_data)         
-    ,.PAD_MIC56_DA      (mic12_data)         
+    ,.PAD_MIC34_DA      (mic34_data)         
+    ,.PAD_MIC56_DA      (mic56_data)         
     ,.PAD_WS            (mic_ws) 
     ,.PAD_CLK_MIC       (mic_clk)         
 );

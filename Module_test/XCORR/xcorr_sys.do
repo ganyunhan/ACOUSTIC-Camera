@@ -39,7 +39,6 @@ vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/ca
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/divisor_cell.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/divisor_top.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/cal_position/sqrt.v"
-vlog -sv -novopt +incdir+../tb -work work "../../project/src/gowin_mult/gowin_mult.v"
 
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/rtl/audio_process/mic_subsys_6+1.v"
 vlog -sv -novopt +incdir+../tb -work work "../../project/src/gowin_rpll/rpll_20MHz.v"
@@ -57,13 +56,13 @@ vsim  -novopt work.tb
 add wave -group "tb" {sim:/tb/*}
 add wave -group "subsys" {sim:/tb/U_TOP/U_MIC_SUBSYS/*}
 
-add wave -group "subsys/ram_0" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[0]/U_RAM_512/*}
-add wave -group "subsys/ram_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[1]/U_RAM_512/*}
-add wave -group "subsys/ram_2" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[2]/U_RAM_512/*}
-add wave -group "subsys/ram_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[3]/U_RAM_512/*}
-add wave -group "subsys/ram_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[4]/U_RAM_512/*}
-add wave -group "subsys/ram_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[5]/U_RAM_512/*}
-add wave -group "subsys/ram_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[6]/U_RAM_512/*}
+## add wave -group "subsys/ram_0" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[0]/U_RAM_512/*}
+## add wave -group "subsys/ram_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[1]/U_RAM_512/*}
+## add wave -group "subsys/ram_2" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[2]/U_RAM_512/*}
+## add wave -group "subsys/ram_3" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[3]/U_RAM_512/*}
+## add wave -group "subsys/ram_4" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[4]/U_RAM_512/*}
+## add wave -group "subsys/ram_5" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[5]/U_RAM_512/*}
+## add wave -group "subsys/ram_6" {sim:/tb/U_TOP/U_MIC_SUBSYS/MIC_DATA_RAM[6]/U_RAM_512/*}
 
 ## add wave -group "subsys/ram_0" {sim:/tb/U_TOP/U_MIC_SUBSYS/U_RAM0_512/*}
 ## add wave -group "subsys/ram_1" {sim:/tb/U_TOP/U_MIC_SUBSYS/U_RAM1_512/*}
