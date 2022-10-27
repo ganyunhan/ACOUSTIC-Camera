@@ -31,7 +31,7 @@ always @(posedge clk_pix or negedge rst_n) begin
             pix_y <= pix_y;
         end else begin
             if (pix_x_in < 0) begin
-            pix_x <= 0;
+                pix_x <= 0;
             end else if (pix_x_in > 480) begin
                 pix_x <= 480;
             end else begin

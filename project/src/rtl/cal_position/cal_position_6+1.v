@@ -333,7 +333,7 @@ always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
         R <= 26'b0;
     end else if (cr_div_r) begin
-        R = (merchant[25] == 1) ? (~merchant + 1'b1) : merchant;
+        R <= (merchant[25] == 1) ? (~merchant + 1'b1) : merchant;
     end else begin
         R <= R;
     end
