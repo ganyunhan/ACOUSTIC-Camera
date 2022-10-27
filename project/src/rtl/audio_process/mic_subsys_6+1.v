@@ -21,6 +21,7 @@ module mic_subsys#(
     ,input             [4 - 1: 0]   mic_data_in
     ,input                          subsys_start
     ,output  reg                    subsys_done
+    ,output                         valid
     ,output  signed   [6 - 1: 0]    lag_diff_0
     ,output  signed   [6 - 1: 0]    lag_diff_1
     ,output  signed   [6 - 1: 0]    lag_diff_2
@@ -34,13 +35,13 @@ reg         [3 - 1: 0]          cr_state;
 reg         [3 - 1: 0]          nx_state;
 reg         [9 - 1: 0]          ram_wr_addr;
 reg         [9 - 1: 0]          ram_rd_addr;
+reg         [16- 1: 0]          mic_da_avg  [4 - 1: 0];
 
 reg                             xcorr_start;
 reg                             fifo_en_mask;
 reg                             ram_rd_en;
 wire                            xcorr_all_complete;
 wire                            xcorr_calc_done;
-
 
 // `define      SIM_ROM_DATA
 `define      SIM_MIC_DATA
@@ -95,6 +96,8 @@ always @(*) begin
         end
     endcase
 end
+
+assign valid            = (mic_da_avg[3] >= 16'd100) ? 1'b1 : 1'b0;
 
 assign cr_fifo_in       = (cr_state == FIFO_IN) ? 1'b1 : 1'b0;
 assign cr_calc_en       = (cr_state == CALC_EN) ? 1'b1 : 1'b0;
@@ -310,6 +313,22 @@ generate
     end
 endgenerate
 
+always @(negedge clk_WS or negedge rst_n) begin
+    if (!rst_n) begin
+        mic_da_avg[0] <= 16'b0;
+        mic_da_avg[1] <= 16'b0;
+        mic_da_avg[2] <= 16'b0;
+        mic_da_avg[3] <= 16'b0;
+    end else if (ram_wr_addr == 9'd50) begin
+        mic_da_avg[0] <= (mic_data[0][15] == 1) ? (~mic_data[0] + 1'b1) : mic_data[0];
+    end else if (ram_wr_addr == 9'd250) begin
+        mic_da_avg[1] <= (mic_data[0][15] == 1) ? (~mic_data[0] + 1'b1) : mic_data[0];
+    end else if (ram_wr_addr == 9'd500) begin
+        mic_da_avg[2] <= (mic_data[0][15] == 1) ? (~mic_data[0] + 1'b1) : mic_data[0];
+    end else if (cr_fifo_in)begin
+        mic_da_avg[3] <= mic_da_avg[0] + mic_da_avg[1] + mic_da_avg[2];
+    end
+end
 
 //Data RAM
 wire signed [16- 1: 0]          mic_fifo_data [7 - 1: 0];

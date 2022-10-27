@@ -3,12 +3,12 @@ module sqrt#(
     parameter TIMES = 31
 )
 (
-     input               clk
-    ,input               rst_n
-    ,input               ena
-    ,input wire [31:0]   in_data
-    ,output reg [15:0]   out_data
-    ,output reg          sqrt_end
+     input                      clk
+    ,input                      rst_n
+    ,input                      ena
+    ,input wire [26- 1: 0]      in_data
+    ,output reg [16- 1: 0]      out_data
+    ,output reg                 sqrt_end
 )/* synthesis syn_preserve = 1 */ /* synthesis syn_keep=1 */;
 
 reg [8 - 1: 0] cnt;          //iteration counter

@@ -18,7 +18,7 @@ module top (
     ,input              PAD_MIC56_DA
     ,output             PAD_WS
     ,output             PAD_CLK_MIC
-    // ,output             PAD_UART_TX
+    ,output             PAD_UART_TX
     ,output             PAD_LCD_DCLK	
 	,output             PAD_LCD_HS            //lcd horizontal synchronization
 	,output             PAD_LCD_VS            //lcd vertical synchronization        
@@ -37,8 +37,8 @@ wire                    rst_mic_n;
 
 wire [4 - 1: 0]         mic_data_in;
 wire [6 - 1: 0]         lag_diff [6 - 1: 0];
-wire [32- 1: 0]         x_2d;
-wire [32- 1: 0]         y_2d;
+wire [26- 1: 0]         x_2d;
+wire [26- 1: 0]         y_2d;
 wire                    done;
 
 wire                    syn_off0_hs;
@@ -70,7 +70,8 @@ U_MIC_SUBSYS
     ,.rst_mic_n             (rst_mic_n          ) //input                             
     ,.mic_data_in           (mic_data_in        ) //input [4 - 1: 0]      
     ,.subsys_start          (subsys_start       ) //input                         
-    ,.subsys_done           (subsys_done        ) //output reg                    
+    ,.subsys_done           (subsys_done        ) //output reg      
+    ,.valid                 (valid              ) //output             
     ,.lag_diff_0            (lag_diff[0]        ) //output  signed   [6 - 1: 0]    
     ,.lag_diff_1            (lag_diff[1]        ) //output  signed   [6 - 1: 0]    
     ,.lag_diff_2            (lag_diff[2]        ) //output  signed   [6 - 1: 0]    
@@ -93,7 +94,7 @@ cal_position U_CAL_POSITION(
     ,.clk_pix               (clk_9MHz           ) //input                     
     ,.rst_n                 (rst_n              ) //input                                  
     // ,.ena                   (1'b1        ) //input 
-    ,.ena                   (subsys_done        ) //input                                       
+    ,.ena                   (subsys_done&valid  ) //input                                       
     ,.lag_diff_in_0         (lag_diff[0]        ) //input  signed [6 - 1: 0]
     ,.lag_diff_in_1         (lag_diff[1]        ) //input  signed [6 - 1: 0]
     ,.lag_diff_in_2         (lag_diff[2]        ) //input  signed [6 - 1: 0]
@@ -115,8 +116,8 @@ cal_position U_CAL_POSITION(
 // (
 // 	 .sys_clk		        (clk_60MHz          )//i
 // 	,.sys_rst_n		        (rst_n              )//i
-// 	,.data	                (x_2d               )//i[16- 1: 0]
-//  ,.uart_ena              (done               )//i
+// 	,.data	                ({26'b0,{lag_diff[0]}})//i[32- 1: 0]
+//     ,.uart_ena              (subsys_done        )//i
 // 	,.uart_ready	        ()//o
 // 	,.uart_txd		        (uart_tx            )//o	
 // );
@@ -126,7 +127,7 @@ thd_show U_THD_SHOW(
     ,.rst_n                 (rst_n              ) //input
     ,.ena                   (done               ) //input                
     ,.pix_x_in              (x_2d               ) //input      [32- 1: 0]              
-    ,.pix_y_in              (y_2d               ) //input      [32- 1: 0]              
+    ,.pix_y_in              (y_2d               ) //input      [32- 1: 0]               
     ,.syn_off0_hs           (syn_off0_hs        ) //output               
     ,.syn_off0_vs           (syn_off0_vs        ) //output               
     ,.out_de                (out_de             ) //output             
@@ -143,7 +144,7 @@ assign mic_data_in[3]   = PAD_MIC56_DA;
 assign subsys_start     = 1'b1;
 assign PAD_WS           = clk_WS;
 assign PAD_CLK_MIC      = clk_6MHz;
-// assign PAD_UART_TX      = uart_tx;
+//assign PAD_UART_TX      = uart_tx;
 assign PAD_LCD_DCLK     = clk_9MHz;
 assign PAD_LCD_HS       = syn_off0_hs;
 assign PAD_LCD_VS       = syn_off0_vs;

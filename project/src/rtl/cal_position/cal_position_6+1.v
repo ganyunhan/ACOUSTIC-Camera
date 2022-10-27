@@ -9,8 +9,8 @@ module cal_position(
     ,input  signed          [6 - 1: 0]      lag_diff_in_3
     ,input  signed          [6 - 1: 0]      lag_diff_in_4
     ,input  signed          [6 - 1: 0]      lag_diff_in_5
-    ,output reg signed      [32- 1: 0]      x_2d
-    ,output reg signed      [32- 1: 0]      y_2d
+    ,output reg signed      [26- 1: 0]      x_2d
+    ,output reg signed      [26- 1: 0]      y_2d
     ,output reg                             done//caculate end
 )/* synthesis syn_dspstyle = "logic" */;
 
@@ -20,34 +20,34 @@ localparam          frequency   = 93750;
 localparam          COEF1       = 8 * 1732 * L / 100;
 localparam          COEF2       = 160 * L;
 
-reg signed  [32- 1: 0]  R;
+reg signed  [26- 1: 0]  R;
 
-reg signed  [32- 1: 0]  y_position_temp;
-reg signed  [32- 1: 0]  x_position_temp;
+reg signed  [26- 1: 0]  y_position_temp;
+reg signed  [26- 1: 0]  x_position_temp;
 
-reg signed  [32- 1: 0]  distance[6 - 1: 0]/* synthesis syn_ramstyle = "block_ram" */;
+reg signed  [26- 1: 0]  distance[6 - 1: 0]/* synthesis syn_ramstyle = "block_ram" */;
 reg         [10- 1: 0]  IntrinsicMatrix [0 : 2 - 1] [0: 3 - 1]/* synthesis syn_ramstyle = "block_ram" */;
 
 wire        [16- 1: 0]  z_position;
-reg signed  [32- 1: 0]  z_position2;           //z*z
+reg signed  [26- 1: 0]  z_position2;           //z*z
 wire                    cal_end;
-reg         [32- 1: 0]  lag_diff [0 : 6 - 1]/* synthesis syn_ramstyle = "block_ram" */;
+reg         [26- 1: 0]  lag_diff [0 : 6 - 1]/* synthesis syn_ramstyle = "block_ram" */;
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        lag_diff[0] <= 32'b0;
-        lag_diff[1] <= 32'b0;
-        lag_diff[2] <= 32'b0;
-        lag_diff[3] <= 32'b0;
-        lag_diff[4] <= 32'b0;
-        lag_diff[5] <= 32'b0;
+        lag_diff[0] <= 26'b0;
+        lag_diff[1] <= 26'b0;
+        lag_diff[2] <= 26'b0;
+        lag_diff[3] <= 26'b0;
+        lag_diff[4] <= 26'b0;
+        lag_diff[5] <= 26'b0;
     end else if(ena)begin
-        lag_diff[0] <= {{26{lag_diff_in_0[5]}} , {lag_diff_in_0}};
-        lag_diff[1] <= {{26{lag_diff_in_1[5]}} , {lag_diff_in_1}};
-        lag_diff[2] <= {{26{lag_diff_in_2[5]}} , {lag_diff_in_2}};
-        lag_diff[3] <= {{26{lag_diff_in_3[5]}} , {lag_diff_in_3}};
-        lag_diff[4] <= {{26{lag_diff_in_4[5]}} , {lag_diff_in_4}};
-        lag_diff[5] <= {{26{lag_diff_in_5[5]}} , {lag_diff_in_5}};
+        lag_diff[0] <= {{20{lag_diff_in_0[5]}} , {lag_diff_in_0}};
+        lag_diff[1] <= {{20{lag_diff_in_1[5]}} , {lag_diff_in_1}};
+        lag_diff[2] <= {{20{lag_diff_in_2[5]}} , {lag_diff_in_2}};
+        lag_diff[3] <= {{20{lag_diff_in_3[5]}} , {lag_diff_in_3}};
+        lag_diff[4] <= {{20{lag_diff_in_4[5]}} , {lag_diff_in_4}};
+        lag_diff[5] <= {{20{lag_diff_in_5[5]}} , {lag_diff_in_5}};
     end else begin
         lag_diff[0] <= lag_diff[0];
         lag_diff[1] <= lag_diff[1];
@@ -108,10 +108,10 @@ reg   [3 - 1: 0]            dist_num;
 
 reg                         ena_sqrt;
 reg                         data_rdy;  
-reg   signed [32- 1: 0]     dividend;
-reg   signed [32- 1: 0]     divisor ; 
+reg   signed [26- 1: 0]     dividend;
+reg   signed [26- 1: 0]     divisor ; 
 wire                        res_rdy ;
-wire  signed [32- 1: 0]     merchant; 
+wire  signed [26- 1: 0]     merchant; 
 
 wire                        dist_done;
 
@@ -294,12 +294,12 @@ assign dist_done = (dist_num > DIST_NUM - 1'b1) ? 1'b1 : 1'b0;
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        distance[0] <= 32'b0;
-        distance[1] <= 32'b0;
-        distance[2] <= 32'b0;
-        distance[3] <= 32'b0;
-        distance[4] <= 32'b0;
-        distance[5] <= 32'b0;
+        distance[0] <= 26'b0;
+        distance[1] <= 26'b0;
+        distance[2] <= 26'b0;
+        distance[3] <= 26'b0;
+        distance[4] <= 26'b0;
+        distance[5] <= 26'b0;
     end else if (cr_div_dist && res_rdy) begin
         distance[dist_num] <= merchant;
     end else begin
@@ -323,11 +323,7 @@ always @(posedge clk_pix or negedge rst_n) begin
     if (!rst_n) begin
         done <= 1'b0;
     end else if (cr_done) begin
-        // if ((x_2d == 238) && (y_2d == 145)) begin
-        //     done <= 1'b0;
-        // end else begin
             done <= 1'b1;
-        // end
     end else begin
         done <= 1'b0;
     end
@@ -335,9 +331,9 @@ end
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        R <= 32'b0;
+        R <= 26'b0;
     end else if (cr_div_r) begin
-        R = (merchant[31] == 1) ? (~merchant + 1'b1) : merchant;
+        R = (merchant[25] == 1) ? (~merchant + 1'b1) : merchant;
     end else begin
         R <= R;
     end
@@ -345,7 +341,7 @@ end
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        x_position_temp <= 32'b0;
+        x_position_temp <= 26'b0;
     end else if (cr_div_x) begin
         x_position_temp <= merchant;
     end else begin
@@ -355,7 +351,7 @@ end
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        y_position_temp <= 32'b0;
+        y_position_temp <= 26'b0;
     end else if (cr_div_y) begin
         y_position_temp <= merchant;
     end else begin
@@ -365,7 +361,7 @@ end
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        x_2d <= 32'b0;
+        x_2d <= 26'b0;
     end else if (cr_div_x_2d) begin
         x_2d <= 480 - merchant;
     end else begin
@@ -375,7 +371,7 @@ end
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        y_2d <= 32'b0;
+        y_2d <= 26'b0;
     end else if (cr_div_y_2d) begin
         y_2d <= merchant;
     end else begin
@@ -385,8 +381,8 @@ end
 
 always@(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        dividend <= 32'b0;
-        divisor <=32'b0;
+        dividend <= 26'b0;
+        divisor <=26'b0;
         data_rdy <= 1'b0;
     end else if (nx_calc_dist) begin
         dividend <= vel * lag_diff[dist_num] * 10000;
@@ -444,15 +440,15 @@ end
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-        z_position2 <= 32'b0;
+        z_position2 <= 26'b0;
     end else begin
         z_position2 <= (R / 10) * (R / 10) - x_position_temp * x_position_temp - y_position_temp * y_position_temp;
     end
 end
 
 divider_top#(           
-     .N                 (32           )
-    ,.M                 (32           )
+     .N                 (26           )
+    ,.M                 (26           )
 )
 U_DIVIDER(
      .clk               (clk          )
