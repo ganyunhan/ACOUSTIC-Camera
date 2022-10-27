@@ -322,7 +322,6 @@ ram0_512 U_RAM0_512(
 .ada                    (ram_wr_addr        ), //input [8:0] ada
 .din                    (mic_data[0]        ), //input [15:0] din
 
-
 .clkb                   (clk                ), //input clkb
 .resetb                 (!rst_n             ), //input resetb
 .ceb                    (ram_rd_en          ), //input ceb
@@ -338,7 +337,6 @@ ram1_512 U_RAM1_512(
 .cea                    (fifo_en_mask       ), //input cea
 .ada                    (ram_wr_addr        ), //input [8:0] ada
 .din                    (mic_data[1]        ), //input [15:0] din
-
 
 .clkb                   (clk                ), //input clkb
 .resetb                 (!rst_n             ), //input resetb
@@ -356,7 +354,6 @@ ram2_512 U_RAM2_512(
 .ada                    (ram_wr_addr        ), //input [8:0] ada
 .din                    (mic_data[2]        ), //input [15:0] din
 
-
 .clkb                   (clk                ), //input clkb
 .resetb                 (!rst_n             ), //input resetb
 .ceb                    (ram_rd_en          ), //input ceb
@@ -372,7 +369,6 @@ ram3_512 U_RAM3_512(
 .cea                    (fifo_en_mask       ), //input cea
 .ada                    (ram_wr_addr        ), //input [8:0] ada
 .din                    (mic_data[3]        ), //input [15:0] din
-
 
 .clkb                   (clk                ), //input clkb
 .resetb                 (!rst_n             ), //input resetb
@@ -390,7 +386,6 @@ ram4_512 U_RAM4_512(
 .ada                    (ram_wr_addr        ), //input [8:0] ada
 .din                    (mic_data[4]        ), //input [15:0] din
 
-
 .clkb                   (clk                ), //input clkb
 .resetb                 (!rst_n             ), //input resetb
 .ceb                    (ram_rd_en          ), //input ceb
@@ -407,7 +402,6 @@ ram5_512 U_RAM5_512(
 .ada                    (ram_wr_addr        ), //input [8:0] ada
 .din                    (mic_data[5]        ), //input [15:0] din
 
-
 .clkb                   (clk                ), //input clkb
 .resetb                 (!rst_n             ), //input resetb
 .ceb                    (ram_rd_en          ), //input ceb
@@ -423,7 +417,6 @@ ram6_512 U_RAM6_512(
 .cea                    (fifo_en_mask       ), //input cea
 .ada                    (ram_wr_addr        ), //input [8:0] ada
 .din                    (mic_data[6]        ), //input [15:0] din
-
 
 .clkb                   (clk                ), //input clkb
 .resetb                 (!rst_n             ), //input resetb
@@ -444,7 +437,6 @@ ram6_512 U_RAM6_512(
             .cea                    (fifo_en_mask       ), //input cea
             .ada                    (ram_wr_addr        ), //input [8:0] ada
             .din                    (mic_data[j]        ), //input [15:0] din
-
 
             .clkb                   (clk                ), //input clkb
             .resetb                 (!rst_n             ), //input resetb
@@ -468,6 +460,8 @@ generate
         XCORR_NEW_Top U_XCORR_TOP(
             .clk                (clk          ), //input clk
             .rstn               (ram_rd_en          ), //input rstn
+            // .series_x           ({{mic_fifo_data[k][16- 1:10]},10'b0}), //input [15:0] series_x
+            // .series_y           ({{mic_fifo_data[0][16- 1:10]},10'b0}), //input [15:0] series_y
             .series_x           (mic_fifo_data[k]   ), //input [15:0] series_x
             .series_y           (mic_fifo_data[0]   ), //input [15:0] series_y
             // .start              (xcorr_start        ), //input start_n

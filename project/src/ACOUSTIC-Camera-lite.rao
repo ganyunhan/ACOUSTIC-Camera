@@ -2,7 +2,7 @@
 <GAO_CONFIG>
     <Version>3.0</Version>
     <Mode>Lite</Mode>
-    <AoCore_Lite index="0" sample_clock="clk_60MHz" trig_type="0" capture_amount="2048" implemention="0" input_register_enabled="0" capture_init_data_enabled="0" module_name="top">
+    <AoCore_Lite index="0" sample_clock="clk_60MHz" trig_type="0" capture_amount="1024" implemention="0" input_register_enabled="0" capture_init_data_enabled="0" module_name="top">
         <SignalList>
             <Bus name="x_2d[15:0]">
                 <Signal>x_2d[15]</Signal>
@@ -42,5 +42,5 @@
             </Bus>
         </SignalList>
     </AoCore_Lite>
-    <GAO_ID>0011100001010101</GAO_ID>
+    <GAO_ID>0011000101011100</GAO_ID>
 </GAO_CONFIG>

@@ -14,12 +14,27 @@ module thd_show(
 localparam THD_SIZE  = 49;
 localparam RADIUS    = (THD_SIZE - 1) >> 1 ;
 
-wire [12- 1: 0] pix_addr;
-wire [16- 1: 0] pix_data;
-wire signed [16- 1: 0] v_cnt   ;
-wire signed [16- 1: 0] h_cnt   ;
-reg  signed [16- 1: 0] pix_x   ;
-reg  signed [16- 1: 0] pix_y   ;
+wire        [12- 1: 0] pix_addr;
+wire        [16- 1: 0] pix_data;
+wire signed [16- 1: 0] v_cnt;
+wire signed [16- 1: 0] h_cnt;
+reg  signed [16- 1: 0] pix_x;
+reg  signed [16- 1: 0] pix_y;
+reg                    ena_r;
+
+// always @(posedge clk_pix or negedge rst_n) begin
+//     if (!rst_n) begin
+//         ena_r <= 1'b0;
+//     end else if (ena) begin
+//         if (((pix_x_in >= 230) && (pix_x_in <= 240)) && ((pix_y_in >= 140) && (pix_y_in <= 150))) begin
+//             ena_r <= 1'b0;
+//         end else begin
+//             ena_r <= 1'b1;
+//         end
+//     end else begin
+//         ena_r <= ena_r;
+//     end
+// end
 
 always @(posedge clk_pix or negedge rst_n) begin
     if (!rst_n) begin
@@ -56,7 +71,7 @@ begin
         thd_rgb_data <= pix_data;
 end
 
-assign pix_addr = (v_cnt-pix_y+RADIUS)*THD_SIZE + (h_cnt-pix_x+RADIUS);
+assign pix_addr = (v_cnt - pix_y + RADIUS) * THD_SIZE + (h_cnt - pix_x + RADIUS);
 
 Gowin_pROM hotspot_map(
      .clk        (clk_pix        )

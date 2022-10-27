@@ -9,13 +9,10 @@ module cal_position(
     ,input  signed          [6 - 1: 0]      lag_diff_in_3
     ,input  signed          [6 - 1: 0]      lag_diff_in_4
     ,input  signed          [6 - 1: 0]      lag_diff_in_5
-    ,output signed          [32- 1: 0]      x_position
-    ,output signed          [32- 1: 0]      y_position//mm
-    ,output                 [16- 1: 0]      z_position
     ,output reg signed      [32- 1: 0]      x_2d
     ,output reg signed      [32- 1: 0]      y_2d
     ,output reg                             done//caculate end
-)/* synthesis syn_preserve = 1 *//* synthesis syn_netlist_hierarchy=1 */;
+)/* synthesis syn_dspstyle = "logic" */;
 
 localparam signed   L           = 16'd200;   // distance between microphones (0.1mm)
 localparam          vel         = 340;       //  velicity of sound (0.1mm/0.1ms)
@@ -25,15 +22,16 @@ localparam          COEF2       = 160 * L;
 
 reg signed  [32- 1: 0]  R;
 
-reg signed  [32- 1: 0]  y_position_temp/* synthesis syn_preserve = 1 */;
-reg signed  [32- 1: 0]  x_position_temp/* synthesis syn_preserve = 1 */;
+reg signed  [32- 1: 0]  y_position_temp;
+reg signed  [32- 1: 0]  x_position_temp;
 
-reg signed  [32- 1: 0]  distance[6 - 1: 0];      //d12,d13,d14
-reg         [10- 1: 0]  IntrinsicMatrix [0 : 2 - 1] [0: 3 - 1];
+reg signed  [32- 1: 0]  distance[6 - 1: 0]/* synthesis syn_ramstyle = "block_ram" */;
+reg         [10- 1: 0]  IntrinsicMatrix [0 : 2 - 1] [0: 3 - 1]/* synthesis syn_ramstyle = "block_ram" */;
 
+wire        [16- 1: 0]  z_position;
 reg signed  [32- 1: 0]  z_position2;           //z*z
 wire                    cal_end;
-reg         [32- 1: 0]  lag_diff [0 : 6 - 1];
+reg         [32- 1: 0]  lag_diff [0 : 6 - 1]/* synthesis syn_ramstyle = "block_ram" */;
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
@@ -113,7 +111,7 @@ reg                         data_rdy;
 reg   signed [32- 1: 0]     dividend;
 reg   signed [32- 1: 0]     divisor ; 
 wire                        res_rdy ;
-wire  signed [32- 1: 0]     merchant /* synthesis syn_keep=1 */; 
+wire  signed [32- 1: 0]     merchant; 
 
 wire                        dist_done;
 
@@ -325,7 +323,11 @@ always @(posedge clk_pix or negedge rst_n) begin
     if (!rst_n) begin
         done <= 1'b0;
     end else if (cr_done) begin
-        done <= 1'b1;
+        // if ((x_2d == 238) && (y_2d == 145)) begin
+        //     done <= 1'b0;
+        // end else begin
+            done <= 1'b1;
+        // end
     end else begin
         done <= 1'b0;
     end
@@ -365,7 +367,7 @@ always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
         x_2d <= 32'b0;
     end else if (cr_div_x_2d) begin
-        x_2d <= merchant;
+        x_2d <= 480 - merchant;
     end else begin
         x_2d <= x_2d;
     end
@@ -466,7 +468,7 @@ U_DIVIDER(
 sqrt#(
     .TIMES              (64           )
 )
-U_SQRT(
+mysqrt(
      .clk               (clk           ) //input               
     ,.rst_n             (rst_n         ) //input
     ,.ena               (ena_sqrt      )             

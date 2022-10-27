@@ -6,7 +6,6 @@
     <Device name="GW2A-18" pn="GW2A-LV18PG256C8/I7">gw2a18-002</Device>
     <FileList>
         <File path="src/fifo_hs/fifo_hs.v" type="file.verilog" enable="1"/>
-        <File path="src/gowin_mult/gowin_mult.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_prom/acos_rom.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_rpll/rpll_20MHz.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_rpll/rpll_mic.v" type="file.verilog" enable="1"/>

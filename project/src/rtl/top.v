@@ -58,23 +58,6 @@ clock_manage U_CLOCK_MANAGE(
     ,.rst_mic_n         (rst_mic_n          ) //o
 );
 
-// mic_subsys#(
-//     .LAGNUM             (16                 )
-// )
-// U_MIC_SUBSYS
-// (
-//      .clk_60MHz         (clk_60MHz          ) //i
-//     ,.clk_mic           (clk_6MHz           ) //i
-//     ,.clk_WS            (clk_WS             ) //i
-//     ,.rst_n             (rst_n              ) //i
-//     ,.rst_mic_n         (rst_mic_n          ) //i
-//     ,.mic0_data_in      (mic0_data_in       ) //i
-//     ,.mic1_data_in      (mic1_data_in       ) //i
-//     ,.subsys_start      (subsys_start       ) //i
-//     ,.subsys_done       (subsys_done        ) //o
-//     ,.lag_diff          (lag_diff           ) //o[6 - 1: 0]
-// );
-
 mic_subsys#(
     .LAGNUM                 (16                 )
 )
@@ -109,23 +92,20 @@ cal_position U_CAL_POSITION(
      .clk                   (clk_20MHz          ) //input    
     ,.clk_pix               (clk_9MHz           ) //input                     
     ,.rst_n                 (rst_n              ) //input                                  
-    ,.ena                   (1'b1        ) //input 
-    // ,.ena                   (subsys_done        ) //input                                       
-    // ,.lag_diff_in_0         (lag_diff[0]        ) //input  signed [6 - 1: 0]
-    // ,.lag_diff_in_1         (lag_diff[1]        ) //input  signed [6 - 1: 0]
-    // ,.lag_diff_in_2         (lag_diff[2]        ) //input  signed [6 - 1: 0]
-    // ,.lag_diff_in_3         (lag_diff[3]        ) //input  signed [6 - 1: 0]
-    // ,.lag_diff_in_4         (lag_diff[4]        ) //input  signed [6 - 1: 0]
-    // ,.lag_diff_in_5         (lag_diff[5]        ) //input  signed [6 - 1: 0]
-    ,.lag_diff_in_0         (-1        ) //input  signed [6 - 1: 0]
-    ,.lag_diff_in_1         (-6        ) //input  signed [6 - 1: 0]
-    ,.lag_diff_in_2         (-6       ) //input  signed [6 - 1: 0]
-    ,.lag_diff_in_3         (2       ) //input  signed [6 - 1: 0]
-    ,.lag_diff_in_4         (5        ) //input  signed [6 - 1: 0]
-    ,.lag_diff_in_5         (5        ) //input  signed [6 - 1: 0]
-    // ,.x_position            () //output signed [32- 1: 0]                   
-    // ,.y_position            () //output signed [32- 1: 0]                   
-    ,.z_position            () //output        [16- 1: 0]               
+    // ,.ena                   (1'b1        ) //input 
+    ,.ena                   (subsys_done        ) //input                                       
+    ,.lag_diff_in_0         (lag_diff[0]        ) //input  signed [6 - 1: 0]
+    ,.lag_diff_in_1         (lag_diff[1]        ) //input  signed [6 - 1: 0]
+    ,.lag_diff_in_2         (lag_diff[2]        ) //input  signed [6 - 1: 0]
+    ,.lag_diff_in_3         (lag_diff[3]        ) //input  signed [6 - 1: 0]
+    ,.lag_diff_in_4         (lag_diff[4]        ) //input  signed [6 - 1: 0]
+    ,.lag_diff_in_5         (lag_diff[5]        ) //input  signed [6 - 1: 0]
+    // ,.lag_diff_in_0         (-1        ) //input  signed [6 - 1: 0]
+    // ,.lag_diff_in_1         (-6        ) //input  signed [6 - 1: 0]
+    // ,.lag_diff_in_2         (-6       ) //input  signed [6 - 1: 0]
+    // ,.lag_diff_in_3         (2       ) //input  signed [6 - 1: 0]
+    // ,.lag_diff_in_4         (5        ) //input  signed [6 - 1: 0]
+    // ,.lag_diff_in_5         (5        ) //input  signed [6 - 1: 0]             
     ,.x_2d                  (x_2d               ) //output reg    [32- 1: 0]               
     ,.y_2d                  (y_2d               ) //output reg    [32- 1: 0]           
     ,.done                  (done               ) //output reg                         
