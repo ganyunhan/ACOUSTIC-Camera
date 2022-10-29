@@ -4,12 +4,59 @@
     <Mode>Standard</Mode>
     <AoCore index="0" sample_clock="clk_60MHz" trig_type="0" storage_depth="1024" window_num="1" capture_amount="1024" trigger_pos="0" module_name="top" force_trigger_by_falling_edge="false">
         <SignalList>
-            <Signal>U_CAL_POSITION/done</Signal>
+            <Bus name="lag_diff[5][5:0]">
+                <Signal>lag_diff[5][5]</Signal>
+                <Signal>lag_diff[5][4]</Signal>
+                <Signal>lag_diff[5][3]</Signal>
+                <Signal>lag_diff[5][2]</Signal>
+                <Signal>lag_diff[5][1]</Signal>
+                <Signal>lag_diff[5][0]</Signal>
+            </Bus>
+            <Bus name="lag_diff[4][5:0]">
+                <Signal>lag_diff[4][5]</Signal>
+                <Signal>lag_diff[4][4]</Signal>
+                <Signal>lag_diff[4][3]</Signal>
+                <Signal>lag_diff[4][2]</Signal>
+                <Signal>lag_diff[4][1]</Signal>
+                <Signal>lag_diff[4][0]</Signal>
+            </Bus>
+            <Bus name="lag_diff[3][5:0]">
+                <Signal>lag_diff[3][5]</Signal>
+                <Signal>lag_diff[3][4]</Signal>
+                <Signal>lag_diff[3][3]</Signal>
+                <Signal>lag_diff[3][2]</Signal>
+                <Signal>lag_diff[3][1]</Signal>
+                <Signal>lag_diff[3][0]</Signal>
+            </Bus>
+            <Bus name="lag_diff[2][5:0]">
+                <Signal>lag_diff[2][5]</Signal>
+                <Signal>lag_diff[2][4]</Signal>
+                <Signal>lag_diff[2][3]</Signal>
+                <Signal>lag_diff[2][2]</Signal>
+                <Signal>lag_diff[2][1]</Signal>
+                <Signal>lag_diff[2][0]</Signal>
+            </Bus>
+            <Bus name="lag_diff[1][5:0]">
+                <Signal>lag_diff[1][5]</Signal>
+                <Signal>lag_diff[1][4]</Signal>
+                <Signal>lag_diff[1][3]</Signal>
+                <Signal>lag_diff[1][2]</Signal>
+                <Signal>lag_diff[1][1]</Signal>
+                <Signal>lag_diff[1][0]</Signal>
+            </Bus>
+            <Bus name="lag_diff[0][5:0]">
+                <Signal>lag_diff[0][5]</Signal>
+                <Signal>lag_diff[0][4]</Signal>
+                <Signal>lag_diff[0][3]</Signal>
+                <Signal>lag_diff[0][2]</Signal>
+                <Signal>lag_diff[0][1]</Signal>
+                <Signal>lag_diff[0][0]</Signal>
+            </Bus>
         </SignalList>
         <Triggers>
             <Trigger index="0">
                 <SignalList>
-                    <Signal>U_CAL_POSITION/mysqrt/sqrt_end</Signal>
+                    <Signal>subsys_done</Signal>
                 </SignalList>
             </Trigger>
             <Trigger index="1"/>
@@ -50,5 +97,5 @@
             <Expression>M0</Expression>
         </Expressions>
     </AoCore>
-    <GAO_ID>0100011110000001</GAO_ID>
+    <GAO_ID>0011001101001110</GAO_ID>
 </GAO_CONFIG>

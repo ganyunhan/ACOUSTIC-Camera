@@ -7,7 +7,7 @@
     <FileList>
         <File path="src/fifo_hs/fifo_hs.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_prom/acos_rom.v" type="file.verilog" enable="1"/>
-        <File path="src/gowin_rpll/rpll_20MHz.v" type="file.verilog" enable="1"/>
+        <File path="src/gowin_rpll/rpll_9MHz.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_rpll/rpll_mic.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram0_512.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram1_512.v" type="file.verilog" enable="1"/>
@@ -17,6 +17,7 @@
         <File path="src/ram_512/ram5_512.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram6_512.v" type="file.verilog" enable="1"/>
         <File path="src/ram_512/ram_512.v" type="file.verilog" enable="1"/>
+        <File path="src/rpll_9M_to_12M_24M/rpll_9M_to_12M_24M.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/abs.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/i2s_decoder.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/audio_process/mic_subsys_6+1.v" type="file.verilog" enable="1"/>
@@ -31,9 +32,15 @@
         <File path="src/rtl/top.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/uart/uart_top.v" type="file.verilog" enable="1"/>
         <File path="src/rtl/uart/uart_tx.v" type="file.verilog" enable="1"/>
-        <File path="src/rtl/video_process/gowin_prom/gowin_prom.v" type="file.verilog" enable="1"/>
-        <File path="src/rtl/video_process/hotspot_show.v" type="file.verilog" enable="1"/>
-        <File path="src/rtl/video_process/syn_gen.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/cmos_8_16bit.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/color_bar.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/fifo_hs/video_fifo.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/hotspot_map/gowin_prom.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/hotspot_map/hotspot_show.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/iic_init/iic_ctrl.sv" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/iic_init/iic_master.sv" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/video_subsys.v" type="file.verilog" enable="1"/>
+        <File path="src/rtl/video_process/video_timing_data.v" type="file.verilog" enable="1"/>
         <File path="src/xcorr/xcorr.v" type="file.verilog" enable="1"/>
         <File path="src/xcorr_new/xcorr.v" type="file.verilog" enable="1"/>
         <File path="src/xcorr_new/xcorr_wrap.v" type="file.verilog" enable="1"/>
@@ -41,5 +48,6 @@
         <File path="src/ACOUSTIC-Camera.sdc" type="file.sdc" enable="1"/>
         <File path="src/ACOUSTIC-Camera-lite.rao" type="file.gao" enable="0"/>
         <File path="src/ACOUSTIC-Camera.rao" type="file.gao" enable="0"/>
+        <File path="src/rtl/video_process/iic_init/init_480x272_60.txt" type="file.other" enable="1"/>
     </FileList>
 </Project>
