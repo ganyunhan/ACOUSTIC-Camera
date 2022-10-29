@@ -11,6 +11,9 @@ wire start;
 
 wire mic_ws;
 wire mic_clk;
+wire hs;
+wire vs;
+wire de;
 reg  mic0_data = 0;
 reg  mic12_data = 0;
 reg  mic34_data = 0;
@@ -84,7 +87,24 @@ top U_TOP(
     ,.PAD_MIC34_DA      (mic34_data)         
     ,.PAD_MIC56_DA      (mic56_data)         
     ,.PAD_WS            (mic_ws) 
-    ,.PAD_CLK_MIC       (mic_clk)         
+    ,.PAD_CLK_MIC       (mic_clk)  
+	,.PAD_CMOS_SCL 		() //output                 
+    ,.PAD_CMOS_SDA 		() //inout                  
+    ,.PAD_CMOS_VSYN		(vs) //input                  
+    ,.PAD_CMOS_HREF		(hs) //input                  
+    ,.PAD_CMOS_PCLK		(U_TOP.clk_9MHz) //input                  
+    ,.PAD_CMOS_XCLK		() //output                 
+    ,.PAD_CMOS_DATA		(16'hffff) //input [8 - 1: 0]       
+    ,.PAD_CMOS_RST 		() //output                 
+    ,.PAD_CMOS_PWDN		() //output                        
+);
+
+color_bar u_color_bar(
+	 .clk				(U_TOP.clk_9MHz)    
+	,.rst				(!rst_n)    
+	,.hs 				(hs) 
+	,.vs 				(vs)    
+	,.de 				(de)
 );
 
 endmodule
