@@ -13,7 +13,8 @@ module clock_manage(
      input                  ext_clk
     ,input                  rst_n
     ,output                 clk_60MHz
-    ,output                 clk_20MHz
+    ,output                 clk_24MHz
+    ,output                 clk_12MHz
     ,output                 clk_9MHz
     ,output                 clk_6MHz    
     ,output                 clk_WS
@@ -30,20 +31,17 @@ rpll_mic U_PLL_27_60(
 );
 assign rst_mic_n = rst_mic_lock ? rst_n : 1'b0;
 
-clk_div #(
-    .SCALER         (3              )
-)
-U_CLK_DIV_3
-(
-     .clk_in        (ext_clk        ) //i
-    ,.rst_n         (rst_n          ) //i
-    ,.clk_out       (clk_9MHz       ) //o
+rpll_9MHz U_RPLL_9MHz(
+     .clkout        (clk_9MHz       ) //output clkout
+    ,.reset         (!rst_n         ) //input reset
+    ,.clkin         (ext_clk        ) //input clkin
 );
 
-rpll_20MHz U_RPLL_20MHZ(
-    .clkout         (clk_20MHz), //output clkout
-    .reset          (!rst_n), //input reset
-    .clkin          (clk_60MHz) //input clkin
+rpll_9M_to_12M_24M U_RPLL_12_24MHz(
+     .clkout        (clk_24MHz      )
+    ,.clkoutd       (clk_12MHz      )
+    ,.reset         (!rst_n         )
+    ,.clkin         (clk_9MHz       )
 );
 
 clk_div #(
